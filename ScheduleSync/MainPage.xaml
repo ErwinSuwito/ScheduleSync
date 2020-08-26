@@ -13,7 +13,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Interactivity:Interaction.Behaviors>
-        <providers:InteractiveProviderBehavior ClientId="YOUR_CLIENT_ID_HERE" Scopes="User.Read,Calendars.ReadWrite"/>
+        <providers:InteractiveProviderBehavior x:Name="graphProvider" Scopes="User.Read,Calendars.ReadWrite"/>
     </Interactivity:Interaction.Behaviors>
 
     <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
@@ -37,6 +37,7 @@
 
             <StackPanel x:Name="loginPanel" RelativePanel.Below="headerPanel"
                         Margin="0,12,0,0">
+                <wgt:LoginButton />
             </StackPanel>
         </RelativePanel>
     </Grid>

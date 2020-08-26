@@ -26,5 +26,11 @@ namespace ScheduleSync
         {
             this.InitializeComponent();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            graphProvider.ClientId = ClientSecret.GraphApiClientId;
+            base.OnNavigatedTo(e);
+        }
     }
 }

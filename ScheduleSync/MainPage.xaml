@@ -6,39 +6,17 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:Interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:providers="using:Microsoft.Toolkit.Graph.Providers"
-    xmlns:wgt="using:Microsoft.Toolkit.Graph.Controls"  
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
     <Interactivity:Interaction.Behaviors>
         <providers:InteractiveProviderBehavior x:Name="graphProvider" Scopes="User.Read,Calendars.ReadWrite"/>
     </Interactivity:Interaction.Behaviors>
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColorDark2}">
-            
-        </Grid>
-
-        <RelativePanel Grid.Row="1" Margin="24,24,24,24">
-            <StackPanel x:Name="headerPanel" >
-                <TextBlock Text="Sync your intake schedule to your calendar" 
-                           TextWrapping="Wrap"
-                           Style="{ThemeResource SubheaderTextBlockStyle}" />
-                <TextBlock x:Name="subheaderText" Text="Sign in to your Microsoft Account or APKey to get started." 
-                           TextWrapping="Wrap" Margin="0,4,0,0" FontSize="18" />
-            </StackPanel>
-
-            <StackPanel x:Name="loginPanel" RelativePanel.Below="headerPanel"
-                        Margin="0,12,0,0">
-                <wgt:LoginButton />
-            </StackPanel>
-        </RelativePanel>
-    </Grid>
+    <Frame x:Name="rootFrame">
+        
+    </Frame>
 </Page>

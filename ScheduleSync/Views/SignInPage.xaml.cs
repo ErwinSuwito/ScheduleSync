@@ -13,29 +13,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace ScheduleSync
+namespace ScheduleSync.Views
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class SignInPage : Page
     {
-        public MainPage()
+        public SignInPage()
         {
             this.InitializeComponent();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            graphProvider.ClientId = ClientSecret.GraphApiClientId;
-            base.OnNavigatedTo(e);
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            rootFrame.Navigate(typeof(Views.SignInPage), null);
         }
     }
 }

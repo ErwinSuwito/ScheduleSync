@@ -21,11 +21,16 @@ namespace ScheduleSync.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SignInPage : Page
+    public sealed partial class SetIntakePage : Page
     {
-        public SignInPage()
+        public SetIntakePage()
         {
             this.InitializeComponent();
+        }
+
+        private void backBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SignInPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
         }
 
         private void nextBtn_Click(object sender, RoutedEventArgs e)

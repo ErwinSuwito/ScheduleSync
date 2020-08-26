@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="ScheduleSync.Views.SignInPage"
+    x:Class="ScheduleSync.Views.SetIntakePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ScheduleSync.Views"
@@ -15,24 +15,34 @@
             <RowDefinition Height="1.3*" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColorDark2}">
-            <Image Source="ms-appx:///Assets/Calendar.png" Height="92"/>
+        <Grid Grid.Row="0" Background="{ThemeResource AppBarItemPointerOverBackgroundThemeBrush}">
+            <Image Source="ms-appx:///Assets/Intake.png" Stretch="UniformToFill"/>
         </Grid>
 
         <RelativePanel Grid.Row="1" Margin="28,24,28,24">
             <StackPanel x:Name="headerPanel" >
-                <TextBlock Text="Sync your intake schedule to your calendar" 
+                <TextBlock Text="Set your intake" 
                            TextWrapping="Wrap" FontSize="32" FontWeight="SemiBold"
                            Style="{ThemeResource SubheaderTextBlockStyle}" />
-                <TextBlock x:Name="subheaderText" Text="Sign in to your Microsoft Account or APKey to get started." 
+                <TextBlock x:Name="subheaderText" Text="Type in your intake code below. There is no need to include your tutorial group." 
                            TextWrapping="Wrap" Margin="0,4,0,0" FontSize="18" />
+                
+                <TextBox x:Name="intakeCodeBox" Margin="0,12,0,0" Header="Intake code"
+                         PlaceholderText="Your intake code (e.g. UCDF1709ICT(SE)"/>
             </StackPanel>
 
-            <StackPanel x:Name="loginPanel" RelativePanel.Below="headerPanel"
-                        Margin="0,12,0,0">
-                <wgt:LoginButton />
-            </StackPanel>
         </RelativePanel>
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                    Margin="24,24,24,24">
+            <Button x:Name="backBtn" Style="{ThemeResource TopChromeButtonStyle}"
+                    Click="backBtn_Click">
+                <Button.Content>
+                    <FontIcon Glyph="&#xE0C4;" FontSize="16"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Margin="24,24,24,24">

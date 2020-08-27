@@ -46,7 +46,7 @@
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"
                     Margin="24,24,24,24">
-            <Button x:Name="backBtn" Style="{ThemeResource TopChromeButtonStyle}"
+            <Button x:Name="backBtn" Style="{ThemeResource RoundedSquareButtonStyle}"
                     Click="backBtn_Click">
                 <Button.Content>
                     <FontIcon Glyph="&#xE0C4;" FontSize="16"/>
@@ -57,7 +57,7 @@
 
         <StackPanel Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                     Margin="24,24,24,24">
-            <Button x:Name="nextBtn" Style="{ThemeResource TopChromeButtonStyle}"
+            <Button x:Name="nextBtn" Style="{ThemeResource RoundedSquareButtonStyle}"
                     Click="nextBtn_Click">
                 <Button.Content>
                     <FontIcon Glyph="&#xE0AE;" FontSize="16"/>

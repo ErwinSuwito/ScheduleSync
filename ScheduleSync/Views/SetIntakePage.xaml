@@ -24,11 +24,22 @@
                 <TextBlock Text="Set your intake" 
                            TextWrapping="Wrap" FontSize="32" FontWeight="SemiBold"
                            Style="{ThemeResource SubheaderTextBlockStyle}" />
-                <TextBlock x:Name="subheaderText" Text="Type in your intake code below. There is no need to include your tutorial group." 
+                <TextBlock x:Name="subheaderText" Text="Type in your intake code below." 
                            TextWrapping="Wrap" Margin="0,4,0,0" FontSize="18" />
-                
-                <TextBox x:Name="intakeCodeBox" Margin="0,12,0,0" Header="Intake code"
-                         PlaceholderText="Your intake code (e.g. UCDF1709ICT(SE)"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                    <TextBox x:Name="intakeCodeBox" Margin="0,0,0,0" Header="Intake code"
+                         PlaceholderText="UCDF1709ICT(SE)" Width="172"/>
+
+                    <TextBox x:Name="tutorialGroupBox" Margin="12,0,0,0" Header="Tutorial group"
+                         PlaceholderText="T1" />
+                </StackPanel>
+
+                <StackPanel Margin="0,12,0,0">
+                    <TextBlock Text="I am a..." Style="{ThemeResource BodyTextBlockStyle}"/>
+                    <RadioButton x:Name="fsRadBtn" Content="Foreign student" Margin="0,12,0,0"/>
+                    <RadioButton x:Name="lsRadBtn" Content="Local student"  Margin="0,12,0,0"/>
+                </StackPanel>
             </StackPanel>
 
         </RelativePanel>

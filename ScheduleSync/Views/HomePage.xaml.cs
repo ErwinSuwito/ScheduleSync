@@ -56,38 +56,52 @@ namespace ScheduleSync.Views
 
             List<Schedule> timetable = await da.FilterTimetable(intakeCode, tutorialGroup, isLocalStudent);
 
-            foreach (Schedule schedule in timetable)
+            if (timetable.Count > 0)
             {
-                Event @event = new Event()
+                foreach (Schedule schedule in timetable)
                 {
-                    Subject = schedule.MODID,
-                    Start = new DateTimeTimeZone
+                    Event @event = new Event()
                     {
-                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_FROM,
-                        TimeZone = "Singapore Standard Time"
-                    },
-                    End = new DateTimeTimeZone
+                        Subject = schedule.MODID,
+                        Start = new DateTimeTimeZone
+                        {
+                            DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_FROM,
+                            TimeZone = "Singapore Standard Time"
+                        },
+                        End = new DateTimeTimeZone
+                        {
+                            DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_TO,
+                            TimeZone = "Singapore Standard Time"
+                        },
+                        Location = new Location
+                        {
+                            DisplayName = schedule.ROOM
+                        },
+                        Body = new ItemBody
+                        {
+                            ContentType = BodyType.Html,
+                            Content = "Your lecturer is <a href=\"mailto:" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
+                        }
+                    };
+
+                    var provider = ProviderManager.Instance.GlobalProvider;
+
+                    if (provider != null && provider.State == ProviderState.SignedIn)
                     {
-                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_TO,
-                        TimeZone = "Singapore Standard Time"
-                    },
-                    Location = new Location
-                    {
-                        DisplayName = schedule.ROOM
-                    },
-                    Body = new ItemBody
-                    {
-                        ContentType = BodyType.Html,
-                        Content = "Your lecturer is <a href=\"mailto:" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
+                        await provider.Graph.Me.Events.Request().AddAsync(@event);
                     }
+                }
+            }
+            else
+            {
+                ContentDialog contentDialog = new ContentDialog()
+                {
+                    Title = "No schedule found!",
+                    Content = "There are no timetables found for your intake. If there is supposed to be one, make sure that your intake code is correct.",
+                    CloseButtonText = "Ok"
                 };
 
-                var provider = ProviderManager.Instance.GlobalProvider;
-
-                if (provider != null && provider.State == ProviderState.SignedIn)
-                {
-                    await provider.Graph.Me.Events.Request().AddAsync(@event);
-                }
+                await contentDialog.ShowAsync();
             }
 
             loadPanel.Visibility = Visibility.Collapsed;

@@ -19,6 +19,7 @@ namespace ScheduleSync
 {
     public class DataAccess
     {
+        public Exception ex;
         StorageFile jsonFile;
         StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
         private string scheduleJson;

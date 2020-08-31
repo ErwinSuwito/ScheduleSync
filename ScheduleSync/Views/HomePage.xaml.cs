@@ -32,9 +32,6 @@ namespace ScheduleSync.Views
     public sealed partial class HomePage : Page
     {
         private DataAccess da = new DataAccess();
-        StorageFile jsonFile;
-        StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
-        private string scheduleJson;
 
         public HomePage()
         {
@@ -43,7 +40,7 @@ namespace ScheduleSync.Views
 
         private void nextBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(SetIntakePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+            this.Frame.Navigate(typeof(SettingsPage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

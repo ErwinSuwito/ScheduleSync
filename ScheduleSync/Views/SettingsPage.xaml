@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="Transparent">
+    Background="Transparent"
+    Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -16,7 +17,8 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColorDark2}">
-            <Button Style="{ThemeResource NavigationBackButtonNormalStyle}" />
+            <Button Style="{ThemeResource NavigationBackButtonNormalStyle}" 
+                    Click="Button_Click"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Settings" Style="{ThemeResource BodyTextBlockStyle}" VerticalAlignment="Center"
                            Margin="0,0,0,0" FontSize="16" Foreground="White"/>

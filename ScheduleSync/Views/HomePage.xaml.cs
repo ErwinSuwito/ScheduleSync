@@ -62,12 +62,12 @@ namespace ScheduleSync.Views
                     Subject = schedule.MODID,
                     Start = new DateTimeTimeZone
                     {
-                        DateTime = schedule.DATESTAMP_ISO + "T" + schedule.TIME_FROM + "Z",
+                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_FROM,
                         TimeZone = "Singapore Standard Time"
                     },
                     End = new DateTimeTimeZone
                     {
-                        DateTime = schedule.DATESTAMP_ISO + "T" + schedule.TIME_TO + "Z",
+                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_TO,
                         TimeZone = "Singapore Standard Time"
                     },
                     Location = new Location
@@ -77,7 +77,7 @@ namespace ScheduleSync.Views
                     Body = new ItemBody
                     {
                         ContentType = BodyType.Html,
-                        Content = "Your lecturer is <a href=\"mailto:>" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
+                        Content = "Your lecturer is <a href=\"mailto:" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
                     }
                 };
 

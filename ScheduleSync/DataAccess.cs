@@ -99,9 +99,9 @@ namespace ScheduleSync
                         {
                             continue;
                         }
-
-                        filteredItems.Add(item);
                     }
+
+                    filteredItems.Add(item);
                 }
             }
 

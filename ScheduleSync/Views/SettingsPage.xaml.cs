@@ -13,6 +13,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -72,6 +73,12 @@ namespace ScheduleSync.Views
             localSettings.Values["IntakeCode"] = intakeCodeBox.Text.Trim();
             localSettings.Values["TutorialGroup"] = tutorialGroupBox.Text.Trim();
             localSettings.Values["IsLocalStudent"] = lsRadBtn.IsChecked;
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Uri uri = new Uri(@"https://github.com/ErwinSuwito/ScheduleSync/issues");
+            await Launcher.LaunchUriAsync(uri);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,6 +24,8 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class SetIntakePage : Page
     {
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
         public SetIntakePage()
         {
             this.InitializeComponent();
@@ -35,6 +38,11 @@ namespace ScheduleSync.Views
 
         private void nextBtn_Click(object sender, RoutedEventArgs e)
         {
+            localSettings.Values["IntakeCode"] = intakeCodeBox.Text;
+            localSettings.Values["TutorialGroup"] = tutorialGroupBox.Text;
+            localSettings.Values["IsLocalStudent"] = lsRadBtn.IsChecked;
+            localSettings.Values["RequireFirstRun"] = false;
+
             this.Frame.Navigate(typeof(HomePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
         }
     }

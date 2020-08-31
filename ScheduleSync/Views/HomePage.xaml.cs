@@ -52,9 +52,6 @@ namespace ScheduleSync.Views
 
             List<Schedule> timetable = await da.FilterTimetable("UC2F2008SE", "T1", true);
 
-            
-
-
             foreach (Schedule schedule in timetable)
             {
                 Event @event = new Event()

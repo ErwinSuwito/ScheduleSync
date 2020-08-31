@@ -13,6 +13,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,10 +41,12 @@ namespace ScheduleSync.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
+            var currentView = SystemNavigationManager.GetForCurrentView();
+            currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            currentView.BackRequested += CurrentView_BackRequested;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
             this.Frame.Navigate(typeof(HomePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
         }

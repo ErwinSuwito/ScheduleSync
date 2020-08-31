@@ -12,16 +12,15 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="0.2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColorDark2}">
-            <Button Style="{ThemeResource NavigationBackButtonNormalStyle}" 
-                    Click="Button_Click"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock Text="Settings" Style="{ThemeResource BodyTextBlockStyle}" VerticalAlignment="Center"
-                           Margin="0,0,0,0" FontSize="16" Foreground="White"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
+                        Margin="28,0,0,12" VerticalAlignment="Bottom">
+                <TextBlock Text="Settings" Style="{ThemeResource SubheaderTextBlockStyle}" VerticalAlignment="Center"
+                           Margin="0,0,0,0" Foreground="White"/>
             </StackPanel>
         </Grid>
 

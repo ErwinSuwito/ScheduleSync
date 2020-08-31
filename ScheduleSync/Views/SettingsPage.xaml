@@ -12,7 +12,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="0.25*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -41,6 +41,17 @@
                     <RadioButton x:Name="fsRadBtn" Content="Foreign student" Margin="0,12,0,0"/>
                     <RadioButton x:Name="lsRadBtn" Content="Local student"  Margin="0,12,0,0"/>
                 </StackPanel>
+
+                <Button x:Name="saveBtn" Style="{ThemeResource RoundedButtonStyle}" Margin="0,12,0,0"
+                        Click="saveBtn_Click" >
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal" Margin="4,0,4,0">
+                            <FontIcon Glyph="&#xE105;" FontSize="16" VerticalAlignment="Center"/>
+                            <TextBlock Text="Save" Margin="12,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
 
                 <StackPanel Margin="0,12,0,0">
                     <TextBlock Text="Account" Style="{ThemeResource TitleTextBlockStyle}"/>

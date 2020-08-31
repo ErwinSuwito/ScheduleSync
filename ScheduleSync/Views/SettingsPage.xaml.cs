@@ -32,7 +32,7 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        private DataAccess da = new DataAccess();
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public SettingsPage()
         {
@@ -41,14 +41,37 @@ namespace ScheduleSync.Views
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // Shows the appview back button and adds event to handle when
+            // the back button is clicked
             var currentView = SystemNavigationManager.GetForCurrentView();
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             currentView.BackRequested += CurrentView_BackRequested;
+
+            // Loads settings and update controls
+            intakeCodeBox.Text = localSettings.Values["IntakeCode"].ToString();
+            tutorialGroupBox.Text = localSettings.Values["TutorialGroup"].ToString();
+
+            bool.TryParse(localSettings.Values["IsLocalStudent"].ToString(), out bool IsLocalStudent);
+            if (IsLocalStudent)
+            {
+                lsRadBtn.IsChecked = true;
+            }
+            else
+            {
+                fsRadBtn.IsChecked = true;
+            }
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)
         {
             this.Frame.Navigate(typeof(HomePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft });
+        }
+
+        private void saveBtn_Click(object sender, RoutedEventArgs e)
+        {
+            localSettings.Values["IntakeCode"] = intakeCodeBox.Text;
+            localSettings.Values["TutorialGroup"] = tutorialGroupBox.Text;
+            localSettings.Values["IsLocalStudent"] = lsRadBtn.IsChecked;
         }
     }
 }

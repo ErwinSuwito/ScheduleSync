@@ -30,7 +30,8 @@
                            Style="{ThemeResource TitleTextBlockStyle}" />
                 <TextBlock Text="Tap or click on the Sync button to add your schedule to your calendar." 
                            Margin="0,4,0,0"/>
-                <Button Style="{ThemeResource RoundedButtonStyle}" Margin="0,12,0,0">
+                <Button Style="{ThemeResource RoundedButtonStyle}" Margin="0,12,0,0"
+                        Click="Button_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Margin="4,0,4,0">
                             <FontIcon Glyph="&#xE117;" FontSize="16" VerticalAlignment="Center"/>
@@ -38,6 +39,12 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
+
+                <StackPanel x:Name="loadPanel" Orientation="Horizontal" 
+                            Visibility="Collapsed" Margin="0,8,0,0">
+                    <ProgressRing />
+                    <TextBlock Text="Getting schedule data..." Margin="4,0,0,0"/>
+                </StackPanel>
             </StackPanel>
         </RelativePanel>
 

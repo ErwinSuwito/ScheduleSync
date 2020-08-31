@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScheduleSync
 {
-    public class ScheduleItem
+    public class Schedule
     {
         public string INTAKE { get; set; }
         public string MODID { get; set; }
@@ -22,5 +22,10 @@ namespace ScheduleSync
         public string TIME_TO { get; set; }
         public string GROUPING { get; set; }
         public string COLOR { get; set; }
+    }
+
+    public class Root
+    {
+        public List<Schedule> schedules { get; set; }
     }
 }

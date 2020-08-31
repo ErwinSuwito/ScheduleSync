@@ -13,7 +13,7 @@
     Loaded="Page_Loaded">
 
     <Interactivity:Interaction.Behaviors>
-        <providers:InteractiveProviderBehavior x:Name="graphProvider" Scopes="User.Read,Calendars.ReadWrite"/>
+        <providers:InteractiveProviderBehavior x:Name="graphProvider"/>
     </Interactivity:Interaction.Behaviors>
 
     <Frame x:Name="rootFrame" Background="Transparent">

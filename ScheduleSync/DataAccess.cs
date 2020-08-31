@@ -29,7 +29,7 @@ namespace ScheduleSync
             {
                 StorageFile scheduleZip = await tempFolder.CreateFileAsync("schedule.gz", CreationCollisionOption.ReplaceExisting);
                 WebClient wc = new WebClient();
-                wc.DownloadFileAsync(new Uri("https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable"), scheduleZip.Path);
+                await wc.DownloadFileTaskAsync("https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable", scheduleZip.Path);
 
                 jsonFile = await tempFolder.CreateFileAsync("schedule.json", CreationCollisionOption.ReplaceExisting);
                 var zipStream = await scheduleZip.OpenStreamForWriteAsync();

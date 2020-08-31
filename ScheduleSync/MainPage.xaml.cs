@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Graph.Providers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,6 +24,9 @@ namespace ScheduleSync
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        IProvider provider = ProviderManager.Instance.GlobalProvider;
+
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -31,7 +35,27 @@ namespace ScheduleSync
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             graphProvider.ClientId = ClientSecret.GraphApiClientId;
+
+            provider.StateChanged += Provider_StateChanged;
+
             base.OnNavigatedTo(e);
+        }
+
+        private async void Provider_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (provider != null || provider.State == ProviderState.SignedOut)
+            {
+                ContentDialog contentDialog = new ContentDialog()
+                {
+                    Title = "You are signed out",
+                    Content = "You are signed out of your account. You'll need to login again before continuing.",
+                    CloseButtonText = "Ok"
+                };
+
+                await contentDialog.ShowAsync();
+
+                rootFrame.Navigate(typeof(Views.SignInPage), null);
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

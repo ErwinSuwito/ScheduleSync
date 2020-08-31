@@ -12,7 +12,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.25*" />
+            <RowDefinition Height="0.3*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
@@ -25,7 +25,7 @@
         </Grid>
 
         <ScrollViewer Grid.Row="1" Margin="28,24,28,24">
-            <StackPanel>
+            <StackPanel Margin="0,0,0,52">
                 <TextBlock Text="Intake info" Style="{ThemeResource TitleTextBlockStyle}"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
@@ -55,6 +55,7 @@
 
                 <StackPanel Margin="0,12,0,0">
                     <TextBlock Text="Account" Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Text="You are signed in as" />
                     <wgt:LoginButton Margin="0,4,0,0"/>
                 </StackPanel>
 

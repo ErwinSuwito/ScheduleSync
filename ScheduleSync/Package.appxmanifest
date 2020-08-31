@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="4908137b-defd-4c0f-96e6-c8cde553e6eb"
-    Publisher="CN=Erwin"
+    Name="29437ErwinSuwitoandojo.ScheduleSync"
+    Publisher="CN=EB87CADD-5C4D-4A02-8C6B-C25705F9A969"
     Version="1.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="4908137b-defd-4c0f-96e6-c8cde553e6eb" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="0e724d48-c8db-4eef-bb35-b4ce3f2ff95d" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>ScheduleSync</DisplayName>
-    <PublisherDisplayName>Erwin</PublisherDisplayName>
+    <PublisherDisplayName>Erwin Suwitoandojo</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

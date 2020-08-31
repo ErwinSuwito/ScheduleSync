@@ -37,9 +37,8 @@ namespace ScheduleSync
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            bool.TryParse(localSettings.Values["RequireFirstRun"].ToString(), out bool RequireFirstRun);
 
-            if (RequireFirstRun == false)
+            if (localSettings.Values["RequireFirstRun"] != null)
             {
                 rootFrame.Navigate(typeof(Views.HomePage), null);
             }

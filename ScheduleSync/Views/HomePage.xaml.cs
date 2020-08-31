@@ -50,7 +50,13 @@ namespace ScheduleSync.Views
         {
             loadPanel.Visibility = Visibility.Visible;
 
-            List<Schedule> timetable = await da.FilterTimetable("UC2F2008SE", "T1", true);
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            string intakeCode = localSettings.Values["IntakeCode"].ToString();
+            string tutorialGroup = localSettings.Values["TutorialGroup"].ToString();
+            bool.TryParse(localSettings.Values["IsLocalStudent"].ToString(), out bool isLocalStudent);
+
+            List<Schedule> timetable = await da.FilterTimetable(intakeCode, tutorialGroup, isLocalStudent);
 
             foreach (Schedule schedule in timetable)
             {

@@ -69,8 +69,8 @@ namespace ScheduleSync.Views
 
         private void saveBtn_Click(object sender, RoutedEventArgs e)
         {
-            localSettings.Values["IntakeCode"] = intakeCodeBox.Text;
-            localSettings.Values["TutorialGroup"] = tutorialGroupBox.Text;
+            localSettings.Values["IntakeCode"] = intakeCodeBox.Text.Trim();
+            localSettings.Values["TutorialGroup"] = tutorialGroupBox.Text.Trim();
             localSettings.Values["IsLocalStudent"] = lsRadBtn.IsChecked;
         }
     }

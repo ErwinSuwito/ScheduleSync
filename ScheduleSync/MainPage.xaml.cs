@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,7 +36,17 @@ namespace ScheduleSync
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            rootFrame.Navigate(typeof(Views.SignInPage), null);
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            bool.TryParse(localSettings.Values["RequireFirstRun"].ToString(), out bool RequireFirstRun);
+
+            if (RequireFirstRun == false)
+            {
+                rootFrame.Navigate(typeof(Views.HomePage), null);
+            }
+            else
+            {
+                rootFrame.Navigate(typeof(Views.SignInPage), null);
+            }
         }
     }
 }

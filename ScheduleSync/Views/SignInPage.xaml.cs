@@ -28,6 +28,20 @@ namespace ScheduleSync.Views
         IProvider provider = ProviderManager.Instance.GlobalProvider;
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            provider.StateChanged += Provider_StateChanged;
+            base.OnNavigatedTo(e);
+        }
+
+        private void Provider_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (provider.State == ProviderState.SignedIn)
+            {
+                this.Frame.Navigate(typeof(SetIntakePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
+            }
+        }
+
         public SignInPage()
         {
             this.InitializeComponent();
@@ -38,7 +52,7 @@ namespace ScheduleSync.Views
             this.Frame.Navigate(typeof(SetIntakePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
         }
 
-        private void msftSignInBtn_Click(object sender, RoutedEventArgs e)
+        private async void msftSignInBtn_Click(object sender, RoutedEventArgs e)
         {
             localSettings.Values["AuthType"] = "msft";
 
@@ -48,9 +62,10 @@ namespace ScheduleSync.Views
             InteractiveProviderBehavior graphClient = mp.FindName("graphClient") as InteractiveProviderBehavior;
 
             graphClient.ClientId = ClientSecret.msftGraphClientId;
+            await provider.LoginAsync();
         }
 
-        private void apKeySignInBtn_Click(object sender, RoutedEventArgs e)
+        private async void apKeySignInBtn_Click(object sender, RoutedEventArgs e)
         {
             localSettings.Values["AuthType"] = "apkey";
 
@@ -60,6 +75,7 @@ namespace ScheduleSync.Views
             InteractiveProviderBehavior graphClient = mp.FindName("graphClient") as InteractiveProviderBehavior;
 
             graphClient.ClientId = ClientSecret.apkeyGraphClientId;
+            await provider.LoginAsync();
         }
     }
 }

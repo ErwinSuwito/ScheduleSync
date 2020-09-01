@@ -50,7 +50,6 @@ namespace ScheduleSync
                 }
             }
 
-
             //provider.StateChanged += Provider_StateChanged;
 
             base.OnNavigatedTo(e);

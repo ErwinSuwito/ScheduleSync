@@ -146,7 +146,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Calendar.png" />
+    <Content Include="Assets\ScheduleSync.png" />
     <Content Include="Assets\Intake.png" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\LargeTile.scale-100.png" />

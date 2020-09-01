@@ -16,7 +16,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColorDark2}">
-            <Image Source="ms-appx:///Assets/Calendar.png" Height="92"/>
+            <Image Source="ms-appx:///Assets/ScheduleSync.png" Height="92"/>
         </Grid>
 
         <RelativePanel Grid.Row="1" Margin="28,24,28,24">

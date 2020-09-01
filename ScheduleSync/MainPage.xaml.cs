@@ -36,7 +36,7 @@ namespace ScheduleSync
         {
             graphProvider.ClientId = ClientSecret.GraphApiClientId;
 
-            provider.StateChanged += Provider_StateChanged;
+            //provider.StateChanged += Provider_StateChanged;
 
             base.OnNavigatedTo(e);
         }

@@ -1,12 +1,10 @@
-﻿using Microsoft.Toolkit.Graph.Providers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,9 +23,6 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class SignInPage : Page
     {
-        IProvider provider = ProviderManager.Instance.GlobalProvider;
-        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
         public SignInPage()
         {
             this.InitializeComponent();
@@ -36,30 +31,6 @@ namespace ScheduleSync.Views
         private void nextBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(SetIntakePage), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
-        }
-
-        private void msftSignInBtn_Click(object sender, RoutedEventArgs e)
-        {
-            localSettings.Values["AuthType"] = "msft";
-
-            Frame contentFrame = Window.Current.Content as Frame;
-            MainPage mp = contentFrame.Content as MainPage;
-
-            InteractiveProviderBehavior graphClient = mp.FindName("graphClient") as InteractiveProviderBehavior;
-
-            graphClient.ClientId = ClientSecret.msftGraphClientId;
-        }
-
-        private void apKeySignInBtn_Click(object sender, RoutedEventArgs e)
-        {
-            localSettings.Values["AuthType"] = "apkey";
-
-            Frame contentFrame = Window.Current.Content as Frame;
-            MainPage mp = contentFrame.Content as MainPage;
-
-            InteractiveProviderBehavior graphClient = mp.FindName("graphClient") as InteractiveProviderBehavior;
-
-            graphClient.ClientId = ClientSecret.apkeyGraphClientId;
         }
     }
 }

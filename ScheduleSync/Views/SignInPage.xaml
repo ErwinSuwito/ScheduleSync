@@ -28,9 +28,12 @@
                            TextWrapping="Wrap" Margin="0,4,0,0" FontSize="18" />
             </StackPanel>
 
-            <StackPanel x:Name="loginPanel" RelativePanel.Below="headerPanel"
+            <StackPanel Orientation="Horizontal" RelativePanel.Below="headerPanel"
                         Margin="0,12,0,0">
-                <wgt:LoginButton />
+                <Button x:Name="msftSignInBtn" Content="Sign in with Microsoft account"
+                        Click="msftSignInBtn_Click"/>
+                <Button x:Name="apKeySignInBtn" Content="Sign in with APKey" Grid.Column="1" 
+                        Click="apKeySignInBtn_Click" Margin="8,0,0,0"/>
             </StackPanel>
         </RelativePanel>
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Graph.Providers;
+﻿using Microsoft.Graph;
+using Microsoft.Toolkit.Graph.Providers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,7 +26,7 @@ namespace ScheduleSync
     public sealed partial class MainPage : Page
     {
         IProvider provider = ProviderManager.Instance.GlobalProvider;
-
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         public MainPage()
         {
@@ -34,7 +35,21 @@ namespace ScheduleSync
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            graphProvider.ClientId = ClientSecret.GraphApiClientId;
+            string authType;
+            if (localSettings.Values["AuthType"] != null)
+            {
+                authType = localSettings.Values["AuthType"].ToString();
+
+                if (authType == "msft")
+                {
+                    graphProvider.ClientId = ClientSecret.msftGraphClientId;
+                }
+                else
+                {
+                    graphProvider.ClientId = ClientSecret.GraphApiClientId;
+                }
+            }
+
 
             //provider.StateChanged += Provider_StateChanged;
 

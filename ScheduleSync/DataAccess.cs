@@ -22,6 +22,7 @@ namespace ScheduleSync
     {
         public Exception exception;
         StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         private async Task<bool> GetSchedule()
         {
@@ -72,6 +73,17 @@ namespace ScheduleSync
             string scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
 
             var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
+
+            Schedule lastItem = result.schedules.LastOrDefault();
+
+            if (lastItem != null)
+            {
+                localSettings.Values["SyncedUntilDate"] = lastItem.DATESTAMP_ISO + " " + lastItem.TIME_TO;
+            }
+            else
+            {
+                localSettings.Values["SyncedUntilDate"] = null;
+            }
 
             return result.schedules;
         }

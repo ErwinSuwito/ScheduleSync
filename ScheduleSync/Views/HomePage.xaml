@@ -41,11 +41,6 @@
                     </Button.Content>
                 </Button>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Last synced: " />
-                    <TextBlock Text="Today" Margin="4,0,0,0"/>
-                </StackPanel>
-
                 <StackPanel x:Name="loadPanel" Orientation="Horizontal" 
                             Visibility="Collapsed" Margin="0,8,0,0">
                     <ProgressRing x:Name="progRing"/>
@@ -67,5 +62,16 @@
             </Button>
         </StackPanel>
 
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                    Margin="24,24,24,24">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Last sync: " />
+                <TextBlock Text="Today" Margin="4,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Schedule saved until:" />
+                <TextBlock Text="Today" Margin="4,0,0,0"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

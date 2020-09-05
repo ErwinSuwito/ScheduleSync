@@ -47,6 +47,7 @@ namespace ScheduleSync.Views
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             loadPanel.Visibility = Visibility.Visible;
+            progRing.IsActive = true;
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 

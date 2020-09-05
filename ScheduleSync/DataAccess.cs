@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Data.Json;
+using Windows.Foundation.Metadata;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
@@ -19,10 +20,8 @@ namespace ScheduleSync
 {
     public class DataAccess
     {
-        public Exception ex;
-        StorageFile jsonFile;
+        public Exception exception;
         StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
-        private string scheduleJson;
 
         private async Task<bool> GetSchedule()
         {
@@ -32,7 +31,21 @@ namespace ScheduleSync
                 WebClient wc = new WebClient();
                 await wc.DownloadFileTaskAsync("https://s3-ap-southeast-1.amazonaws.com/open-ws/weektimetable", scheduleZip.Path);
 
-                jsonFile = await tempFolder.CreateFileAsync("schedule.json", CreationCollisionOption.ReplaceExisting);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+                return false;
+            }
+        }
+
+        private async Task<bool> ExtractGZip()
+        {
+            try
+            {
+                StorageFile scheduleZip = await tempFolder.GetFileAsync("schedule.gz");
+                StorageFile jsonFile = await tempFolder.CreateFileAsync("schedule.json", CreationCollisionOption.ReplaceExisting);
                 var zipStream = await scheduleZip.OpenStreamForWriteAsync();
 
                 using (var fileStream = await jsonFile.OpenStreamForWriteAsync())
@@ -42,42 +55,29 @@ namespace ScheduleSync
                         decompressionStream.CopyTo(fileStream);
                     }
                     fileStream.Flush();
+
+                    return true;
                 }
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                exception = ex;
+                return false;
             }
-            finally
-            {
-                jsonFile = await tempFolder.GetFileAsync("schedule.json");
-                scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
-            }
-
-            // Modifies original JSON so that its item is an array. To make it easier to parse
-            string modifiedJson = scheduleJson.Replace("[", "{\"schedules\":[");
-            scheduleJson = modifiedJson.Replace("]", "]}");
-
-            return !string.IsNullOrEmpty(scheduleJson);
         }
 
-        private List<Schedule> ParseTimetable()
+        private async Task<List<Schedule>> ReadAndParseSchedule()
         {
+            StorageFile jsonFile = await tempFolder.GetFileAsync("schedule.json");
+            string scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
+
             var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
 
             return result.schedules;
         }
 
-        public async Task<List<Schedule>> FilterTimetable(string intakeCode, string tutGroup, bool isLocalStudent)
+        private async Task<List<Schedule>> FilterTimetablev2(List<Schedule> scheduleList, string intakeCode, string tutGroup, bool isLocalStudent)
         {
-            bool IsSuccess = await GetSchedule();
-
-            if (!IsSuccess)
-            {
-                return null;
-            }
-
-            List<Schedule> items = ParseTimetable();
             List<Schedule> filteredItems = new List<Schedule>();
             string studentType;
 
@@ -90,7 +90,7 @@ namespace ScheduleSync
                 studentType = "(FS)";
             }
 
-            foreach (Schedule item in items)
+            foreach (Schedule item in scheduleList)
             {
                 if (item.INTAKE == intakeCode && item.GROUPING == tutGroup)
                 {
@@ -108,5 +108,6 @@ namespace ScheduleSync
 
             return filteredItems;
         }
+
     }
 }

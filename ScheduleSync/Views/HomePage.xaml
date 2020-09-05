@@ -41,9 +41,14 @@
                     </Button.Content>
                 </Button>
 
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Last synced: " />
+                    <TextBlock Text="Today" Margin="4,0,0,0"/>
+                </StackPanel>
+
                 <StackPanel x:Name="loadPanel" Orientation="Horizontal" 
                             Visibility="Collapsed" Margin="0,8,0,0">
-                    <ProgressRing />
+                    <ProgressRing x:Name="progRing"/>
                     <TextBlock Text="Getting schedule data..." Margin="4,0,0,0"/>
                 </StackPanel>
             </StackPanel>

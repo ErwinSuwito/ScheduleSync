@@ -85,6 +85,8 @@ namespace ScheduleSync
                 localSettings.Values["SyncedUntilDate"] = null;
             }
 
+            localSettings.Values["LastSync"] = DateTime.Now;
+
             return result.schedules;
         }
 

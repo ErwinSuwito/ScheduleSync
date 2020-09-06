@@ -77,7 +77,7 @@ namespace ScheduleSync
             RegisterBackgroundTasks();
         }
 
-        public void RegisterBackgroundTasks()
+        public async void RegisterBackgroundTasks()
         {
             var taskName = "DownloadScheduleBackgroundTask";
 
@@ -87,6 +87,12 @@ namespace ScheduleSync
                 {
                     return;
                 }
+            }
+
+            var requestStatus = await Windows.ApplicationModel.Background.BackgroundExecutionManager.RequestAccessAsync();
+            if (requestStatus == BackgroundAccessStatus.AlwaysAllowed)
+            {
+
             }
 
             var builder = new BackgroundTaskBuilder();

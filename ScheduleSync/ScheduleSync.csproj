@@ -129,7 +129,6 @@
     </Compile>
     <Compile Include="ClientSecret.cs" />
     <Compile Include="DataAccess.cs" />
-    <Compile Include="DownloadScheduleBackgroundTask.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

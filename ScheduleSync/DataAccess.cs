@@ -24,7 +24,7 @@ namespace ScheduleSync
         StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
-        private async Task<bool> GetSchedule()
+        public async Task<bool> GetSchedule()
         {
             try
             {
@@ -41,7 +41,7 @@ namespace ScheduleSync
             }
         }
 
-        private async Task<bool> ExtractGZip()
+        public async Task<bool> ExtractGZip()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace ScheduleSync
             }
         }
 
-        private async Task<List<Schedule>> ReadAndParseSchedule()
+        public async Task<List<Schedule>> ReadAndParseSchedule()
         {
             StorageFile jsonFile = await tempFolder.GetFileAsync("schedule.json");
             string scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
@@ -90,7 +90,7 @@ namespace ScheduleSync
             return result.schedules;
         }
 
-        private async Task<List<Schedule>> FilterTimetablev2(List<Schedule> scheduleList, string intakeCode, string tutGroup, bool isLocalStudent)
+        public async Task<List<Schedule>> FilterTimetablev2(List<Schedule> scheduleList, string intakeCode, string tutGroup, bool isLocalStudent)
         {
             List<Schedule> filteredItems = new List<Schedule>();
             string studentType;

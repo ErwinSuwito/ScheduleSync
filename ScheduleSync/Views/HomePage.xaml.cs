@@ -33,6 +33,8 @@ namespace ScheduleSync.Views
     public sealed partial class HomePage : Page
     {
         private DataAccess da = new DataAccess();
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        DateTime lastSync;
 
         public HomePage()
         {
@@ -105,13 +107,29 @@ namespace ScheduleSync.Views
                 await contentDialog.ShowAsync();
             }
 
+            UpdateLastSyncTime();
+
             loadPanel.Visibility = Visibility.Collapsed;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            UpdateLastSyncTime();
             var currentView = SystemNavigationManager.GetForCurrentView();
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        }
+
+        void UpdateLastSyncTime()
+        {
+            DateTime.TryParse(localSettings.Values["LastSync"].ToString(), out lastSync);
+            if (lastSync.Date == DateTime.Today)
+            {
+                lastSyncText.Text = "Today";
+            }
+            else
+            {
+                lastSyncText.Text = lastSync.ToShortDateString();
+            }
         }
     }
 }

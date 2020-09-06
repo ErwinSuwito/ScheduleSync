@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -71,6 +72,31 @@ namespace ScheduleSync
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+            // Checks if background task is registered. Register them if not registered.
+            RegisterBackgroundTasks();
+        }
+
+        public void RegisterBackgroundTasks()
+        {
+            var taskName = "DownloadScheduleBackgroundTask";
+
+            foreach (var task in BackgroundTaskRegistration.AllTasks)
+            {
+                if (task.Value.Name == taskName)
+                {
+                    return;
+                }
+            }
+
+            var builder = new BackgroundTaskBuilder();
+            builder.Name = taskName;
+            builder.TaskEntryPoint = "ScheduleSync.DownloadScheduleBackgroundTask";
+            builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
+            builder.AddCondition(new SystemCondition(SystemConditionType.BackgroundWorkCostNotHigh));
+            builder.CancelOnConditionLoss = true;
+            builder.IsNetworkRequested = true;
+            BackgroundTaskRegistration bgTask = builder.Register();
         }
 
         /// <summary>

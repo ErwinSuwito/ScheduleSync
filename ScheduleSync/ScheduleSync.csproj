@@ -242,6 +242,9 @@
     <PackageReference Include="Microsoft.Toolkit.Graph.Controls">
       <Version>7.0.0-preview2</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
+      <Version>6.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Ui.Controls">
       <Version>7.0.0-preview2</Version>
     </PackageReference>

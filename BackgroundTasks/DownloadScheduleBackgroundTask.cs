@@ -22,18 +22,20 @@ namespace BackgroundTasks
         public async void Run(IBackgroundTaskInstance taskInstance)
         {
             _deferral = taskInstance.GetDeferral();
-            DateTime syncedUntil = new DateTime();
+
+            bool isLatestScheduleSynced = false;
 
             if (localSettings.Values["SyncedUntilDate"] != null)
             {
-                DateTime.TryParse(localSettings.Values["SyncedUntilDate"].ToString(), out syncedUntil);
+                string syncedUntil = localSettings.Values["SyncedUntilDate"].ToString();
+                bool.TryParse(localSettings.Values[syncedUntil].ToString(), out isLatestScheduleSynced);
             }
             else
             {
                 await UpdateSchedule();
             }
 
-            if (DateTime.Today >= syncedUntil && (DateTime.Today.DayOfWeek == DayOfWeek.Friday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday || DateTime.Today.DayOfWeek == DayOfWeek.Sunday))
+            if (!isLatestScheduleSynced && (DateTime.Today.DayOfWeek == DayOfWeek.Friday || DateTime.Today.DayOfWeek == DayOfWeek.Saturday || DateTime.Today.DayOfWeek == DayOfWeek.Sunday))
             {
                 bool IsSuccess = await UpdateSchedule();
                 if (IsSuccess)

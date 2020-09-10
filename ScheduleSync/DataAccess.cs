@@ -78,7 +78,15 @@ namespace ScheduleSync
 
             if (lastItem != null)
             {
-                localSettings.Values["SyncedUntilDate"] = lastItem.DATESTAMP_ISO;
+                // Checks and remove old data
+                if (localSettings.Values["SyncedUntilDate"] != null)
+                {
+                    localSettings.Values.Remove(localSettings.Values["SyncedUntilDate"].ToString());
+                }
+
+                string syncedUntilDate = lastItem.DATESTAMP_ISO;
+                localSettings.Values["SyncedUntilDate"] = syncedUntilDate;
+                localSettings.Values[syncedUntilDate] = true;
             }
             else
             {

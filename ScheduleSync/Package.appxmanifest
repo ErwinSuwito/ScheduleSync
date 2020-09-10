@@ -47,7 +47,7 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" Executable="ScheduleSync.exe" EntryPoint="BackgroundTasks.DownloadScheduleBackgroundTask">
+        <Extension Category="windows.backgroundTasks" EntryPoint="BackgroundTasks.DownloadScheduleBackgroundTask">
           <BackgroundTasks>
             <Task Type="systemEvent"/>
           </BackgroundTasks>

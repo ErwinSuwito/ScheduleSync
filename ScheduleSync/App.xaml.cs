@@ -89,20 +89,18 @@ namespace ScheduleSync
                 }
             }
 
-            var requestStatus = await Windows.ApplicationModel.Background.BackgroundExecutionManager.RequestAccessAsync();
+            var requestStatus = await BackgroundExecutionManager.RequestAccessAsync();
             if (requestStatus == BackgroundAccessStatus.AlwaysAllowed)
             {
-
+                var builder = new BackgroundTaskBuilder();
+                builder.Name = taskName;
+                builder.TaskEntryPoint = "BackgroundTasks.DownloadScheduleBackgroundTask";
+                builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
+                builder.AddCondition(new SystemCondition(SystemConditionType.BackgroundWorkCostNotHigh));
+                builder.CancelOnConditionLoss = true;
+                builder.IsNetworkRequested = true;
+                BackgroundTaskRegistration bgTask = builder.Register();
             }
-
-            var builder = new BackgroundTaskBuilder();
-            builder.Name = taskName;
-            builder.TaskEntryPoint = "ScheduleSync.DownloadScheduleBackgroundTask";
-            builder.AddCondition(new SystemCondition(SystemConditionType.UserPresent));
-            builder.AddCondition(new SystemCondition(SystemConditionType.BackgroundWorkCostNotHigh));
-            builder.CancelOnConditionLoss = true;
-            builder.IsNetworkRequested = true;
-            BackgroundTaskRegistration bgTask = builder.Register();
         }
 
         /// <summary>

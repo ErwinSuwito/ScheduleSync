@@ -78,7 +78,7 @@ namespace ScheduleSync
 
             if (lastItem != null)
             {
-                localSettings.Values["SyncedUntilDate"] = lastItem.DATESTAMP_ISO + " " + lastItem.TIME_TO;
+                localSettings.Values["SyncedUntilDate"] = lastItem.DATESTAMP_ISO;
             }
             else
             {

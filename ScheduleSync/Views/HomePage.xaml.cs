@@ -52,12 +52,26 @@ namespace ScheduleSync.Views
             progRing.IsActive = true;
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
             string intakeCode = localSettings.Values["IntakeCode"].ToString();
             string tutorialGroup = localSettings.Values["TutorialGroup"].ToString();
             bool.TryParse(localSettings.Values["IsLocalStudent"].ToString(), out bool isLocalStudent);
 
-            List<Schedule> timetable = await da.FilterTimetable(intakeCode, tutorialGroup, isLocalStudent);
+            bool isLatestScheduleSynced = false;
+
+            if (localSettings.Values["SyncedUntilDate"] != null)
+            {
+                string syncedUntil = localSettings.Values["SyncedUntilDate"].ToString();
+                bool.TryParse(localSettings.Values[syncedUntil].ToString(), out isLatestScheduleSynced);
+            }
+
+            if (!isLatestScheduleSynced)
+            {
+                await da.GetSchedule();
+                await da.ExtractGZip();
+            }
+
+            List<Schedule> completeTimetable = await da.ReadAndParseSchedule();
+            List<Schedule> timetable = await da.FilterTimetablev2(completeTimetable, intakeCode, tutorialGroup, isLocalStudent);
 
             if (timetable.Count > 0)
             {

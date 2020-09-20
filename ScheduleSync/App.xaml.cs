@@ -113,10 +113,19 @@ namespace ScheduleSync
 
         public async void RegisterBackgroundTask()
         {
+            string taskName = "Background Schedule Downloader";
+            foreach (var _task in BackgroundTaskRegistration.AllTasks)
+            {
+                if (_task.Value.Name == taskName)
+                {
+                    return;
+                }
+            }
+
             await BackgroundExecutionManager.RequestAccessAsync();
             var builder = new BackgroundTaskBuilder();
             builder.Name = "Background Schedule Downloader";
-            builder.SetTrigger(new TimeTrigger(15, false));
+            builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
             builder.IsNetworkRequested = true;
 
             BackgroundTaskRegistration task = builder.Register();

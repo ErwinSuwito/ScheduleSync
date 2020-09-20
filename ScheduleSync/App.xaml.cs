@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -71,6 +72,9 @@ namespace ScheduleSync
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+            // Registers background task
+            RegisterBackgroundTask();
         }
 
         /// <summary>
@@ -95,6 +99,20 @@ namespace ScheduleSync
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        public async void RegisterBackgroundTask()
+        {
+            var requestBackgroundExecution = await BackgroundExecutionManager.RequestAccessAsync();
+            if (requestBackgroundExecution == BackgroundAccessStatus.AlwaysAllowed)
+            {
+                var builder = new BackgroundTaskBuilder();
+                builder.Name = "Background Schedule Downloader";
+                builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
+                builder.IsNetworkRequested = true;
+
+                BackgroundTaskRegistration task = builder.Register();
+            }
         }
     }
 }

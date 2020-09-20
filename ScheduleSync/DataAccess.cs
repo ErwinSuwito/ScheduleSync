@@ -75,7 +75,7 @@ namespace ScheduleSync
             // Modifies original JSON so that its item is an array. To make it easier to parse
             string modifiedJson = scheduleJson.Replace("[", "{\"schedules\":[");
             scheduleJson = modifiedJson.Replace("]", "]}");
-            
+
             var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
             
 

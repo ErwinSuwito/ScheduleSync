@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Graph;
+using Microsoft.Toolkit.Graph.Providers;
+using Microsoft.Toolkit.Uwp.Notifications;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +11,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -21,7 +25,7 @@ namespace ScheduleSync
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    sealed partial class App : Windows.UI.Xaml.Application
     {
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -112,6 +116,145 @@ namespace ScheduleSync
                 builder.IsNetworkRequested = true;
 
                 BackgroundTaskRegistration task = builder.Register();
+            }
+        }
+
+        protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            base.OnBackgroundActivated(args);
+
+            // Background task to sync schedule from notification
+            if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail)
+            {
+                var toastArgs = args.TaskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
+
+                if (toastArgs.Argument == "sync")
+                {
+                    var toastContent = new ToastContent()
+                    {
+                        Visual = new ToastVisual()
+                        {
+                            BindingGeneric = new ToastBindingGeneric()
+                            {
+                                Children =
+                                {
+                                    new AdaptiveText()
+                                    {
+                                        Text = "We're adding your schedule..."
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    // Create the toast notification
+                    var toastNotif = new ToastNotification(toastContent.GetXml());
+
+                    // And send the notification
+                    ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+
+                    try
+                    {
+                        DataAccess da = new DataAccess();
+                        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+
+                        List<Schedule> schedules = await da.ReadAndParseSchedule();
+                        string intakeCode = localSettings.Values["IntakeCode"].ToString();
+                        string tutorialGroup = localSettings.Values["TutorialGroup"].ToString();
+                        bool.TryParse(localSettings.Values["IsLocalStudent"].ToString(), out bool isLocalStudent);
+
+                        List<Schedule> filteredSchedule = await da.FilterTimetablev2(schedules, intakeCode, tutorialGroup, isLocalStudent);
+
+                        if (filteredSchedule.Count > 0)
+                        {
+                            foreach (Schedule schedule in filteredSchedule)
+                            {
+                                Event @event = new Event()
+                                {
+                                    Subject = schedule.MODID,
+                                    Start = new DateTimeTimeZone
+                                    {
+                                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_FROM,
+                                        TimeZone = "Singapore Standard Time"
+                                    },
+                                    End = new DateTimeTimeZone
+                                    {
+                                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_TO,
+                                        TimeZone = "Singapore Standard Time"
+                                    },
+                                    Location = new Location
+                                    {
+                                        DisplayName = schedule.ROOM
+                                    },
+                                    Body = new ItemBody
+                                    {
+                                        ContentType = BodyType.Html,
+                                        Content = "Your lecturer is <a href=\"mailto:" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
+                                    }
+                                };
+
+                                var provider = ProviderManager.Instance.GlobalProvider;
+
+                                if (provider != null && provider.State == ProviderState.SignedIn)
+                                {
+                                    await provider.Graph.Me.Events.Request().AddAsync(@event);
+                                }
+                            }
+
+                            toastContent = new ToastContent()
+                            {
+                                Visual = new ToastVisual()
+                                {
+                                    BindingGeneric = new ToastBindingGeneric()
+                                    {
+                                        Children =
+                                    {
+                                        new AdaptiveText()
+                                        {
+                                            Text = "We've added your schedule"
+                                        }
+                                    }
+                                    }
+                                }
+                            };
+
+                            // Create the toast notification
+                            toastNotif = new ToastNotification(toastContent.GetXml());
+
+                            // And send the notification
+                            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        toastContent = new ToastContent()
+                        {
+                            Visual = new ToastVisual()
+                            {
+                                BindingGeneric = new ToastBindingGeneric()
+                                {
+                                    Children =
+                                    {
+                                        new AdaptiveText()
+                                        {
+                                            Text = "We can't add your schedule now. Please try again later."
+                                        },
+                                        new AdaptiveText()
+                                        {
+                                            Text = "Make sure that you are still logged in from the app settings."
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        // Create the toast notification
+                        toastNotif = new ToastNotification(toastContent.GetXml());
+
+                        // And send the notification
+                        ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+                    }
+                }
             }
         }
     }

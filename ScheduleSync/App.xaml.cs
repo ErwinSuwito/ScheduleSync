@@ -84,7 +84,7 @@ namespace ScheduleSync
             }
 
             // Registers background task
-            //RegisterBackgroundTask();
+            RegisterBackgroundTask();
         }
 
         /// <summary>

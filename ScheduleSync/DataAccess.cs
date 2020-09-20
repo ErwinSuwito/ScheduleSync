@@ -97,7 +97,7 @@ namespace ScheduleSync
                 localSettings.Values["SyncedUntilDate"] = null;
             }
 
-            localSettings.Values["LastSync"] = DateTime.Now;
+            localSettings.Values["LastSync"] = DateTime.Today.ToString();
 
             return result.schedules;
         }

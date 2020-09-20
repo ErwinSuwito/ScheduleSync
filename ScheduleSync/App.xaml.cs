@@ -3,6 +3,7 @@ using Microsoft.Toolkit.Graph.Providers;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -83,7 +84,7 @@ namespace ScheduleSync
             }
 
             // Registers background task
-            RegisterBackgroundTask();
+            //RegisterBackgroundTask();
         }
 
         /// <summary>
@@ -112,16 +113,14 @@ namespace ScheduleSync
 
         public async void RegisterBackgroundTask()
         {
-            var requestBackgroundExecution = await BackgroundExecutionManager.RequestAccessAsync();
-            if (requestBackgroundExecution == BackgroundAccessStatus.AlwaysAllowed)
-            {
-                var builder = new BackgroundTaskBuilder();
-                builder.Name = "Background Schedule Downloader";
-                builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
-                builder.IsNetworkRequested = true;
+            await BackgroundExecutionManager.RequestAccessAsync();
+            var builder = new BackgroundTaskBuilder();
+            builder.Name = "Background Schedule Downloader";
+            builder.SetTrigger(new TimeTrigger(15, false));
+            builder.IsNetworkRequested = true;
 
-                BackgroundTaskRegistration task = builder.Register();
-            }
+            BackgroundTaskRegistration task = builder.Register();
+            Debug.WriteLine("Task registered");
         }
 
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)

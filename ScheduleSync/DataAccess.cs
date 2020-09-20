@@ -72,6 +72,10 @@ namespace ScheduleSync
             StorageFile jsonFile = await tempFolder.GetFileAsync("schedule.json");
             string scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
 
+            // Modifies original JSON so that its item is an array. To make it easier to parse
+            string modifiedJson = scheduleJson.Replace("[", "{\"schedules\":[");
+            scheduleJson = modifiedJson.Replace("]", "]}");
+
             var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
 
             Schedule lastItem = result.schedules.LastOrDefault();

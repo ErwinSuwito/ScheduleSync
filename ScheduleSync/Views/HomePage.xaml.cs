@@ -33,6 +33,8 @@ namespace ScheduleSync.Views
     public sealed partial class HomePage : Page
     {
         private DataAccess da = new DataAccess();
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        DateTime lastSync;
 
         public HomePage()
         {
@@ -47,14 +49,29 @@ namespace ScheduleSync.Views
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             loadPanel.Visibility = Visibility.Visible;
+            progRing.IsActive = true;
 
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
             string intakeCode = localSettings.Values["IntakeCode"].ToString();
             string tutorialGroup = localSettings.Values["TutorialGroup"].ToString();
             bool.TryParse(localSettings.Values["IsLocalStudent"].ToString(), out bool isLocalStudent);
 
-            List<Schedule> timetable = await da.FilterTimetable(intakeCode, tutorialGroup, isLocalStudent);
+            bool isLatestScheduleSynced = false;
+
+            if (localSettings.Values["SyncedUntilDate"] != null)
+            {
+                string syncedUntil = localSettings.Values["SyncedUntilDate"].ToString();
+                bool.TryParse(localSettings.Values[syncedUntil].ToString(), out isLatestScheduleSynced);
+            }
+
+            if (!isLatestScheduleSynced)
+            {
+                await da.GetSchedule();
+                await da.ExtractGZip();
+            }
+
+            List<Schedule> completeTimetable = await da.ReadAndParseSchedule();
+            List<Schedule> timetable = await da.FilterTimetablev2(completeTimetable, intakeCode, tutorialGroup, isLocalStudent);
 
             if (timetable.Count > 0)
             {
@@ -104,13 +121,29 @@ namespace ScheduleSync.Views
                 await contentDialog.ShowAsync();
             }
 
+            UpdateLastSyncTime();
+
             loadPanel.Visibility = Visibility.Collapsed;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            UpdateLastSyncTime();
             var currentView = SystemNavigationManager.GetForCurrentView();
             currentView.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+        }
+
+        void UpdateLastSyncTime()
+        {
+            DateTime.TryParse(localSettings.Values["LastSync"].ToString(), out lastSync);
+            if (lastSync.Date == DateTime.Today)
+            {
+                lastSyncText.Text = "Today";
+            }
+            else
+            {
+                lastSyncText.Text = lastSync.ToShortDateString();
+            }
         }
     }
 }

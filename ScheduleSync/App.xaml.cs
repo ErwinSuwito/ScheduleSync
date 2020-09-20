@@ -6,11 +6,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.ServiceModel.Channels;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -36,6 +39,8 @@ namespace ScheduleSync
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+
+        DataAccess da = new DataAccess();
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -122,6 +127,8 @@ namespace ScheduleSync
         protected override async void OnBackgroundActivated(BackgroundActivatedEventArgs args)
         {
             base.OnBackgroundActivated(args);
+            var deferral = args.TaskInstance.GetDeferral();
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
             // Background task to sync schedule from notification
             if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail)
@@ -155,9 +162,6 @@ namespace ScheduleSync
 
                     try
                     {
-                        DataAccess da = new DataAccess();
-                        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-
                         List<Schedule> schedules = await da.ReadAndParseSchedule();
                         string intakeCode = localSettings.Values["IntakeCode"].ToString();
                         string tutorialGroup = localSettings.Values["TutorialGroup"].ToString();
@@ -256,6 +260,90 @@ namespace ScheduleSync
                     }
                 }
             }
+            else
+            {
+                // Downloads new schedule
+                bool isLatestScheduleSynced = false;
+
+                if (localSettings.Values["SycnedUntilDate"] != null)
+                {
+                    string syncedUntil = localSettings.Values["SyncedUntilDate"].ToString();
+                    bool.TryParse(localSettings.Values[syncedUntil].ToString(), out isLatestScheduleSynced);
+                }
+                else
+                {
+                    await UpdateSchedule();
+                }
+
+                if (!isLatestScheduleSynced && (DateTime.Today.DayOfWeek == System.DayOfWeek.Friday || DateTime.Today.DayOfWeek == System.DayOfWeek.Saturday || DateTime.Today.DayOfWeek == System.DayOfWeek.Sunday))
+                {
+                    bool IsSuccess = await UpdateSchedule();
+                    if (IsSuccess)
+                    {
+                        var toastContent = new ToastContent()
+                        {
+                            Visual = new ToastVisual()
+                            {
+                                BindingGeneric = new ToastBindingGeneric()
+                                {
+                                    Children =
+                                {
+                                    new AdaptiveText()
+                                    {
+                                        Text = "You have new schedule!"
+                                    },
+                                    new AdaptiveText()
+                                    {
+                                        Text = "Next week's timetable is ready to be imported to your Calendar."
+                                    }
+                                }
+                                }
+                            },
+                            Actions = new ToastActionsCustom()
+                            {
+                                Buttons =
+                            {
+                                new ToastButton("Add now", "sync")
+                                {
+                                    ActivationType = ToastActivationType.Background,
+                                    ActivationOptions = new ToastActivationOptions()
+                                    {
+                                        AfterActivationBehavior = ToastAfterActivationBehavior.PendingUpdate
+                                    }
+                                },
+                                new ToastButtonDismiss("Dismiss")
+                            }
+                            }
+                        };
+
+                        // Create the toast notification
+                        var toastNotif = new ToastNotification(toastContent.GetXml());
+
+                        // And send the notification
+                        ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+                    }
+                }
+
+            }
         }
+
+        private async Task<bool> UpdateSchedule()
+        {
+            bool IsSuccess = await da.GetSchedule();
+            if (IsSuccess)
+            {
+                IsSuccess = await da.ExtractGZip();
+
+                if (IsSuccess)
+                {
+                    var schedule = await da.ReadAndParseSchedule();
+
+                    IsSuccess = (schedule == null) ? false : true;
+                }
+            }
+
+            return IsSuccess;
+        }
+
     }
 }

@@ -273,7 +273,7 @@ namespace ScheduleSync
                 // Downloads new schedule
                 bool isLatestScheduleSynced = false;
 
-                if (localSettings.Values["SycnedUntilDate"] != null)
+                if (localSettings.Values["SyncedUntilDate"] != null)
                 {
                     string syncedUntil = localSettings.Values["SyncedUntilDate"].ToString();
                     bool.TryParse(localSettings.Values[syncedUntil].ToString(), out isLatestScheduleSynced);
@@ -316,7 +316,7 @@ namespace ScheduleSync
                                     ActivationType = ToastActivationType.Background,
                                     ActivationOptions = new ToastActivationOptions()
                                     {
-                                        AfterActivationBehavior = ToastAfterActivationBehavior.PendingUpdate
+                                        AfterActivationBehavior = ToastAfterActivationBehavior.Default
                                     }
                                 },
                                 new ToastButtonDismiss("Dismiss")

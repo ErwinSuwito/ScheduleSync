@@ -149,7 +149,7 @@ namespace ScheduleSync.Views
             }
             catch (NullReferenceException nullEx)
             {
-                lastSync.Text = "Never";
+                lastSyncText.Text = "Never";
             }
         }
     }

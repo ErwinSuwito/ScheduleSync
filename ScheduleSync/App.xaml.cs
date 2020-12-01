@@ -145,6 +145,7 @@ namespace ScheduleSync
 
                 if (toastArgs.Argument == "sync")
                 {
+                    ToastNotificationManager.History.Clear();
                     var toastContent = new ToastContent()
                     {
                         Visual = new ToastVisual()

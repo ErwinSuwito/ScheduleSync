@@ -129,7 +129,12 @@ namespace ScheduleSync
                         }
                     }
 
-                    filteredItems.Add(item);
+                    DateTime dt = new DateTime();
+                    DateTime.TryParse(item.DATESTAMP_ISO, out dt);
+                    if (dt.DayOfYear >= DateTime.Today.DayOfYear)
+                    {
+                        filteredItems.Add(item);
+                    }
                 }
             }
 

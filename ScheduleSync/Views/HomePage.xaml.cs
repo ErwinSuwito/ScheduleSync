@@ -135,19 +135,26 @@ namespace ScheduleSync.Views
 
         void UpdateLastSyncTime()
         {
-            try
+            if (localSettings.Values["LastSync"] != null)
             {
-                DateTime.TryParse(localSettings.Values["LastSync"].ToString(), out lastSync);
-                if (lastSync.Date == DateTime.Today)
+                try
                 {
-                    lastSyncText.Text = "Today";
+                    DateTime.TryParse(localSettings.Values["LastSync"].ToString(), out lastSync);
+                    if (lastSync.Date == DateTime.Today)
+                    {
+                        lastSyncText.Text = "Today";
+                    }
+                    else
+                    {
+                        lastSyncText.Text = lastSync.ToShortDateString();
+                    }
                 }
-                else
+                catch (NullReferenceException nullEx)
                 {
-                    lastSyncText.Text = lastSync.ToShortDateString();
+                    lastSyncText.Text = "Never";
                 }
             }
-            catch (NullReferenceException nullEx)
+            else
             {
                 lastSyncText.Text = "Never";
             }

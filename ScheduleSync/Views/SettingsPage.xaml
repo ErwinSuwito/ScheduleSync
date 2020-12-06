@@ -61,7 +61,7 @@
 
                 <StackPanel x:Name="debugPanel" Margin="0,12,0,0" Visibility="Collapsed">
                     <TextBlock Text="Debug" Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <Button x:Name="deregisterBgTask" Content="De-register background tasks" Margin="0,4,0,0"
+                    <Button x:Name="deregisterBgTask" Content="Re-register background tasks" Margin="0,4,0,0"
                             Click="deregisterBgTask_Click"/>
                     <Button x:Name="openStorageFolder" Content="Open local storage folder" Margin="0,4,0,0"
                             Click="openStorageFolder_Click"/>

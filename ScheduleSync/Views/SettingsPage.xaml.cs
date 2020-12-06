@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -88,12 +89,18 @@ namespace ScheduleSync.Views
 
         private void deregisterBgTask_Click(object sender, RoutedEventArgs e)
         {
+            foreach (var _task in BackgroundTaskRegistration.AllTasks)
+            {
+                _task.Value.Unregister(true);
+            }
 
+            ((App)Windows.UI.Xaml.Application.Current).RegisterBackgroundTask();
         }
 
-        private void openStorageFolder_Click(object sender, RoutedEventArgs e)
+        private async void openStorageFolder_Click(object sender, RoutedEventArgs e)
         {
-
+            StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
+            await Launcher.LaunchFolderAsync(tempFolder);
         }
     }
 }

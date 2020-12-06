@@ -340,30 +340,26 @@ namespace ScheduleSync
                 */
                 #endregion
 
-                var dayOfWeek = DateTime.Today.DayOfWeek;
-
-                if (dayOfWeek == System.DayOfWeek.Friday || dayOfWeek == System.DayOfWeek.Saturday || dayOfWeek == System.DayOfWeek.Sunday)
+                if (localSettings.Values["SyncedUntilDate"] != null)
                 {
-                    if (localSettings.Values["SyncedUntilDate"] != null)
+                    string syncedUntilDate = localSettings.Values["SyncedUntilDate"].ToString();
+                    DateTime.TryParse(syncedUntilDate, out DateTime SyncedUntilDateTime);
+
+                    // Remove this on production
+                    SyncedUntilDateTime = new DateTime(2020, 12, 5);
+
+                    if (SyncedUntilDateTime < DateTime.Today)
                     {
-                        string syncedUntilDate = localSettings.Values["SyncedUntilDate"].ToString();
-                        DateTime.TryParse(syncedUntilDate, out DateTime SyncedUntilDateTime);
-
-                        // Remove this on production
-                        SyncedUntilDateTime = new DateTime(2020, 12, 5);
-
-                        if (SyncedUntilDateTime < DateTime.Today)
+                        bool IsSuccess = await UpdateSchedule();
+                        if (IsSuccess)
                         {
-                            bool IsSuccess = await UpdateSchedule();
-                            if (IsSuccess)
+                            var toastContent = new ToastContent()
                             {
-                                var toastContent = new ToastContent()
+                                Visual = new ToastVisual()
                                 {
-                                    Visual = new ToastVisual()
+                                    BindingGeneric = new ToastBindingGeneric()
                                     {
-                                        BindingGeneric = new ToastBindingGeneric()
-                                        {
-                                            Children =
+                                        Children =
                                             {
                                                 new AdaptiveText()
                                                 {
@@ -375,11 +371,11 @@ namespace ScheduleSync
                                                 }
 
                                             }
-                                        }
-                                    },
-                                    Actions = new ToastActionsCustom()
-                                    {
-                                        Buttons =
+                                    }
+                                },
+                                Actions = new ToastActionsCustom()
+                                {
+                                    Buttons =
                                         {
                                             new ToastButton("Add now", "sync")
                                             {
@@ -391,21 +387,20 @@ namespace ScheduleSync
                                             },
                                             new ToastButtonDismiss("Dismiss")
                                         }
-                                    }
-                                };
+                                }
+                            };
 
-                                // Create the toast notification
-                                var toastNotif = new ToastNotification(toastContent.GetXml());
+                            // Create the toast notification
+                            var toastNotif = new ToastNotification(toastContent.GetXml());
 
-                                // And send the notification
-                                ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
-                            }
+                            // And send the notification
+                            ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
                         }
                     }
-                    else
-                    {
-                        Debug.WriteLine("It's not friday, saturday, or sunday yet.");
-                    }
+                }
+                else
+                {
+                    Debug.WriteLine("It's not friday, saturday, or sunday yet.");
                 }
             }
         }

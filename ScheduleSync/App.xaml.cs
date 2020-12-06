@@ -126,6 +126,7 @@ namespace ScheduleSync
             var builder = new BackgroundTaskBuilder();
             builder.Name = "Background Schedule Downloader";
             builder.SetTrigger(new SystemTrigger(SystemTriggerType.InternetAvailable, false));
+            builder.SetTrigger(new ToastNotificationActionTrigger());
             builder.IsNetworkRequested = true;
 
             BackgroundTaskRegistration task = builder.Register();
@@ -142,6 +143,8 @@ namespace ScheduleSync
             if (args.TaskInstance.TriggerDetails is ToastNotificationActionTriggerDetail)
             {
                 var toastArgs = args.TaskInstance.TriggerDetails as ToastNotificationActionTriggerDetail;
+
+                Debug.WriteLine(toastArgs.Argument);
 
                 if (toastArgs.Argument == "sync")
                 {
@@ -345,6 +348,9 @@ namespace ScheduleSync
                     {
                         string syncedUntilDate = localSettings.Values["SyncedUntilDate"].ToString();
                         DateTime.TryParse(syncedUntilDate, out DateTime SyncedUntilDateTime);
+
+                        // Remove this on production
+                        SyncedUntilDateTime = new DateTime(2020, 12, 5);
 
                         if (SyncedUntilDateTime < DateTime.Today)
                         {

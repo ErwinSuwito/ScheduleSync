@@ -80,5 +80,15 @@ namespace ScheduleSync.Views
             Uri uri = new Uri(@"https://github.com/ErwinSuwito/ScheduleSync/issues");
             await Launcher.LaunchUriAsync(uri);
         }
+
+        private void deregisterBgTask_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void openStorageFolder_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

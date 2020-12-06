@@ -61,6 +61,11 @@ namespace ScheduleSync.Views
             {
                 fsRadBtn.IsChecked = true;
             }
+
+            if (Debugger.IsAttached)
+            {
+                debugPanel.Visibility = Visibility.Visible;
+            }
         }
 
         private void CurrentView_BackRequested(object sender, BackRequestedEventArgs e)

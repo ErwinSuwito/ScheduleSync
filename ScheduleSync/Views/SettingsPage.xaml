@@ -61,7 +61,7 @@
 
                 <StackPanel Margin="0,12,0,0">
                     <TextBlock Text="About" Style="{ThemeResource TitleTextBlockStyle}"/>
-                    <TextBlock Text="ScheduleSync 0.1" FontSize="16" Margin="0,4,0,0"/>
+                    <TextBlock Text="ScheduleSync 0.1.3" FontSize="16" Margin="0,4,0,0"/>
                     <TextBlock Text="Erwin Suwitoandojo"/>
 
                     <TextBlock Text="Got feedback or bugs?" Style="{ThemeResource BodyTextBlockStyle}" Margin="0,8,0,0" />

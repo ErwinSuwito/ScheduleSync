@@ -68,7 +68,7 @@
                 <TextBlock Text="Last sync: " />
                 <TextBlock x:Name="lastSyncText" Text="Today" Margin="4,0,0,0"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Visibility="Collapsed">
                 <TextBlock Text="Schedule saved until:" />
                 <TextBlock Text="Today" Margin="4,0,0,0"/>
             </StackPanel>

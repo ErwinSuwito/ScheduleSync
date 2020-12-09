@@ -270,6 +270,8 @@ namespace ScheduleSync
             }
             else
             {
+                #region "OldCode"
+                /*
                 // Downloads new schedule
                 bool isLatestScheduleSynced = false;
 
@@ -331,7 +333,73 @@ namespace ScheduleSync
                         ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
                     }
                 }
+                */
+                #endregion
 
+                var dayOfWeek = DateTime.Today.DayOfWeek;
+
+                if (dayOfWeek == System.DayOfWeek.Friday || dayOfWeek == System.DayOfWeek.Saturday || dayOfWeek == System.DayOfWeek.Sunday)
+                {
+                    if (localSettings.Values["SyncedUntilDate"] != null)
+                    {
+                        string syncedUntilDate = localSettings.Values["SyncedUntilDate"].ToString();
+                        DateTime.TryParse(syncedUntilDate, out DateTime SyncedUntilDateTime);
+
+                        if (SyncedUntilDateTime < DateTime.Today)
+                        {
+                            bool IsSuccess = await UpdateSchedule();
+                            if (IsSuccess)
+                            {
+                                var toastContent = new ToastContent()
+                                {
+                                    Visual = new ToastVisual()
+                                    {
+                                        BindingGeneric = new ToastBindingGeneric()
+                                        {
+                                            Children =
+                                            {
+                                                new AdaptiveText()
+                                                {
+                                                    Text = "You have new schedule!"
+                                                },
+                                                new AdaptiveText()
+                                                {
+                                                    Text = "Next week's timetable is ready to be imported to your Calendar."
+                                                }
+
+                                            }
+                                        }
+                                    },
+                                    Actions = new ToastActionsCustom()
+                                    {
+                                        Buttons =
+                                        {
+                                            new ToastButton("Add now", "sync")
+                                            {
+                                                ActivationType = ToastActivationType.Background,
+                                                ActivationOptions = new ToastActivationOptions()
+                                                {
+                                                    AfterActivationBehavior = ToastAfterActivationBehavior.Default
+                                                }
+                                            },
+                                            new ToastButtonDismiss("Dismiss")
+                                        }
+                                    }
+                                };
+
+                                // Create the toast notification
+                                var toastNotif = new ToastNotification(toastContent.GetXml());
+
+                                // And send the notification
+                                ToastNotificationManager.CreateToastNotifier().Show(toastNotif);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("It's not friday, saturday, or sunday yet.");
+                    }
+                }
             }
         }
 

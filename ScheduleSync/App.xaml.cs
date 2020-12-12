@@ -23,6 +23,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace ScheduleSync
 {
@@ -39,6 +42,9 @@ namespace ScheduleSync
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            // Starts AppCenter
+            AppCenter.Start(ClientSecret.AppCenterId, typeof(Analytics), typeof(Crashes));
         }
 
         DataAccess da = new DataAccess();

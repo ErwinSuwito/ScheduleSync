@@ -1,0 +1,119 @@
+﻿<Page
+    x:Class="ScheduleSync.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ScheduleSync.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    Background="Transparent">
+
+    <ScrollViewer>
+        <StackPanel Padding="28,24">
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <ReorderThemeTransition />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+            <TextBlock x:Name="PageHeader"
+                       Text="Settings" 
+                       Style="{ThemeResource TitleTextBlockStyle}" />
+
+            <muxc:Expander x:Name="SettingsExpander"
+                           Margin="0,8,0,0"
+                           IsExpanded="True"
+                           HorizontalContentAlignment="Stretch"
+                           HorizontalAlignment="Stretch"
+                           RelativePanel.Below="PageHeader">
+                <muxc:Expander.Header>
+                    <RelativePanel>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE7BE;" />
+                            <TextBlock Text="Intake Settings"
+                                       Margin="8,0,0,0"/>
+                        </StackPanel>
+                        <TextBlock x:Name="IntakeCode"
+                                   Text="UC2F2008SE(FS) G1"
+                                   RelativePanel.AlignRightWithPanel="True"/>
+                    </RelativePanel>
+                </muxc:Expander.Header>
+                <StackPanel>
+                    <TextBox x:Name="IntakeCodeTextBox" 
+                             Header="Intake code"
+                             PlaceholderText="UC2F2008SE"/>
+
+                    <TextBox x:Name="TutorialGroupTextBox" 
+                             Header="Tutorial group" 
+                             PlaceholderText="G1"
+                             Margin="0,8,0,0"/>
+                    <TextBlock Text="I am a..." 
+                               Margin="0,8,0,0" 
+                               Style="{ThemeResource BodyTextBlockStyle}"/>
+                    <RadioButton x:Name="ForeignStudentRadButton" 
+                                 Content="Foreign student" 
+                                 Margin="0,8,0,0"/>
+                    <RadioButton x:Name="LocalStudentRadButton" 
+                                 Content="Local student"  
+                                 Margin="0,8,0,0"/>
+                </StackPanel>
+            </muxc:Expander>
+
+            <muxc:Expander x:Name="AccountExpander"
+                           Margin="0,8,0,0"
+                           HorizontalContentAlignment="Stretch"
+                           HorizontalAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <RelativePanel>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE77B;" />
+                            <TextBlock Text="Account Settings"
+                                       Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </RelativePanel>
+                </muxc:Expander.Header>
+                <Grid>
+                    <TextBlock Text="Account settings goes here" />
+                </Grid>
+            </muxc:Expander>
+
+            <muxc:Expander x:Name="AboutExpander"
+                           Margin="0,8,0,0"
+                           HorizontalContentAlignment="Stretch"
+                           HorizontalAlignment="Stretch">
+                <muxc:Expander.Header>
+                    <RelativePanel>
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon Glyph="&#xE946;" />
+                            <TextBlock Text="About and Feedback"
+                                       Margin="8,0,0,0"/>
+                        </StackPanel>
+                    </RelativePanel>
+                </muxc:Expander.Header>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Image x:Name="AppLogo"
+                               Source="ms-appx:///Assets/ScheduleSync.png" 
+                               Width="36" 
+                               Height="36" />
+                        <TextBlock x:Name="AppTitle" 
+                                   Text="ScheduleSync" 
+                                   Style="{ThemeResource BodyTextBlockStyle}" 
+                                   FontSize="20"
+                                   Margin="8,0,0,0"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="Version 0.3"/>
+
+                    <TextBlock Text="Got feedback or bugs?" 
+                               Style="{ThemeResource BodyTextBlockStyle}"
+                               Margin="0,8,0,0" 
+                               TextWrapping="Wrap" />
+                    <Button Content="Open GitHub" 
+                            Margin="0,4,0,0"/>
+                </StackPanel>
+            </muxc:Expander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

@@ -1,16 +1,16 @@
 ﻿<Page
-    x:Class="ScheduleSync.MainPage"
+    x:Class="ScheduleSync.Shell.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ScheduleSync"
+    xmlns:local="using:ScheduleSync.Shell"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals">
-
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations">
     <Page.Resources>
         <Style x:Key="NavigationBackButtonNormalStyle" TargetType="Button">
             <Setter Property="Background" Value="{ThemeResource NavigationViewBackButtonBackground}"/>
@@ -85,23 +85,38 @@
         </Grid.RowDefinitions>
 
         <RelativePanel x:Name="TitleBar" 
-                       Margin="48,0,0,0"
                        Background="Transparent">
-            <Image x:Name="AppLogo" 
-                   Source="ms-appx:///Assets/ScheduleSync.png" 
-                   Width="24" 
-                   Height="24"
-                   RelativePanel.AlignVerticalCenterWithPanel="True"/>
-            <TextBlock x:Name="AppTitle" Text="ScheduleSync" 
-                       Style="{ThemeResource CaptionTextBlockStyle}" 
-                       Margin="8,0,0,0"
-                       RelativePanel.AlignVerticalCenterWithPanel="True"
-                       RelativePanel.RightOf="AppLogo"/>
+            <StackPanel x:Name="TitleBarContent"
+                        Margin="48,0,0,0"
+                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                        Orientation="Horizontal">
+                <StackPanel.Transitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition></RepositionThemeTransition>
+                    </TransitionCollection>
+                </StackPanel.Transitions>
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <RepositionThemeTransition/>
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+
+                <Image x:Name="AppLogo" 
+                       Source="ms-appx:///Assets/ScheduleSync.png" 
+                       Width="24" 
+                       Height="24"/>
+                <TextBlock x:Name="AppTitle" 
+                           Text="ScheduleSync" 
+                           VerticalAlignment="Center"
+                           Style="{ThemeResource CaptionTextBlockStyle}" 
+                           Margin="8,0,0,0" />
+            </StackPanel>
         </RelativePanel>
 
         <Button x:Name="BackButton"
                 Style="{StaticResource NavigationBackButtonNormalStyle}"
-                Click="BackButton_Click"/>
+                Click="BackButton_Click">
+        </Button>
 
         <muxc:NavigationView x:Name="NavView"
                              PaneDisplayMode="LeftCompact"

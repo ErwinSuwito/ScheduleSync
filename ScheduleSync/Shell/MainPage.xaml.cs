@@ -17,10 +17,12 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using ScheduleSync.Views;
 using muxc = Microsoft.UI.Xaml.Controls;
+using Microsoft.Toolkit.Uwp.UI.Animations;
+using System.Numerics;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace ScheduleSync
+namespace ScheduleSync.Shell
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
@@ -113,8 +115,7 @@ namespace ScheduleSync
 
         private void ContentFrame_Navigated(object sender, NavigationEventArgs e)
         {
-            BackButton.IsEnabled = ContentFrame.CanGoBack;
-
+            ToggleBackButton();
             if (ContentFrame.SourcePageType == typeof(SettingsPage))
             {
                 NavView.SelectedItem = (muxc.NavigationViewItem)NavView.SettingsItem;
@@ -129,6 +130,22 @@ namespace ScheduleSync
 
                 NavView.Header =
                     ((muxc.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
+            }
+        }
+
+        private async void ToggleBackButton()
+        {
+            if (!ContentFrame.CanGoBack)
+            {
+                AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromSeconds(0.5)).StartAsync(BackButton);
+                TitleBarContent.Margin = new Thickness(12, 0, 0, 0);
+                BackButton.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                TitleBarContent.Margin = new Thickness(48, 0, 0, 0);
+                BackButton.Visibility = Visibility.Visible;
+                await AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromSeconds(0.5)).StartAsync(BackButton);
             }
         }
     }

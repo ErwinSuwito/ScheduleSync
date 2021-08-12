@@ -8,6 +8,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -69,7 +70,15 @@ namespace ScheduleSync
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(Shell.MainPage), e.Arguments);
+                    ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+                    if (localSettings.Values["RequireFirstRun"] != null)
+                    {
+                        rootFrame.Navigate(typeof(Shell.MainPage), e.Arguments);
+                    }
+                    else
+                    {
+                        rootFrame.Navigate(typeof(Shell.SetupPage), e.Arguments);
+                    }
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

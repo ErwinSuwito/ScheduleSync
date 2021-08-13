@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Authentication;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -30,7 +31,13 @@ namespace ScheduleSync
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            string clientId = ClientSecret.ClientId;
+            string[] scopes = new string[] { "User.Read", "Calendars.ReadWrite" };
+
+            ProviderManager.Instance.GlobalProvider = new MsalProvider(clientId, scopes);
+
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
             if (localSettings.Values["RequireFirstRun"] != null)
             {
                 this.Frame.Navigate(typeof(Shell.MainShell), null);

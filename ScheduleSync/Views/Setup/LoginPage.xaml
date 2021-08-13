@@ -5,6 +5,7 @@
     xmlns:local="using:ScheduleSync.Views.Setup"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:wgt="using:CommunityToolkit.Graph.Uwp.Controls"
     mc:Ignorable="d"
     Background="Transparent">
 
@@ -18,6 +19,8 @@
                        TextWrapping="Wrap"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
+            
+            <wgt:LoginButton Margin="0,4,0,0" />
         </StackPanel>
 
         <Button x:Name="NextButton"

@@ -40,7 +40,8 @@
                                    RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
                 </muxc:Expander.Header>
-                <controls:IntakeSettingsControl />
+                <controls:IntakeSettingsControl x:Name="IntakeSettings" 
+                                                HorizontalAlignment="Left"/>
             </muxc:Expander>
 
             <muxc:Expander x:Name="AccountExpander"

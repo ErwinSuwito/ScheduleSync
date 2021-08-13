@@ -70,15 +70,7 @@ namespace ScheduleSync
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-                    if (localSettings.Values["RequireFirstRun"] != null)
-                    {
-                        rootFrame.Navigate(typeof(Shell.MainPage), e.Arguments);
-                    }
-                    else
-                    {
-                        rootFrame.Navigate(typeof(Shell.SetupPage), e.Arguments);
-                    }
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

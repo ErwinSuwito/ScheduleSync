@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:ScheduleSync.Views.Setup"
+    xmlns:controls="using:ScheduleSync.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -24,7 +25,8 @@
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
 
-            <StackPanel Margin="0,8,0,0"
+            <controls:IntakeSettingsControl Margin="0,8,0,0"/>
+            <!--<StackPanel Margin="0,8,0,0"
                         MaxWidth="450"
                         MinWidth="320"
                         HorizontalAlignment="Left">
@@ -44,7 +46,7 @@
                 <RadioButton x:Name="LocalStudentRadButton" 
                          Content="Local student"  
                          Margin="0,8,0,0"/>
-            </StackPanel>
+            </StackPanel>-->
 
         </StackPanel>
 

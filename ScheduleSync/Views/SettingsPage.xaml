@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:controls="using:ScheduleSync.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     Background="Transparent">
@@ -39,24 +40,7 @@
                                    RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
                 </muxc:Expander.Header>
-                <StackPanel>
-                    <TextBox x:Name="IntakeCodeTextBox" 
-                             Header="Intake code"
-                             PlaceholderText="UC2F2008SE"/>
-                    <TextBox x:Name="TutorialGroupTextBox" 
-                             Header="Tutorial group" 
-                             PlaceholderText="G1"
-                             Margin="0,8,0,0"/>
-                    <TextBlock Text="I am a..." 
-                               Margin="0,8,0,0" 
-                               Style="{ThemeResource BodyTextBlockStyle}"/>
-                    <RadioButton x:Name="ForeignStudentRadButton" 
-                                 Content="Foreign student" 
-                                 Margin="0,8,0,0"/>
-                    <RadioButton x:Name="LocalStudentRadButton" 
-                                 Content="Local student"  
-                                 Margin="0,8,0,0"/>
-                </StackPanel>
+                <controls:IntakeSettingsControl />
             </muxc:Expander>
 
             <muxc:Expander x:Name="AccountExpander"

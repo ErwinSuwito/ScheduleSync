@@ -28,16 +28,16 @@ namespace ScheduleSync.Views
             this.InitializeComponent();
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void IntakeSettings_Loaded(object sender, RoutedEventArgs e)
         {
             string studentType = (IntakeSettings.IsFsStudent == true) ? "(FS)" : "(LS)";
-            Debug.WriteLine("Intake Code: " + IntakeSettings.IntakeCode);
             IntakeCode.Text = IntakeSettings.IntakeCode + studentType + ", " + IntakeSettings.TutorialGroup;
+        }
+
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            IntakeSettings.SaveIntakeSettings();
+            base.OnNavigatingFrom(e);
         }
     }
 }

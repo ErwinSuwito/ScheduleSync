@@ -35,11 +35,7 @@ namespace ScheduleSync.Views.Setup
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["IntakeCode"] = IntakeSettings.IntakeCode.Trim();
-            localSettings.Values["TutorialGroup"] = IntakeSettings.TutorialGroup.Trim();
-            localSettings.Values["IsFsStudent"] = IntakeSettings.IsFsStudent;
-            localSettings.Values["RequireFirstRun"] = false;
+            IntakeSettings.SaveIntakeSettings();
 
             var parentFrame = Window.Current.Content as Frame;
             parentFrame.Navigate(typeof(Shell.MainShell), null);

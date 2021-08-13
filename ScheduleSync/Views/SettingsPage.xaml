@@ -9,97 +9,102 @@
     xmlns:controls="using:ScheduleSync.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    Background="Transparent"
-    Loaded="Page_Loaded">
+    Background="Transparent">
 
     <ScrollViewer>
-        <StackPanel Padding="28,24">
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <ReorderThemeTransition />
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
+        <RelativePanel HorizontalAlignment="Stretch">
             <TextBlock x:Name="PageHeader"
                        Text="Settings" 
+                       Margin="24,24,0,0"
                        Style="{ThemeResource TitleTextBlockStyle}" />
-
-            <muxc:Expander x:Name="SettingsExpander"
+            <StackPanel RelativePanel.Below="PageHeader"
+                        HorizontalAlignment="Stretch"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True"
+                        Padding="24,4">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <ReorderThemeTransition />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
+                <muxc:Expander x:Name="SettingsExpander"
                            Margin="0,8,0,0"
                            IsExpanded="True"
+                               HorizontalAlignment="Stretch"
                            HorizontalContentAlignment="Stretch"
-                           HorizontalAlignment="Stretch"
                            RelativePanel.Below="PageHeader">
-                <muxc:Expander.Header>
-                    <RelativePanel>
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE7BE;" />
-                            <TextBlock Text="Intake Settings"
+                    <muxc:Expander.Header>
+                        <RelativePanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE7BE;" />
+                                <TextBlock Text="Intake Settings"
                                        Margin="8,0,0,0"/>
-                        </StackPanel>
-                        <TextBlock x:Name="IntakeCode"
+                            </StackPanel>
+                            <TextBlock x:Name="IntakeCode"
                                    d:Text="UC2F2008SE(FS) G1"
                                    RelativePanel.AlignRightWithPanel="True"/>
-                    </RelativePanel>
-                </muxc:Expander.Header>
-                <controls:IntakeSettingsControl x:Name="IntakeSettings" 
+                        </RelativePanel>
+                    </muxc:Expander.Header>
+                    <controls:IntakeSettingsControl x:Name="IntakeSettings" 
                                                 HorizontalAlignment="Left"
                                                 Loaded="IntakeSettings_Loaded"/>
-            </muxc:Expander>
+                </muxc:Expander>
 
-            <muxc:Expander x:Name="AccountExpander"
+                <muxc:Expander x:Name="AccountExpander"
                            Margin="0,8,0,0"
                            HorizontalContentAlignment="Stretch"
                            HorizontalAlignment="Stretch">
-                <muxc:Expander.Header>
-                    <RelativePanel>
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE77B;" />
-                            <TextBlock Text="Account Settings"
+                    <muxc:Expander.Header>
+                        <RelativePanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE77B;" />
+                                <TextBlock Text="Account Settings"
                                        Margin="8,0,0,0"/>
-                        </StackPanel>
-                    </RelativePanel>
-                </muxc:Expander.Header>
-                <Grid>
-                    <TextBlock Text="Account settings goes here" />
-                </Grid>
-            </muxc:Expander>
+                            </StackPanel>
+                        </RelativePanel>
+                    </muxc:Expander.Header>
+                    <Grid>
+                        <TextBlock Text="Account settings goes here" />
+                    </Grid>
+                </muxc:Expander>
 
-            <muxc:Expander x:Name="AboutExpander"
+                <muxc:Expander x:Name="AboutExpander"
                            Margin="0,8,0,0"
                            HorizontalContentAlignment="Stretch"
                            HorizontalAlignment="Stretch">
-                <muxc:Expander.Header>
-                    <RelativePanel>
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon Glyph="&#xE946;" />
-                            <TextBlock Text="About and Feedback"
+                    <muxc:Expander.Header>
+                        <RelativePanel>
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon Glyph="&#xE946;" />
+                                <TextBlock Text="About and Feedback"
                                        Margin="8,0,0,0"/>
-                        </StackPanel>
-                    </RelativePanel>
-                </muxc:Expander.Header>
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <Image x:Name="AppLogo"
+                            </StackPanel>
+                        </RelativePanel>
+                    </muxc:Expander.Header>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="AppLogo"
                                Source="ms-appx:///Assets/ScheduleSync.png" 
                                Width="36" 
                                Height="36" />
-                        <TextBlock x:Name="AppTitle" 
+                            <TextBlock x:Name="AppTitle" 
                                    Text="ScheduleSync" 
                                    Style="{ThemeResource BodyTextBlockStyle}" 
                                    FontSize="20"
                                    Margin="8,0,0,0"
                                    VerticalAlignment="Center"/>
-                    </StackPanel>
-                    <TextBlock Text="Version 0.3"/>
+                        </StackPanel>
+                        <TextBlock Text="Version 0.3"/>
 
-                    <TextBlock Text="Got feedback or bugs?" 
+                        <TextBlock Text="Got feedback or bugs?" 
                                Style="{ThemeResource BodyTextBlockStyle}"
                                Margin="0,8,0,0" 
                                TextWrapping="Wrap" />
-                    <Button Content="Open GitHub" 
+                        <Button Content="Open GitHub" 
                             Margin="0,4,0,0"/>
-                </StackPanel>
-            </muxc:Expander>
-        </StackPanel>
+                    </StackPanel>
+                </muxc:Expander>
+            </StackPanel>
+        </RelativePanel>
     </ScrollViewer>
 </Page>

@@ -29,11 +29,6 @@
                         <RepositionThemeTransition></RepositionThemeTransition>
                     </TransitionCollection>
                 </StackPanel.Transitions>
-                <StackPanel.ChildrenTransitions>
-                    <TransitionCollection>
-                        <RepositionThemeTransition/>
-                    </TransitionCollection>
-                </StackPanel.ChildrenTransitions>
 
                 <Image x:Name="AppLogo" 
                        Source="ms-appx:///Assets/ScheduleSync.png" 

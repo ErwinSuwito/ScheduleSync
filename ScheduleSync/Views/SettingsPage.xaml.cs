@@ -39,5 +39,10 @@ namespace ScheduleSync.Views
             IntakeSettings.SaveIntakeSettings();
             base.OnNavigatingFrom(e);
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -9,7 +9,8 @@
     xmlns:controls="using:ScheduleSync.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    Background="Transparent">
+    Background="Transparent"
+    Loaded="Page_Loaded">
 
     <ScrollViewer>
         <StackPanel Padding="28,24">
@@ -36,12 +37,13 @@
                                        Margin="8,0,0,0"/>
                         </StackPanel>
                         <TextBlock x:Name="IntakeCode"
-                                   Text="UC2F2008SE(FS) G1"
+                                   d:Text="UC2F2008SE(FS) G1"
                                    RelativePanel.AlignRightWithPanel="True"/>
                     </RelativePanel>
                 </muxc:Expander.Header>
                 <controls:IntakeSettingsControl x:Name="IntakeSettings" 
-                                                HorizontalAlignment="Left"/>
+                                                HorizontalAlignment="Left"
+                                                Loaded="IntakeSettings_Loaded"/>
             </muxc:Expander>
 
             <muxc:Expander x:Name="AccountExpander"

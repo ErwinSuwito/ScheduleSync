@@ -5,7 +5,7 @@
     xmlns:local="using:ScheduleSync.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d"
     Background="Transparent">
 
@@ -28,9 +28,25 @@
                         <TextBlock Text="Timetable Sync" 
                                    RelativePanel.AlignLeftWithPanel="True"
                                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                        <Button Content="Sync Now" 
+                        <muxc:ProgressRing x:Name="ProgressRing"
+                                           IsActive="False" 
+                                           Width="24"
+                                           Height="24"
+                                           Visibility="Collapsed"
+                                           RelativePanel.AlignHorizontalCenterWith="SyncButton"
+                                           RelativePanel.AlignVerticalCenterWithPanel="True">
+                            <animations:Implicit.ShowAnimations>
+                                <animations:OpacityAnimation Duration="0:0:0.2" From="0" To="1.0"/>
+                            </animations:Implicit.ShowAnimations>
+                            <animations:Implicit.HideAnimations>
+                                <animations:OpacityAnimation Duration="0:0:0.2" From="1.0" To="0"/>
+                            </animations:Implicit.HideAnimations>
+                        </muxc:ProgressRing>
+                        <Button x:Name="SyncButton"
+                                Content="Sync Now" 
+                                Click="SyncButton_Click"
                                 Style="{ThemeResource AccentButtonStyle}"
-                                RelativePanel.AlignRightWithPanel="True"/>
+                                RelativePanel.AlignRightWithPanel="True" />
                     </RelativePanel>
                 </muxc:Expander.Header>
                 <StackPanel Orientation="Vertical">

@@ -26,5 +26,34 @@ namespace ScheduleSync.Views
         {
             this.InitializeComponent();
         }
+
+        DispatcherTimer dt = new DispatcherTimer();
+        private void SyncButton_Click(object sender, RoutedEventArgs e)
+        {
+            StartSyncingAnimation();
+            dt.Interval = new TimeSpan(0, 0, 5);
+            dt.Tick += Dt_Tick;
+            dt.Start();
+        }
+
+        private void Dt_Tick(object sender, object e)
+        {
+            dt.Stop();
+            StopSyncingAnimation();
+        }
+
+        private void StartSyncingAnimation()
+        {
+            SyncButton.IsEnabled = false;
+            ProgressRing.Visibility = Visibility.Visible;
+            ProgressRing.IsActive = true;
+        }
+
+        private void StopSyncingAnimation()
+        {
+            SyncButton.IsEnabled = true;
+            ProgressRing.Visibility = Visibility.Collapsed;
+            ProgressRing.IsActive = false;
+        }
     }
 }

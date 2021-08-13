@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ClientSecret.cs" />
+    <Compile Include="Controls\Converters.cs" />
     <Compile Include="Controls\IntakeSettingsControl.xaml.cs">
       <DependentUpon>IntakeSettingsControl.xaml</DependentUpon>
     </Compile>

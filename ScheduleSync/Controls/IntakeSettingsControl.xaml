@@ -6,9 +6,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    Loaded="UserControl_Loaded"
     d:DesignHeight="300"
     MaxWidth="450"
     MinWidth="320">
+    <UserControl.Resources>
+        <local:ReverseBooleanConverter x:Key="ReverseBooleanConverter" />
+    </UserControl.Resources>
 
     <StackPanel>
         <TextBox x:Name="IntakeCodeTextBox" 
@@ -29,7 +33,8 @@
                      IsChecked="{x:Bind IsFsStudent, Mode=TwoWay}"/>
         <RadioButton x:Name="LocalStudentRadButton" 
                      Content="Local student"  
-                     Margin="0,4,0,0"/>
+                     Margin="0,4,0,0"
+                     IsChecked="{x:Bind IsFsStudent, Mode=TwoWay, Converter={StaticResource ReverseBooleanConverter}}"/>
     </StackPanel>
 
 </UserControl>

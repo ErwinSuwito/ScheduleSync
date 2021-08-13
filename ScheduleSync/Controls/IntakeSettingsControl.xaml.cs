@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -53,6 +54,18 @@ namespace ScheduleSync.Controls
         public IntakeSettingsControl()
         {
             this.InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            if (localSettings.Values["RequireFirstRun"] != null)
+            {
+                IntakeCode = localSettings.Values["IntakeCode"].ToString();
+                TutorialGroup = localSettings.Values["TutorialGroup"].ToString();
+                bool.TryParse(localSettings.Values["IsFsStudent"].ToString(), out bool _isForeignStudent);
+                IsFsStudent = _isForeignStudent;
+            }
         }
     }
 }

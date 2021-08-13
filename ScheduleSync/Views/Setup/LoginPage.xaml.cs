@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Authentication;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,28 @@ namespace ScheduleSync.Views.Setup
     /// </summary>
     public sealed partial class LoginPage : Page
     {
+        IProvider provider; 
         public LoginPage()
         {
             this.InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            provider = ProviderManager.Instance.GlobalProvider;
+            provider.StateChanged += Provider_StateChanged;
+        }
+
+        private void Provider_StateChanged(object sender, ProviderStateChangedEventArgs e)
+        {
+            if (provider.State == ProviderState.SignedIn)
+            {
+                NextButton.IsEnabled = true;
+            }
+            else
+            {
+                NextButton.IsEnabled = false;
+            }
         }
     }
 }

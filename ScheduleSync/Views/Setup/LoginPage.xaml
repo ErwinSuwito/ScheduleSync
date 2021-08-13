@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wgt="using:CommunityToolkit.Graph.Uwp.Controls"
     mc:Ignorable="d"
-    Background="Transparent">
+    Background="Transparent"
+    Loaded="Page_Loaded">
 
     <Grid Margin="24">
         <StackPanel x:Name="Content">
@@ -19,11 +20,11 @@
                        TextWrapping="Wrap"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
-            
             <wgt:LoginButton Margin="0,4,0,0" />
         </StackPanel>
 
         <Button x:Name="NextButton"
+                IsEnabled="False"
                 Style="{StaticResource NavigationBackButtonNormalStyle}"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"

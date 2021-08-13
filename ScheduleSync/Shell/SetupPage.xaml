@@ -35,8 +35,12 @@
             </StackPanel>
         </RelativePanel>
 
+        <Grid Grid.Row="1" 
+              Background="{ThemeResource NavigationViewContentBackground}"
+              CornerRadius="10" />
+
         <Frame x:Name="rootFrame"
                Grid.Row="1"
-               Background="{ThemeResource NavigationViewContentBackground}"/>
+               Background="Transparent"/>
     </Grid>
 </Page>

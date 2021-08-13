@@ -15,24 +15,16 @@ using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace ScheduleSync.Shell
+namespace ScheduleSync.Views.Setup
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SetupPage : Page
+    public sealed partial class LoginPage : Page
     {
-        public SetupPage()
+        public LoginPage()
         {
             this.InitializeComponent();
-
-            // Sets TitleBar as the title bar to expand dragable area
-            Window.Current.SetTitleBar(TitleBar);
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            rootFrame.Navigate(typeof(Views.Setup.LoginPage), null);
         }
     }
 }

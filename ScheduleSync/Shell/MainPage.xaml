@@ -11,9 +11,6 @@
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations">
-    <Page.Resources>
-
-    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>

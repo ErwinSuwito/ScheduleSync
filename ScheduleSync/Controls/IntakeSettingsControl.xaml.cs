@@ -67,5 +67,14 @@ namespace ScheduleSync.Controls
                 IsFsStudent = _isForeignStudent;
             }
         }
+
+        public void SaveIntakeSettings()
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["IntakeCode"] = IntakeCode.Trim();
+            localSettings.Values["TutorialGroup"] = TutorialGroup.Trim();
+            localSettings.Values["IsFsStudent"] = IsFsStudent;
+            localSettings.Values["RequireFirstRun"] = false;
+        }
     }
 }

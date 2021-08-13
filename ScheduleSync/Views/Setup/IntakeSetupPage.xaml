@@ -25,36 +25,16 @@
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
 
-            <controls:IntakeSettingsControl Margin="0,8,0,0"/>
-            <!--<StackPanel Margin="0,8,0,0"
-                        MaxWidth="450"
-                        MinWidth="320"
-                        HorizontalAlignment="Left">
-                <TextBox x:Name="IntakeCodeTextBox" 
-                     Header="Intake code"
-                     PlaceholderText="UC2F2008SE"/>
-                <TextBox x:Name="TutorialGroupTextBox" 
-                     Header="Tutorial group" 
-                     PlaceholderText="G1"
-                     Margin="0,8,0,0"/>
-                <TextBlock Text="I am a..." 
-                       Margin="0,8,0,0" 
-                       Style="{ThemeResource BodyTextBlockStyle}"/>
-                <RadioButton x:Name="ForeignStudentRadButton" 
-                         Content="Foreign student" 
-                         Margin="0,8,0,0"/>
-                <RadioButton x:Name="LocalStudentRadButton" 
-                         Content="Local student"  
-                         Margin="0,8,0,0"/>
-            </StackPanel>-->
-
+            <controls:IntakeSettingsControl x:Name="IntakeSettings"
+                                            Margin="0,8,0,0" />
         </StackPanel>
 
         <Button x:Name="NextButton"
                 Style="{StaticResource NavigationBackButtonNormalStyle}"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
-                FlowDirection="RightToLeft"/>
+                FlowDirection="RightToLeft"
+                Click="NextButton_Click"/>
 
         <Button x:Name="BackButton"
                 Visibility="Visible"

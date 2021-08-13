@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -30,6 +31,18 @@ namespace ScheduleSync.Views.Setup
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.GoBack();
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values["IntakeCode"] = IntakeSettings.IntakeCode.Trim();
+            localSettings.Values["TutorialGroup"] = IntakeSettings.TutorialGroup.Trim();
+            localSettings.Values["IsFsStudent"] = IntakeSettings.IsFsStudent;
+            localSettings.Values["RequireFirstRun"] = false;
+
+            var parentFrame = Window.Current.Content as Frame;
+            parentFrame.Navigate(typeof(Shell.MainShell), null);
         }
     }
 }

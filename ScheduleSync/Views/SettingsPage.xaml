@@ -43,7 +43,6 @@
                     <TextBox x:Name="IntakeCodeTextBox" 
                              Header="Intake code"
                              PlaceholderText="UC2F2008SE"/>
-
                     <TextBox x:Name="TutorialGroupTextBox" 
                              Header="Tutorial group" 
                              PlaceholderText="G1"

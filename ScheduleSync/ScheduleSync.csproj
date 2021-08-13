@@ -124,6 +124,7 @@
     <Compile Include="Controls\IntakeSettingsControl.xaml.cs">
       <DependentUpon>IntakeSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Data\DataAccess.cs" />
     <Compile Include="Data\ScheduleItem.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

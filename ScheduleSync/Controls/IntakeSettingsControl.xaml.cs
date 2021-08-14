@@ -76,5 +76,15 @@ namespace ScheduleSync.Controls
             localSettings.Values["IsFsStudent"] = IsFsStudent;
             localSettings.Values["RequireFirstRun"] = false;
         }
+
+        /// <summary>
+        /// Returns the complete intake code for the user, with their student type and tutorial group
+        /// </summary>
+        /// <returns></returns>
+        public string GetIntakeCode()
+        {
+            string studentType = (IsFsStudent == true) ? "(FS)" : "(LS)";
+            return IntakeCode + studentType + " " + TutorialGroup;
+        }
     }
 }

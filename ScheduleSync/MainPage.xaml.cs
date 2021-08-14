@@ -36,13 +36,16 @@ namespace ScheduleSync
 
             ProviderManager.Instance.GlobalProvider = new MsalProvider(clientId, scopes);
 
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            ProviderManager.Instance.GlobalProvider.StateChanged += GlobalProvider_StateChanged;
+        }
 
-            if (localSettings.Values["RequireFirstRun"] != null)
+        private void GlobalProvider_StateChanged(object sender, ProviderStateChangedEventArgs e)
+        {
+            if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn)
             {
                 this.Frame.Navigate(typeof(Shell.MainShell), null);
             }
-            else
+            else if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedOut)
             {
                 this.Frame.Navigate(typeof(Shell.SetupPage), null);
             }

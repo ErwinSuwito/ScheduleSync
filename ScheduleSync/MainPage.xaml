@@ -11,10 +11,10 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
-    <Interactivity:Interaction.Behaviors>
-        <!--<providers:InteractiveProviderBehavior x:Name="graphProvider" Scopes="User.Read,Calendars.ReadWrite"/>-->
-    </Interactivity:Interaction.Behaviors>
-    
     <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="extendedSplashImage" Source="Assets/SplashScreen.png"/>
+            <ProgressRing Name="splashProgressRing" IsActive="True" Width="20" HorizontalAlignment="Center"></ProgressRing>
+        </StackPanel>
     </Grid>
 </Page>

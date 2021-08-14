@@ -35,12 +35,17 @@ namespace ScheduleSync
             string[] scopes = new string[] { "User.Read", "Calendars.ReadWrite" };
 
             ProviderManager.Instance.GlobalProvider = new MsalProvider(clientId, scopes);
-
             ProviderManager.Instance.GlobalProvider.StateChanged += GlobalProvider_StateChanged;
+
+            if (ProviderManager.Instance.GlobalProvider.State != ProviderState.Loading)
+            {
+                CheckProviderStatus();
+            }
         }
 
-        private void GlobalProvider_StateChanged(object sender, ProviderStateChangedEventArgs e)
+        void CheckProviderStatus()
         {
+            ProviderManager.Instance.GlobalProvider.StateChanged -= GlobalProvider_StateChanged;
             if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn)
             {
                 this.Frame.Navigate(typeof(Shell.MainShell), null);
@@ -49,6 +54,11 @@ namespace ScheduleSync
             {
                 this.Frame.Navigate(typeof(Shell.SetupPage), null);
             }
+        }
+
+        private void GlobalProvider_StateChanged(object sender, ProviderStateChangedEventArgs e)
+        {
+            CheckProviderStatus();
         }
     }
 }

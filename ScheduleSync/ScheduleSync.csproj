@@ -126,6 +126,7 @@
     </Compile>
     <Compile Include="Data\DataAccess.cs" />
     <Compile Include="Data\ScheduleItem.cs" />
+    <Compile Include="Data\SyncService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

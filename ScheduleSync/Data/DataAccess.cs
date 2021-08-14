@@ -17,7 +17,7 @@ namespace ScheduleSync.Data
         StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
-        public async Task<bool> GetSchedule()
+        private async Task<bool> DownloadSchedule()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace ScheduleSync.Data
             }
         }
 
-        public async Task<bool> ExtractGZip()
+        private async Task<bool> ExtractGZip()
         {
             try
             {
@@ -60,9 +60,23 @@ namespace ScheduleSync.Data
             }
         }
 
-        public async Task<List<Schedule>> DeserializeSchedule()
+        public async Task<bool> GetSchedule()
+        {
+            bool result = await DownloadSchedule();
+            if (result == true)
+            {
+                result = await ExtractGZip();
+            }
+
+            return result;
+        }
+
+        private async Task<List<Schedule>> DeserializeSchedule()
         {
             StorageFile jsonFile = await tempFolder.GetFileAsync("schedule.json");
+            if (jsonFile == null)
+                return null;
+
             string scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
 
             // Modifies original JSON so that its item is an array. To make it easier to parse
@@ -96,6 +110,10 @@ namespace ScheduleSync.Data
         {
             string studentType = (isFsStudent == true) ? "(FS)" : "(LS)";
             var allSchedule = await DeserializeSchedule();
+
+            if (allSchedule == null)
+                return null;
+
             List<Schedule> filteredItems = new List<Schedule>();
 
             foreach (Schedule item in allSchedule)

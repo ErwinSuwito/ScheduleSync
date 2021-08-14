@@ -10,7 +10,8 @@
     xmlns:wgt="using:CommunityToolkit.Graph.Uwp.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    Background="Transparent">
+    Background="Transparent"
+    Loaded="Page_Loaded">
 
     <ScrollViewer>
         <RelativePanel HorizontalAlignment="Stretch"

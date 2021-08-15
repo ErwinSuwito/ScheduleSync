@@ -22,6 +22,10 @@ namespace ScheduleSync.Data
         public SyncService()
         {
             ProviderManager.Instance.ProviderStateChanged += Instance_ProviderStateChanged;
+            if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn)
+            {
+                graphClient = ProviderManager.Instance.GlobalProvider.GetClient();
+            }
         }
 
         private void Instance_ProviderStateChanged(object sender, ProviderStateChangedEventArgs e)

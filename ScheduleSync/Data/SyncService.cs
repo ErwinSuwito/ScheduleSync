@@ -3,6 +3,7 @@ using CommunityToolkit.Graph.Extensions;
 using Microsoft.Graph;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,14 +43,22 @@ namespace ScheduleSync.Data
             if (graphClient == null)
                 return SyncResult.Failed;
 
-            foreach (var schedule in schedules)
+            try
             {
-                Event @event = MakeEvent(schedule);
+                foreach (var schedule in schedules)
+                {
+                    Event @event = MakeEvent(schedule);
 
-                await graphClient.Me.Events.Request().AddAsync(@event);
+                    await graphClient.Me.Events.Request().AddAsync(@event);
+                }
+
+                return SyncResult.Success;
             }
-
-            return SyncResult.Success;
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return SyncResult.Failed;
+            }
         }
 
         public Event MakeEvent(Schedule schedule)

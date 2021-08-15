@@ -85,25 +85,7 @@ namespace ScheduleSync.Data
 
             var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
 
-            var sortedResult = from schedule in result.schedules
-                               orderby schedule.DATESTAMP_ISO
-                               select schedule;
-
-            Schedule lastItem = sortedResult.LastOrDefault();
-
-            // Checks and remove old data
-            if (localSettings.Values["SyncedUntilDate"] != null)
-            {
-                localSettings.Values.Remove(localSettings.Values["SyncedUntilDate"].ToString());
-            }
-
-            string syncedUntilDate = lastItem.DATESTAMP_ISO;
-            localSettings.Values["SyncedUntilDate"] = syncedUntilDate;
-            localSettings.Values[syncedUntilDate] = true;
-
-            localSettings.Values["LastSync"] = DateTime.Now.ToString();
-
-            return (List<Schedule>)sortedResult;
+            return result.schedules;
         }
 
         public async Task<List<Schedule>> GetTimetable(string intakeCode, string tutorialGroup, bool isFsStudent)

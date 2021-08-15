@@ -48,6 +48,7 @@ namespace ScheduleSync
                 // Retrieve the window coordinates of the splash screen image.
                 splashImageRect = splash.ImageLocation;
                 PositionImage();
+                PositionRing();
             }
 
             // Create a Frame to act as the navigation context
@@ -62,6 +63,12 @@ namespace ScheduleSync
             extendedSplashImage.Width = splashImageRect.Width;
         }
 
+        void PositionRing()
+        {
+            splashProgressRing.SetValue(Canvas.LeftProperty, splashImageRect.X + (splashImageRect.Width * 0.5) - (splashProgressRing.Width * 0.5));
+            splashProgressRing.SetValue(Canvas.TopProperty, (splashImageRect.Y + splashImageRect.Height + splashImageRect.Height * 0.1));
+        }
+
         // Include code to be executed when the system has transitioned from the splash screen to the extended splash screen (application's first view).
         void DismissedEventHandler(SplashScreen sender, object e)
         {
@@ -74,9 +81,16 @@ namespace ScheduleSync
             ProviderManager.Instance.GlobalProvider = new MsalProvider(clientId, scopes);
 
             ProviderManager.Instance.GlobalProvider.StateChanged += GlobalProvider_StateChanged;
+
+            CheckProviderState();
         }
 
         private void GlobalProvider_StateChanged(object sender, ProviderStateChangedEventArgs e)
+        {
+            CheckProviderState();
+        }
+
+        private void CheckProviderState()
         {
             if (ProviderManager.Instance.GlobalProvider.State != ProviderState.Loading)
             {
@@ -109,7 +123,7 @@ namespace ScheduleSync
                 PositionImage();
 
                 // If applicable, include a method for positioning a progress control.
-                // PositionRing();
+                PositionRing();
             }
         }
 

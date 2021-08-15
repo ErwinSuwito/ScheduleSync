@@ -12,9 +12,9 @@
     Loaded="Page_Loaded">
 
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Image x:Name="extendedSplashImage" Source="Assets/SplashScreen.png"/>
-            <ProgressRing Name="splashProgressRing" IsActive="True" Width="20" HorizontalAlignment="Center"></ProgressRing>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ProgressRing Name="splashProgressRing" IsActive="True" Width="32" />
+            <TextBlock Text="Logging you in..." Margin="4,0,0,0"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -11,6 +11,7 @@
     <Grid>
         <Canvas>
             <Image x:Name="extendedSplashImage" Source="Assets/SplashScreen.png"/>
+            <ProgressRing Name="splashProgressRing" IsActive="True" Width="20" HorizontalAlignment="Center"></ProgressRing>
         </Canvas>
     </Grid>
 </Page>

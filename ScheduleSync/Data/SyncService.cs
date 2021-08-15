@@ -40,34 +40,39 @@ namespace ScheduleSync.Data
 
             foreach (var schedule in schedules)
             {
-                Event @event = new Event()
-                {
-                    Subject = schedule.MODID,
-                    Start = new DateTimeTimeZone
-                    {
-                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_FROM,
-                        TimeZone = "Singapore Standard Time"
-                    },
-                    End = new DateTimeTimeZone
-                    {
-                        DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_TO,
-                        TimeZone = "Singapore Standard Time"
-                    },
-                    Location = new Location
-                    {
-                        DisplayName = schedule.ROOM
-                    },
-                    Body = new ItemBody
-                    {
-                        ContentType = BodyType.Html,
-                        Content = "Your lecturer is <a href=\"mailto:" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
-                    }
-                };
+                Event @event = MakeEvent(schedule);
 
                 await graphClient.Me.Events.Request().AddAsync(@event);
             }
 
             return SyncResult.Success;
+        }
+
+        public Event MakeEvent(Schedule schedule)
+        {
+            return new Event()
+            {
+                Subject = schedule.MODID,
+                Start = new DateTimeTimeZone
+                {
+                    DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_FROM,
+                    TimeZone = "Singapore Standard Time"
+                },
+                End = new DateTimeTimeZone
+                {
+                    DateTime = schedule.DATESTAMP_ISO + " " + schedule.TIME_TO,
+                    TimeZone = "Singapore Standard Time"
+                },
+                Location = new Location
+                {
+                    DisplayName = schedule.ROOM
+                },
+                Body = new ItemBody
+                {
+                    ContentType = BodyType.Html,
+                    Content = "Your lecturer is <a href=\"mailto:" + schedule.SAMACCOUNTNAME + "@staffemail.apu.edu.my\">" + schedule.NAME + "</a><br><br>Added by ScheduleSync"
+                }
+            };
         }
     }
 }

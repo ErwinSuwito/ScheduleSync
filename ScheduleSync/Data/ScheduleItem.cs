@@ -10,6 +10,7 @@ namespace ScheduleSync.Data
     {
         public string INTAKE { get; set; }
         public string MODID { get; set; }
+        public string MODULE_NAME { get; set; }
         public string DAY { get; set; }
         public string LOCATION { get; set; }
         public string ROOM { get; set; }
@@ -20,9 +21,13 @@ namespace ScheduleSync.Data
         public string DATESTAMP_ISO { get; set; }
         public string TIME_FROM { get; set; }
         public string TIME_TO { get; set; }
+        public DateTime TIME_FROM_ISO { get; set; }
+        public DateTime TIME_TO_ISO { get; set; }
         public string GROUPING { get; set; }
         public string COLOR { get; set; }
+        public string CLASS_CODE { get; set; }
     }
+
 
     public class Root
     {

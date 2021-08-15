@@ -49,7 +49,7 @@
                         </RelativePanel>
                     </muxc:Expander.Header>
                     <controls:IntakeSettingsControl x:Name="IntakeSettings" 
-                                                    HorizontalAlignment="Stretch"
+                                                    HorizontalAlignment="Left"
                                                     Loaded="IntakeSettings_Loaded"/>
                 </muxc:Expander>
 
@@ -112,7 +112,6 @@
                                    Margin="44,0,0,0"/>
                     </StackPanel>
                 </muxc:Expander>
-
                 <muxc:Expander x:Name="ExtrasExpander"
                                Margin="0,8,0,0"
                                HorizontalContentAlignment="Stretch"
@@ -126,11 +125,46 @@
                             </StackPanel>
                         </RelativePanel>
                     </muxc:Expander.Header>
-                    <StackPanel>
-                        
-                    </StackPanel>
+                    <GridView SelectionMode="None"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsItemClickEnabled="True"
+                              ItemClick="GridView_ItemClick">
+                        <GridViewItem Padding="8,2"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch">
+                            <StackPanel Tag="Feedback"
+                                        Orientation="Horizontal"
+                                        Padding="4"
+                                        Spacing="8">
+                                <FontIcon Glyph="&#xED15;" />
+                                <TextBlock Text="Send Feedback" />
+                            </StackPanel>
+                        </GridViewItem>
+                        <GridViewItem Padding="8,2"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch">
+                            <StackPanel Tag="PrivacyPolicy"
+                                        Orientation="Horizontal"
+                                        Padding="4"
+                                        Spacing="8">
+                                <FontIcon Glyph="&#xE72E;" />
+                                <TextBlock Text="Privacy Policy" />
+                            </StackPanel>
+                        </GridViewItem>
+                        <GridViewItem Padding="8,2"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch">
+                            <StackPanel Tag="Github"
+                                        Orientation="Horizontal"
+                                        Padding="4"
+                                        Spacing="8">
+                                <FontIcon Glyph="&#xE943;" />
+                                <TextBlock Text="Source code" />
+                            </StackPanel>
+                        </GridViewItem>
+                    </GridView>
                 </muxc:Expander>
-
             </StackPanel>
         </RelativePanel>
     </ScrollViewer>

@@ -10,6 +10,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -103,6 +104,29 @@ namespace ScheduleSync.Views
         private async void Provider_StateChanged(object sender, ProviderStateChangedEventArgs e)
         {
             await  RefreshUserInfoAsync();
+        }
+
+        private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = e.ClickedItem as StackPanel;
+
+            switch (item.Tag)
+            {
+                case "Feedback":
+                    await Launcher.LaunchUriAsync(new Uri(@"https://github.com/ErwinSuwito/ScheduleSync/issues"));
+                    break;
+
+                case "PrivacyPolicy":
+                    await Launcher.LaunchUriAsync(new Uri(@"http://suwito.codes/privacypolicy/"));
+                    break;
+
+                case "Github":
+                    await Launcher.LaunchUriAsync(new Uri(@"https://github.com/ErwinSuwito/ScheduleSync"));
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

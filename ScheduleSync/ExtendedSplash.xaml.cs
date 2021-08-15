@@ -100,6 +100,8 @@ namespace ScheduleSync
 
         async void DismissExtendedSplash()
         {
+            ProviderManager.Instance.GlobalProvider.StateChanged -= GlobalProvider_StateChanged;
+
             await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
                 rootFrame = new Frame();
                 if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn)

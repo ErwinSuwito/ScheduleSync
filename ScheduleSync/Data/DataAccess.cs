@@ -73,9 +73,12 @@ namespace ScheduleSync.Data
 
         private async Task<List<Schedule>> DeserializeSchedule()
         {
+            if (!File.Exists(tempFolder.Path + "schedule.json"))
+            {
+                await GetSchedule();
+            }
+
             StorageFile jsonFile = await tempFolder.GetFileAsync("schedule.json");
-            if (jsonFile == null)
-                return null;
 
             string scheduleJson = await File.ReadAllTextAsync(jsonFile.Path);
 

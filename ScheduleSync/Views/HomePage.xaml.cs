@@ -1,10 +1,13 @@
-﻿using System;
+﻿using ScheduleSync.Data;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,23 +25,38 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class HomePage : Page
     {
+        SyncService syncService = new SyncService();
+        DataAccess data = new DataAccess();
+
         public HomePage()
         {
             this.InitializeComponent();
         }
 
-        DispatcherTimer dt = new DispatcherTimer();
-        private void SyncButton_Click(object sender, RoutedEventArgs e)
+        private async void SyncButton_Click(object sender, RoutedEventArgs e)
         {
             StartSyncingAnimation();
-            dt.Interval = new TimeSpan(0, 0, 5);
-            dt.Tick += Dt_Tick;
-            dt.Start();
-        }
 
-        private void Dt_Tick(object sender, object e)
-        {
-            dt.Stop();
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            string IntakeCode = localSettings.Values["IntakeCode"].ToString();
+            string TutorialGroup = localSettings.Values["TutorialGroup"].ToString();
+            bool.TryParse(localSettings.Values["IsFsStudent"].ToString(), out bool isForeignStudent);
+
+            var schedule = await data.GetTimetable(IntakeCode, TutorialGroup, isForeignStudent);
+            var result = await syncService.SyncEventsAsync(schedule);
+
+            if (result != SyncResult.Success)
+            {
+                ContentDialog contentDialog = new ContentDialog()
+                {
+                    Title = "Unable to sync",
+                    Content = "We're encountering an error while syncing your timetable. Please try again later.",
+                    CloseButtonText = "Ok"
+                };
+
+                await contentDialog.ShowAsync();
+            }
+
             StopSyncingAnimation();
         }
 

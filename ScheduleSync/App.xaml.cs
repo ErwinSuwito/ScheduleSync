@@ -78,6 +78,9 @@ namespace ScheduleSync
                 Window.Current.Activate();
 
                 ExtendToTitleBar();
+
+                ApplicationView.PreferredLaunchViewSize = new Size(500, 680);
+                ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             }
         }
 

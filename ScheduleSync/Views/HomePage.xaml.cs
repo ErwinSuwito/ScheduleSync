@@ -57,6 +57,7 @@ namespace ScheduleSync.Views
                 await contentDialog.ShowAsync();
             }
 
+            localSettings.Values["LastSyncedDate"] = DateTime.Now.ToShortDateString();
             StopSyncingAnimation();
         }
 
@@ -72,6 +73,21 @@ namespace ScheduleSync.Views
             SyncButton.IsEnabled = true;
             ProgressRing.Visibility = Visibility.Collapsed;
             ProgressRing.IsActive = false;
+            UpdateDates();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateDates();
+        }
+
+        private void UpdateDates()
+        {
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            string syncedUntilDate = (localSettings.Values["LastScheduleDate"] == null) ? "Never" : localSettings.Values["LastScheduleDate"].ToString();
+            string lastSyncDate = (localSettings.Values["LastSyncedDate"] == null) ? "Never" : localSettings.Values["LastSyncedDate"].ToString();
+            SyncUntilDate.Text = syncedUntilDate;
+            LastSyncDate.Text = lastSyncDate;
         }
     }
 }

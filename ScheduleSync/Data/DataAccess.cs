@@ -89,7 +89,8 @@ namespace ScheduleSync.Data
             var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
 
             Schedule lastItem = result.schedules.LastOrDefault();
-            localSettings.Values["LastScheduleDate"] = lastItem.DATESTAMP_ISO;
+            DateTime.TryParse(lastItem.DATESTAMP_ISO, out DateTime dt);
+            localSettings.Values["LastScheduleDate"] = dt.ToShortDateString();
 
             return result.schedules;
         }

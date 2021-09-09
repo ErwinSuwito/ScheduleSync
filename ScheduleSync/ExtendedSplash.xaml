@@ -12,7 +12,7 @@
     <Grid>
         <Canvas>
             <Image x:Name="extendedSplashImage" Source="Assets/SplashScreen.png"/>
-            <muxc:ProgressRing Name="splashProgressRing" IsActive="True" Margin="0,52,0,0" Width="28" Height="28" HorizontalAlignment="Center"></muxc:ProgressRing>
+            <muxc:ProgressRing x:Name="splashProgressRing" IsActive="True" Margin="0,52,0,0" Width="28" Height="28" HorizontalAlignment="Center"></muxc:ProgressRing>
         </Canvas>
     </Grid>
 </Page>

@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="8fa70b6d-ff68-45b7-b413-e88ac7eaf25a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>ScheduleSync</DisplayName>
+    <DisplayName>ScheduleSync Dev</DisplayName>
     <PublisherDisplayName>erwin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,7 +30,7 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="ScheduleSync.App">
+      EntryPoint="ScheduleSyncDev.App">
       <uap:VisualElements
         DisplayName="ScheduleSync Dev"
         Square150x150Logo="Assets\Square150x150Logo.png"

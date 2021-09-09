@@ -39,17 +39,13 @@ namespace ScheduleSync.Views.Setup
         {
             if (provider.State == ProviderState.SignedIn)
             {
-                NextButton.IsEnabled = true;
-            }
-            else
-            {
-                NextButton.IsEnabled = false;
+                this.Frame.Navigate(typeof(IntakeSetupPage), null);
             }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(IntakeSetupPage), null);
+            
         }
     }
 }

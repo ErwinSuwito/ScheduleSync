@@ -30,7 +30,7 @@
         </StackPanel>
 
         <Button x:Name="NextButton"
-                Style="{StaticResource NavigationBackButtonNormalStyle}"
+                Style="{ThemeResource NavigationBackButtonNormalStyle}"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
                 FlowDirection="RightToLeft"
@@ -38,7 +38,7 @@
 
         <Button x:Name="BackButton"
                 Visibility="Visible"
-                Style="{StaticResource NavigationBackButtonNormalStyle}"
+                Style="{ThemeResource NavigationBackButtonNormalStyle}"
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Left"
                 FlowDirection="LeftToRight"

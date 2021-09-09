@@ -42,10 +42,5 @@ namespace ScheduleSync.Views.Setup
                 this.Frame.Navigate(typeof(IntakeSetupPage), null);
             }
         }
-
-        private void NextButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }

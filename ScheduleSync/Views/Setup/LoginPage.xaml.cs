@@ -42,5 +42,10 @@ namespace ScheduleSync.Views.Setup
                 this.Frame.Navigate(typeof(IntakeSetupPage), null);
             }
         }
+
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            await provider.SignInAsync();
+        }
     }
 }

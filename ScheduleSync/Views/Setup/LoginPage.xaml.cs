@@ -43,9 +43,9 @@ namespace ScheduleSync.Views.Setup
             }
         }
 
-        private void NextButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            await provider.SignInAsync();
         }
     }
 }

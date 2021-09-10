@@ -18,6 +18,9 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace ScheduleSync
 {
@@ -34,6 +37,7 @@ namespace ScheduleSync
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            AppCenter.Start("5c8c1b96-1478-4366-817a-e430d52281b4", typeof(Analytics), typeof(Crashes));
         }
 
         /// <summary>

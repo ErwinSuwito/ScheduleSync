@@ -25,23 +25,10 @@
                        TextWrapping="Wrap"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
-            <wgt:LoginButton Margin="0,4,0,0" />
+            <Button x:Name="LoginButton"
+                    Content="Login"
+                    Click="LoginButton_Click"
+                    Margin="0,4,0,0" />
         </StackPanel>
-
-        <Button x:Name="NextButton"
-                IsEnabled="False"
-                Style="{StaticResource NavigationBackButtonNormalStyle}"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Right"
-                FlowDirection="RightToLeft"
-                Click="NextButton_Click" />
-
-        <Button x:Name="BackButton"
-                Visibility="Collapsed"
-                Style="{StaticResource NavigationBackButtonNormalStyle}"
-                VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"
-                FlowDirection="LeftToRight"  />
-
     </Grid>
 </Page>

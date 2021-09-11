@@ -9,7 +9,7 @@ namespace ScheduleSync
 {
     public class ClientSecret
     {
-        public static string GraphApiClientId = "YOUR-CLIENT-ID-HERE";
+        public static string ClientId = "YOUR-CLIENT-ID-HERE";
     }
 }
 ```

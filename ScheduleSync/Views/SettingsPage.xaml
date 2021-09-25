@@ -55,6 +55,7 @@
 
                 <muxc:Expander x:Name="AccountExpander"
                                Margin="0,8,0,0"
+                               IsExpanded="True"
                                HorizontalContentAlignment="Stretch"
                                HorizontalAlignment="Stretch">
                     <muxc:Expander.Header>

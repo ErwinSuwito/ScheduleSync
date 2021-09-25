@@ -121,7 +121,14 @@ namespace ScheduleSync
                 }
                 else
                 {
-                    rootFrame.Content = new Shell.SetupPage(); Window.Current.Content = rootFrame;
+                    if (OperatingSystemVersion.Build >= 22000)
+                    {
+                        rootFrame.Content = new Shell.SetupPage(); Window.Current.Content = rootFrame;
+                    }
+                    else
+                    {
+                        rootFrame.Content = new Shell.AcrylicSetupPage(); Window.Current.Content = rootFrame;
+                    }
                 }
             });
         }

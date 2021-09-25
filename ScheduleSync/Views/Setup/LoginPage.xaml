@@ -28,7 +28,7 @@
             <Button x:Name="LoginButton"
                     Content="Login"
                     Click="LoginButton_Click"
-                    Margin="0,4,0,0" />
+                    Margin="0,8,0,0" />
         </StackPanel>
     </Grid>
 </Page>

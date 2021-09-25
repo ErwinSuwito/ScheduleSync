@@ -140,6 +140,9 @@
       <DependentUpon>MainShell.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shell\AcrylicSetupPage.xaml.cs">
+      <DependentUpon>AcrylicSetupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\SetupPage.xaml.cs">
       <DependentUpon>SetupPage.xaml</DependentUpon>
     </Compile>
@@ -238,6 +241,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\MainShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Shell\AcrylicSetupPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

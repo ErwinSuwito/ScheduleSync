@@ -102,11 +102,12 @@ namespace ScheduleSync
         {
             ProviderManager.Instance.GlobalProvider.StateChanged -= GlobalProvider_StateChanged;
 
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => {
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
                 rootFrame = new Frame();
                 if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn)
                 {
-                    rootFrame.Content = new Shell.MainShell(); Window.Current.Content = rootFrame;
+                    rootFrame.Content = new Shell.AcrylicMainShell(); Window.Current.Content = rootFrame;
                 }
                 else
                 {

@@ -133,6 +133,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell\AcrylicMainShell.xaml.cs">
+      <DependentUpon>AcrylicMainShell.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Shell\MainShell.xaml.cs">
       <DependentUpon>MainShell.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\AcrylicMainShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Shell\MainShell.xaml">
       <Generator>MSBuild:Compile</Generator>

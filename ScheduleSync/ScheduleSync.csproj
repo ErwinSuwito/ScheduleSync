@@ -124,6 +124,9 @@
     <Compile Include="Controls\IntakeSettingsControl.xaml.cs">
       <DependentUpon>IntakeSettingsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoginControl.xaml.cs">
+      <DependentUpon>LoginControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess.cs" />
     <Compile Include="Data\ScheduleItem.cs" />
     <Compile Include="Data\SyncService.cs" />
@@ -225,6 +228,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\IntakeSettingsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoginControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

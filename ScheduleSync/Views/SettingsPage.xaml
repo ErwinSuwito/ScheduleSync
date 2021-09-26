@@ -133,6 +133,17 @@
                         <GridViewItem Padding="8,2"
                                       HorizontalAlignment="Stretch"
                                       HorizontalContentAlignment="Stretch">
+                            <StackPanel Tag="Review"
+                                        Orientation="Horizontal"
+                                        Padding="4"
+                                        Spacing="8">
+                                <FontIcon Glyph="&#xE1CE;" />
+                                <TextBlock Text="Rate &amp; Review" />
+                            </StackPanel>
+                        </GridViewItem>
+                        <GridViewItem Padding="8,2"
+                                      HorizontalAlignment="Stretch"
+                                      HorizontalContentAlignment="Stretch">
                             <StackPanel Tag="PrivacyPolicy"
                                         Orientation="Horizontal"
                                         Padding="4"

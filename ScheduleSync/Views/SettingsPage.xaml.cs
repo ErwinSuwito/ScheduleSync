@@ -49,6 +49,11 @@ namespace ScheduleSync.Views
                     await Launcher.LaunchUriAsync(new Uri(@"https://github.com/ErwinSuwito/ScheduleSync/issues"));
                     break;
 
+                case "Review":
+                    // This won't work properly until app is associated with the Store.
+                    await SystemInformation.LaunchStoreForReviewAsync();
+                    break;
+
                 case "PrivacyPolicy":
                     await Launcher.LaunchUriAsync(new Uri(@"http://suwito.codes/privacypolicy/"));
                     break;

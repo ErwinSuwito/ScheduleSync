@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:wgt="using:CommunityToolkit.Graph.Uwp.Controls"
+    xmlns:controls="using:ScheduleSync.Controls"
     mc:Ignorable="d"
     Background="Transparent"
     Loaded="Page_Loaded">
@@ -25,10 +26,15 @@
                        TextWrapping="Wrap"
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
-            <Button x:Name="LoginButton"
-                    Content="Login"
-                    Click="LoginButton_Click"
-                    Margin="0,4,0,0" />
+            <controls:LoginControl Margin="0,12,0,0"/>
         </StackPanel>
+
+        <Button x:Name="NextButton"
+                Style="{StaticResource NavigationBackButtonNormalStyle}"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                FlowDirection="RightToLeft"
+                IsEnabled="{x:Bind IsNextBtnEnabled, Mode=OneWay}"
+                Click="NextButton_Click"/>
     </Grid>
 </Page>

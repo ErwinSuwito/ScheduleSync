@@ -1,0 +1,30 @@
+﻿<UserControl
+    x:Class="ScheduleSync.Controls.LoginControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ScheduleSync.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="72"
+    d:DesignWidth="400"
+    Loaded="UserControl_Loaded">
+
+    <RelativePanel>
+        <StackPanel x:Name="LoggedInPanel"
+                    RelativePanel.AlignLeftWithPanel="True"
+                    RelativePanel.AlignVerticalCenterWithPanel="True">
+            <TextBlock Text="Logged in as: "/>
+            <TextBlock x:Name="UserEmail" 
+                       Text="{x:Bind SignedInAsEmailText, Mode=OneWay}"
+                       d:Text="erwin.suwitoandojo@outlook.com" />
+        </StackPanel>
+        <Button x:Name="LogoutButton"
+                Content="{x:Bind LoginButtonText, Mode=OneWay}"
+                Click="LogoutButton_Click"
+                RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                d:Content="Login"/>
+    </RelativePanel>
+
+</UserControl>

@@ -14,7 +14,8 @@ namespace ScheduleSync.Data
     public enum SyncResult
     {
         Success,
-        Failed
+        Failed,
+        NoSchedule
     }
 
     public class SyncService
@@ -41,6 +42,9 @@ namespace ScheduleSync.Data
 
         public async Task<SyncResult> SyncEventsAsync(List<Schedule> schedules)
         {
+            if (schedules.Count == 0)
+                return SyncResult.NoSchedule;
+
             if (graphClient == null)
                 return SyncResult.Failed;
 

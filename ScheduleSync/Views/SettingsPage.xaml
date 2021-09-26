@@ -92,7 +92,7 @@
                                        Text="ScheduleSync" 
                                        Style="{ThemeResource BodyTextBlockStyle}" 
                                        FontSize="20"
-                                       Margin="12,0,0,0"
+                                       Margin="8,0,0,0"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
                         <TextBlock Text="Version 0.3.1"

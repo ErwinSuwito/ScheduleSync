@@ -45,16 +45,31 @@ namespace ScheduleSync.Views
             var schedule = await data.GetTimetable(IntakeCode, TutorialGroup, isForeignStudent);
             var result = await syncService.SyncEventsAsync(schedule);
 
-            if (result != SyncResult.Success)
-            {
-                ContentDialog contentDialog = new ContentDialog()
-                {
-                    Title = "Unable to sync",
-                    Content = "We're encountering an error while syncing your timetable. Please try again later.",
-                    CloseButtonText = "Ok"
-                };
+            ContentDialog contentDialog;
 
-                await contentDialog.ShowAsync();
+            switch (result)
+            {
+                case SyncResult.Failed:
+                    contentDialog = new ContentDialog()
+                    {
+                        Title = "Unable to sync",
+                        Content = "We're encountering an error while syncing your timetable. Please try again later.",
+                        CloseButtonText = "Ok"
+                    };
+
+                    await contentDialog.ShowAsync();
+                    break;
+
+                case SyncResult.NoSchedule:
+                    contentDialog = new ContentDialog()
+                    {
+                        Title = "No schedule found",
+                        Content = "We didn't found any schedule for your intake. If there is supposed to be a schedule, make sure the intake code in Settings is correct.",
+                        CloseButtonText = "Ok"
+                    };
+
+                    await contentDialog.ShowAsync();
+                    break;
             }
 
             localSettings.Values["LastSyncedDate"] = DateTime.Now.ToShortDateString();

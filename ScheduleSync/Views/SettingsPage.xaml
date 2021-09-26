@@ -10,8 +10,7 @@
     xmlns:wgt="using:CommunityToolkit.Graph.Uwp.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    Background="Transparent"
-    Loaded="Page_Loaded">
+    Background="Transparent">
 
     <ScrollViewer>
         <RelativePanel HorizontalAlignment="Stretch"
@@ -44,17 +43,18 @@
                                            Margin="12,0,0,0"/>
                             </StackPanel>
                             <TextBlock x:Name="IntakeCode"
+                                       Text="{x:Bind IntakeSettings.Intake, Mode=OneWay}"
                                        d:Text="UC2F2008SE(FS) G1"
                                        RelativePanel.AlignRightWithPanel="True"/>
                         </RelativePanel>
                     </muxc:Expander.Header>
                     <controls:IntakeSettingsControl x:Name="IntakeSettings" 
-                                                    HorizontalAlignment="Left"
-                                                    Loaded="IntakeSettings_Loaded"/>
+                                                    HorizontalAlignment="Left" />
                 </muxc:Expander>
 
                 <muxc:Expander x:Name="AccountExpander"
                                Margin="0,8,0,0"
+                               IsExpanded="True"
                                HorizontalContentAlignment="Stretch"
                                HorizontalAlignment="Stretch">
                     <muxc:Expander.Header>
@@ -66,18 +66,7 @@
                             </StackPanel>
                         </RelativePanel>
                     </muxc:Expander.Header>
-                    <RelativePanel>
-                        <StackPanel x:Name="LoggedInPanel">
-                            <TextBlock Text="Logged in as: "/>
-                            <TextBlock x:Name="UserEmail" 
-                                       d:Text="erwin.suwitoandojo@outlook.com" />
-                        </StackPanel>
-                        <Button x:Name="LogoutButton"
-                                Content="Logout"
-                                Click="LogoutButton_Click"
-                                RelativePanel.AlignRightWithPanel="True"
-                                RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                    </RelativePanel>
+                    <controls:LoginControl />
                 </muxc:Expander>
 
                 <muxc:Expander x:Name="AboutExpander"
@@ -103,10 +92,10 @@
                                        Text="ScheduleSync" 
                                        Style="{ThemeResource BodyTextBlockStyle}" 
                                        FontSize="20"
-                                       Margin="12,0,0,0"
+                                       Margin="8,0,0,0"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
-                        <TextBlock Text="Version 0.3.1"
+                        <TextBlock Text="Version 0.3.2"
                                    Margin="44,0,0,0"/>
                         <TextBlock Text="by Erwin Suwitoandojo"
                                    Margin="44,0,0,0"/>

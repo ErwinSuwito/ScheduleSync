@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,8 +38,17 @@ namespace ScheduleSync.Views.Setup
         {
             IntakeSettings.SaveIntakeSettings();
 
-            var parentFrame = Window.Current.Content as Frame;
-            parentFrame.Navigate(typeof(Shell.MainShell), null);
+            OSVersion OperatingSystemVersion = SystemInformation.Instance.OperatingSystemVersion;
+            if (OperatingSystemVersion.Build >= 22000)
+            {
+                var parentFrame = Window.Current.Content as Frame;
+                parentFrame.Navigate(typeof(Shell.MainShell), null);
+            }
+            else
+            {
+                var parentFrame = Window.Current.Content as Frame;
+                parentFrame.Navigate(typeof(Shell.AcrylicMainShell), null);
+            }
         }
     }
 }

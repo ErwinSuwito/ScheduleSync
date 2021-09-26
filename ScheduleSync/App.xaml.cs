@@ -83,7 +83,7 @@ namespace ScheduleSync
 
                 ExtendToTitleBar();
 
-                ApplicationView.PreferredLaunchViewSize = new Size(500, 680);
+                ApplicationView.PreferredLaunchViewSize = new Size(500, 720);
                 ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             }
         }

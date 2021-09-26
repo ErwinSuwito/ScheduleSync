@@ -16,6 +16,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
 using CommunityToolkit.Authentication;
 using Microsoft.Toolkit.Uwp.Helpers;
+using Windows.Storage;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -108,7 +109,9 @@ namespace ScheduleSync
                 OSVersion OperatingSystemVersion = SystemInformation.Instance.OperatingSystemVersion;
 
                 rootFrame = new Frame();
-                if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn)
+                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+                if (ProviderManager.Instance.GlobalProvider.State == ProviderState.SignedIn && localSettings.Values["IntakeCode"] != null)
                 {
                     if (OperatingSystemVersion.Build >= 22000)
                     {

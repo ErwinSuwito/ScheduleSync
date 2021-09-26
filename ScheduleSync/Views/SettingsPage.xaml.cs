@@ -1,7 +1,4 @@
-﻿using CommunityToolkit.Authentication;
-using CommunityToolkit.Graph.Extensions;
-using Microsoft.Graph;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -28,19 +25,9 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
-        IProvider provider = ProviderManager.Instance.GlobalProvider;
-        GraphServiceClient graphClient;
-
         public SettingsPage()
         {
             this.InitializeComponent();
-        }
-
-        private void IntakeSettings_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Gets the intake code of the user (with their student type and tutorial group)
-            // and shows it in a TextBlock inside the expander control header.
-            IntakeCode.Text = IntakeSettings.GetIntakeCode();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

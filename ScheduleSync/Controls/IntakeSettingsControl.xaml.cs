@@ -24,7 +24,7 @@ namespace ScheduleSync.Controls
         public string IntakeCode
         {
             get { return (string)GetValue(IntakeCodeProperty); }
-            set { SetValue(IntakeCodeProperty, value); }
+            set { Intake = GetIntakeCode();  SetValue(IntakeCodeProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for IntakeCode.  This enables animation, styling, binding, etc...
@@ -34,7 +34,7 @@ namespace ScheduleSync.Controls
         public string TutorialGroup
         {
             get { return (string)GetValue(TutorialGroupProperty); }
-            set { SetValue(TutorialGroupProperty, value); }
+            set { Intake = GetIntakeCode(); SetValue(TutorialGroupProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for TutorialGroup.  This enables animation, styling, binding, etc...
@@ -44,12 +44,26 @@ namespace ScheduleSync.Controls
         public bool IsFsStudent
         {
             get { return (bool)GetValue(IsFsStudentProperty); }
-            set { SetValue(IsFsStudentProperty, value); }
+            set { Intake = GetIntakeCode(); SetValue(IsFsStudentProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for IsFsStudent.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IsFsStudentProperty =
             DependencyProperty.Register("IsFsStudent", typeof(bool), typeof(IntakeSettingsControl), new PropertyMetadata(false));
+
+
+
+        public string Intake
+        {
+            get { return (string)GetValue(IntakeProperty); }
+            set { SetValue(IntakeProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Intake.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IntakeProperty =
+            DependencyProperty.Register("Intake", typeof(string), typeof(IntakeSettingsControl), new PropertyMetadata(""));
+
+
 
         public IntakeSettingsControl()
         {

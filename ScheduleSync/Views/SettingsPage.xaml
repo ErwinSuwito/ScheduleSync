@@ -43,13 +43,13 @@
                                            Margin="12,0,0,0"/>
                             </StackPanel>
                             <TextBlock x:Name="IntakeCode"
+                                       Text="{x:Bind IntakeSettings.Intake, Mode=OneWay}"
                                        d:Text="UC2F2008SE(FS) G1"
                                        RelativePanel.AlignRightWithPanel="True"/>
                         </RelativePanel>
                     </muxc:Expander.Header>
                     <controls:IntakeSettingsControl x:Name="IntakeSettings" 
-                                                    HorizontalAlignment="Left"
-                                                    Loaded="IntakeSettings_Loaded"/>
+                                                    HorizontalAlignment="Left" />
                 </muxc:Expander>
 
                 <muxc:Expander x:Name="AccountExpander"

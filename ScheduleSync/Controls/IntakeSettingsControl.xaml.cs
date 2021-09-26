@@ -59,7 +59,7 @@ namespace ScheduleSync.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            if (localSettings.Values["RequireFirstRun"] != null)
+            if (localSettings.Values["IntakeCode"] != null)
             {
                 IntakeCode = localSettings.Values["IntakeCode"].ToString();
                 TutorialGroup = localSettings.Values["TutorialGroup"].ToString();

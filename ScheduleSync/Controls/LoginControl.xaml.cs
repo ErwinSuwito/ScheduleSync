@@ -65,7 +65,8 @@ namespace ScheduleSync.Controls
                     Title = "Are you sure you want to logout?",
                     Content = "We won't be able to sync your calendar after you logout. You will be asked to sign in again the next time you open the app.",
                     PrimaryButtonText = "Logout",
-                    CloseButtonText = "Cancel"
+                    CloseButtonText = "Cancel",
+                    DefaultButton = ContentDialogButton.Close
                 };
 
                 var result = await contentDialog.ShowAsync();

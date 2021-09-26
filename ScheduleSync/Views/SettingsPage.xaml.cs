@@ -49,63 +49,6 @@ namespace ScheduleSync.Views
             base.OnNavigatingFrom(e);
         }
 
-        private async void LogoutButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (provider.State == ProviderState.SignedIn)
-            {
-                ContentDialog contentDialog = new ContentDialog()
-                {
-                    Title = "Are you sure you want to logout?",
-                    Content = "We won't be able to sync your calendar after you logout. You will be asked to sign in again the next time you open the app.",
-                    PrimaryButtonText = "Logout",
-                    CloseButtonText = "Cancel"
-                };
-
-                var result = await contentDialog.ShowAsync();
-                if (result == ContentDialogResult.Primary)
-                {
-                    if (provider != null)
-                    {
-                        await provider.SignOutAsync();
-                    }
-                }
-            }
-            else if(provider.State == ProviderState.SignedOut)
-            {
-                await provider.SignInAsync();
-            }
-        }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (provider != null)
-            {
-                provider.StateChanged += Provider_StateChanged;
-                await RefreshUserInfoAsync();
-            }
-        }
-
-        private async Task RefreshUserInfoAsync()
-        {
-            if (provider.State == ProviderState.SignedIn)
-            {
-                LogoutButton.Content = "Logout";
-                graphClient = provider.GetClient();
-                var me = await graphClient.Me.Request().GetAsync();
-                UserEmail.Text = me.UserPrincipalName;
-            }
-            else if (provider.State == ProviderState.SignedOut)
-            {
-                LogoutButton.Content = "Login";
-                UserEmail.Text = "You are not signed in";
-            }
-        }
-
-        private async void Provider_StateChanged(object sender, ProviderStateChangedEventArgs e)
-        {
-            await  RefreshUserInfoAsync();
-        }
-
         private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var item = e.ClickedItem as StackPanel;

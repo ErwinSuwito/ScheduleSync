@@ -10,8 +10,7 @@
     xmlns:wgt="using:CommunityToolkit.Graph.Uwp.Controls"
     mc:Ignorable="d"
     muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    Background="Transparent"
-    Loaded="Page_Loaded">
+    Background="Transparent">
 
     <ScrollViewer>
         <RelativePanel HorizontalAlignment="Stretch"
@@ -67,18 +66,7 @@
                             </StackPanel>
                         </RelativePanel>
                     </muxc:Expander.Header>
-                    <RelativePanel>
-                        <StackPanel x:Name="LoggedInPanel">
-                            <TextBlock Text="Logged in as: "/>
-                            <TextBlock x:Name="UserEmail" 
-                                       d:Text="erwin.suwitoandojo@outlook.com" />
-                        </StackPanel>
-                        <Button x:Name="LogoutButton"
-                                Content="Logout"
-                                Click="LogoutButton_Click"
-                                RelativePanel.AlignRightWithPanel="True"
-                                RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                    </RelativePanel>
+                    <controls:LoginControl />
                 </muxc:Expander>
 
                 <muxc:Expander x:Name="AboutExpander"

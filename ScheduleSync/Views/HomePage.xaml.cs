@@ -127,8 +127,8 @@ namespace ScheduleSync.Views
         private void UpdateDates()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            string syncedUntilDate = (localSettings.Values["LastScheduleDate"] == null) ? "Never" : localSettings.Values["LastScheduleDate"].ToString();
-            string lastSyncDate = (localSettings.Values["LastSyncedDate"] == null) ? "Never" : localSettings.Values["LastSyncedDate"].ToString();
+            string syncedUntilDate = (localSettings.Values["LastScheduleDate"] == null) ? "Never" : (localSettings.Values["LastScheduleDate"].ToString() == DateTime.Today.ToShortDateString() ? "Today" : localSettings.Values["LastScheduleDate"].ToString());
+            string lastSyncDate = (localSettings.Values["LastSyncedDate"] == null) ? "Never" : (localSettings.Values["LastSyncedDate"].ToString() == DateTime.Today.ToShortDateString()) ? "Today" : localSettings.Values["LastSyncedDate"].ToString();
             SyncUntilDate.Text = syncedUntilDate;
             LastSyncDate.Text = lastSyncDate;
         }

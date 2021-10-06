@@ -29,25 +29,43 @@
                         <TextBlock Text="Timetable Sync" 
                                    RelativePanel.AlignLeftWithPanel="True"
                                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                        <muxc:ProgressRing x:Name="ProgressRing"
-                                           IsActive="False" 
-                                           Width="24"
-                                           Height="24"
-                                           Visibility="Collapsed"
-                                           RelativePanel.AlignHorizontalCenterWith="SyncButton"
-                                           RelativePanel.AlignVerticalCenterWithPanel="True">
-                            <animations:Implicit.ShowAnimations>
-                                <animations:OpacityAnimation Duration="0:0:0.2" From="0" To="1.0"/>
-                            </animations:Implicit.ShowAnimations>
-                            <animations:Implicit.HideAnimations>
-                                <animations:OpacityAnimation Duration="0:0:0.2" From="1.0" To="0"/>
-                            </animations:Implicit.HideAnimations>
-                        </muxc:ProgressRing>
                         <Button x:Name="SyncButton"
-                                Content="Sync Now" 
                                 Click="SyncButton_Click"
                                 Style="{ThemeResource AccentButtonStyle}"
-                                RelativePanel.AlignRightWithPanel="True" />
+                                RelativePanel.AlignRightWithPanel="True" >
+                            <Button.Content>
+                                <Grid>
+                                    <SymbolIcon x:Name="SyncSuccessIcon"
+                                                Symbol="Accept"
+                                                Height="12"
+                                                Visibility="Collapsed">
+                                        <animations:Implicit.ShowAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
+                                        </animations:Implicit.ShowAnimations>
+                                        <animations:Implicit.HideAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
+                                        </animations:Implicit.HideAnimations>
+                                    </SymbolIcon>
+                                    <TextBlock x:Name="SyncNowText"
+                                               Text="Sync Now" />
+                                    <muxc:ProgressRing x:Name="ProgressRing"
+                                                       Foreground="{ThemeResource AppBarBackgroundThemeBrush}"
+                                                       IsActive="False"
+                                                       IsEnabled="False"
+                                                       Width="16"
+                                                       Height="16"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center">
+                                        <animations:Implicit.ShowAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
+                                        </animations:Implicit.ShowAnimations>
+                                        <animations:Implicit.HideAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
+                                        </animations:Implicit.HideAnimations>
+                                    </muxc:ProgressRing>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
                     </RelativePanel>
                 </muxc:Expander.Header>
                 <StackPanel Orientation="Vertical">

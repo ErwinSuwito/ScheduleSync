@@ -1,4 +1,5 @@
-﻿using ScheduleSync.Data;
+﻿using Microsoft.Toolkit.Uwp.UI.Animations;
+using ScheduleSync.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,68 +28,95 @@ namespace ScheduleSync.Views
     {
         SyncService syncService = new SyncService();
         DataAccess data = new DataAccess();
+        bool IsLoading = false;
+        SyncResult result;
+        DispatcherTimer dt = new DispatcherTimer();
 
         public HomePage()
         {
             this.InitializeComponent();
+            dt.Tick += Dt_Tick;
+            dt.Interval = new TimeSpan(0, 0, 3);
         }
 
         private async void SyncButton_Click(object sender, RoutedEventArgs e)
         {
-            StartSyncingAnimation();
-
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            string IntakeCode = localSettings.Values["IntakeCode"].ToString();
-            string TutorialGroup = localSettings.Values["TutorialGroup"].ToString();
-            bool.TryParse(localSettings.Values["IsFsStudent"].ToString(), out bool isForeignStudent);
-
-            var schedule = await data.GetTimetable(IntakeCode, TutorialGroup, isForeignStudent);
-            var result = await syncService.SyncEventsAsync(schedule);
-
-            ContentDialog contentDialog;
-
-            switch (result)
+            if (!IsLoading)
             {
-                case SyncResult.Failed:
-                    contentDialog = new ContentDialog()
-                    {
-                        Title = "Unable to sync",
-                        Content = "We're encountering an error while syncing your timetable. Please try again later.",
-                        CloseButtonText = "Ok"
-                    };
+                StartSyncingAnimation();
 
-                    await contentDialog.ShowAsync();
-                    break;
+                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+                string IntakeCode = localSettings.Values["IntakeCode"].ToString();
+                string TutorialGroup = localSettings.Values["TutorialGroup"].ToString();
+                bool.TryParse(localSettings.Values["IsFsStudent"].ToString(), out bool isForeignStudent);
 
-                case SyncResult.NoSchedule:
-                    contentDialog = new ContentDialog()
-                    {
-                        Title = "No schedule found",
-                        Content = "We didn't found any schedule for your intake. If there is supposed to be a schedule, make sure the intake code in Settings is correct.",
-                        CloseButtonText = "Ok"
-                    };
+                var schedule = await data.GetTimetable(IntakeCode, TutorialGroup, isForeignStudent);
+                result = await syncService.SyncEventsAsync(schedule);
 
-                    await contentDialog.ShowAsync();
-                    break;
+                ContentDialog contentDialog;
+
+                switch (result)
+                {
+                    case SyncResult.Failed:
+                        contentDialog = new ContentDialog()
+                        {
+                            Title = "Unable to sync",
+                            Content = "We're encountering an error while syncing your timetable. Please try again later.",
+                            CloseButtonText = "Ok"
+                        };
+
+                        await contentDialog.ShowAsync();
+                        break;
+
+                    case SyncResult.NoSchedule:
+                        contentDialog = new ContentDialog()
+                        {
+                            Title = "No schedule found",
+                            Content = "We didn't found any schedule for your intake. If there is supposed to be a schedule, make sure the intake code in Settings is correct.",
+                            CloseButtonText = "Ok"
+                        };
+
+                        await contentDialog.ShowAsync();
+                        break;
+                }
+
+                localSettings.Values["LastSyncedDate"] = DateTime.Now.ToShortDateString();
+                StopSyncingAnimation();
             }
-
-            localSettings.Values["LastSyncedDate"] = DateTime.Now.ToShortDateString();
-            StopSyncingAnimation();
         }
 
         private void StartSyncingAnimation()
         {
-            SyncButton.IsEnabled = false;
+            AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromSeconds(0.5)).StartAsync(SyncNowText);
+            IsLoading = true;
             ProgressRing.Visibility = Visibility.Visible;
             ProgressRing.IsActive = true;
         }
 
         private void StopSyncingAnimation()
         {
-            SyncButton.IsEnabled = true;
+            IsLoading = false;
             ProgressRing.Visibility = Visibility.Collapsed;
             ProgressRing.IsActive = false;
+
+            if (result == SyncResult.Success || result == SyncResult.NoSchedule)
+            {
+                dt.Start();
+                SyncSuccessIcon.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromSeconds(0.5)).StartAsync(SyncNowText);
+            }
+
             UpdateDates();
+        }
+
+        private void Dt_Tick(object sender, object e)
+        {
+            dt.Stop();
+            SyncSuccessIcon.Visibility = Visibility.Collapsed;
+            AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromSeconds(0.5)).StartAsync(SyncNowText);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

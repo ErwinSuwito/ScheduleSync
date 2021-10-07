@@ -71,14 +71,12 @@
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <TextBlock Text="Last sync:" />
-                        <TextBlock x:Name="LastSyncDate"
-                                   Text="Today" 
+                        <TextBlock Text="{x:Bind LastSyncDate, Mode=OneWay}" 
                                    Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <TextBlock Text="Synced until:" />
-                        <TextBlock x:Name="SyncUntilDate" 
-                                   Text="Today" 
+                        <TextBlock Text="{x:Bind SyncUntilDate, Mode=OneWay}" 
                                    Margin="4,0,0,0" />
                     </StackPanel>
                 </StackPanel>

@@ -2,9 +2,11 @@
 using ScheduleSync.Data;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -24,13 +26,35 @@ namespace ScheduleSync.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class HomePage : Page
+    public sealed partial class HomePage : Page, INotifyPropertyChanged
     {
         SyncService syncService = new SyncService();
         DataAccess data = new DataAccess();
         bool IsLoading = false;
         SyncResult result;
         DispatcherTimer dt = new DispatcherTimer();
+        private string syncUntilDate;
+        private string lastSyncDate;
+
+        public string SyncUntilDate
+        {
+            get { return this.syncUntilDate; }
+            set
+            {
+                this.syncUntilDate = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string LastSyncDate
+        {
+            get { return this.lastSyncDate; }
+            set
+            {
+                this.lastSyncDate = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public HomePage()
         {
@@ -129,8 +153,16 @@ namespace ScheduleSync.Views
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             string syncedUntilDate = (localSettings.Values["LastScheduleDate"] == null) ? "Never" : (localSettings.Values["LastScheduleDate"].ToString() == DateTime.Today.ToShortDateString() ? "Today" : localSettings.Values["LastScheduleDate"].ToString());
             string lastSyncDate = (localSettings.Values["LastSyncedDate"] == null) ? "Never" : (localSettings.Values["LastSyncedDate"].ToString() == DateTime.Today.ToShortDateString()) ? "Today" : localSettings.Values["LastSyncedDate"].ToString();
-            SyncUntilDate.Text = syncedUntilDate;
-            LastSyncDate.Text = lastSyncDate;
+            SyncUntilDate = syncedUntilDate;
+            LastSyncDate = lastSyncDate;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            // Raise the PropertyChanged event, passing the name of the property whose value has changed.
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
     }
 }

@@ -30,12 +30,14 @@ namespace ScheduleSync.Views
     {
         SyncService syncService = new SyncService();
         DataAccess data = new DataAccess();
-        bool IsLoading = false;
+        private bool isLoading = false;
+        private bool showCheckIcon = false;
         SyncResult result;
         DispatcherTimer dt = new DispatcherTimer();
         private string syncUntilDate;
         private string lastSyncDate;
 
+        #region Getter Setter methods
         public string SyncUntilDate
         {
             get { return this.syncUntilDate; }
@@ -55,6 +57,27 @@ namespace ScheduleSync.Views
                 this.OnPropertyChanged();
             }
         }
+
+        public bool IsLoading
+        {
+            get {  return this.isLoading; }
+            set 
+            {  
+                this.isLoading = value; 
+                this.OnPropertyChanged();
+            }
+        }
+
+        public bool ShowCheckIcon
+        {
+            get { return this.showCheckIcon; }
+            set
+            {
+                this.showCheckIcon = value;
+                this.OnPropertyChanged();
+            }
+        }
+        #endregion
 
         public HomePage()
         {
@@ -113,20 +136,16 @@ namespace ScheduleSync.Views
         {
             AnimationBuilder.Create().Opacity(to: 0, duration: TimeSpan.FromSeconds(0.5)).StartAsync(SyncNowText);
             IsLoading = true;
-            ProgressRing.Visibility = Visibility.Visible;
-            ProgressRing.IsActive = true;
         }
 
         private void StopSyncingAnimation()
         {
             IsLoading = false;
-            ProgressRing.Visibility = Visibility.Collapsed;
-            ProgressRing.IsActive = false;
 
             if (result == SyncResult.Success || result == SyncResult.NoSchedule)
             {
                 dt.Start();
-                SyncSuccessIcon.Visibility = Visibility.Visible;
+                ShowCheckIcon = true;
             }
             else
             {
@@ -139,7 +158,7 @@ namespace ScheduleSync.Views
         private void Dt_Tick(object sender, object e)
         {
             dt.Stop();
-            SyncSuccessIcon.Visibility = Visibility.Collapsed;
+            ShowCheckIcon = false;
             AnimationBuilder.Create().Opacity(to: 1, duration: TimeSpan.FromSeconds(0.5)).StartAsync(SyncNowText);
         }
 

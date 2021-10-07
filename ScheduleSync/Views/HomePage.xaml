@@ -5,10 +5,15 @@
     xmlns:local="using:ScheduleSync.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     Background="Transparent"
     Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid Padding="28,24">
         <StackPanel x:Name="HeaderStackPanel">
@@ -35,10 +40,9 @@
                                 RelativePanel.AlignRightWithPanel="True" >
                             <Button.Content>
                                 <Grid>
-                                    <SymbolIcon x:Name="SyncSuccessIcon"
-                                                Symbol="Accept"
+                                    <SymbolIcon Symbol="Accept"
                                                 Height="12"
-                                                Visibility="Collapsed">
+                                                Visibility="{x:Bind ShowCheckIcon, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                                         <animations:Implicit.ShowAnimations>
                                             <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
                                         </animations:Implicit.ShowAnimations>
@@ -50,8 +54,8 @@
                                                Text="Sync Now" />
                                     <muxc:ProgressRing x:Name="ProgressRing"
                                                        Foreground="{ThemeResource AppBarBackgroundThemeBrush}"
-                                                       IsActive="False"
-                                                       IsEnabled="False"
+                                                       Visibility="{x:Bind IsLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                                       IsActive="{x:Bind IsLoading, Mode=OneWay}"
                                                        Width="16"
                                                        Height="16"
                                                        HorizontalAlignment="Center"

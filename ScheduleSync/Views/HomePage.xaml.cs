@@ -61,10 +61,10 @@ namespace ScheduleSync.Views
 
         public bool IsLoading
         {
-            get {  return this.isLoading; }
-            set 
-            {  
-                this.isLoading = value; 
+            get { return this.isLoading; }
+            set
+            {
+                this.isLoading = value;
                 this.OnPropertyChanged();
             }
         }
@@ -172,13 +172,23 @@ namespace ScheduleSync.Views
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             DateTimeOffset syncedUntilDateTimeOffset, lastSyncDateTimeOffset;
+
             if (localSettings.Values["LastScheduleDate"] != null)
                 DateTimeOffset.TryParse(localSettings.Values["LastScheduleDate"].ToString(), out syncedUntilDateTimeOffset);
+
             if (localSettings.Values["LastSyncedDate"] != null)
                 DateTimeOffset.TryParse(localSettings.Values["LastSyncedDate"].ToString(), out lastSyncDateTimeOffset);
 
-            SyncUntilDate = (syncedUntilDateTimeOffset != DateTimeOffset.MinValue) ?  syncedUntilDateTimeOffset.Humanize() : "Never";
             LastSyncDate = (lastSyncDateTimeOffset != DateTimeOffset.MinValue) ? lastSyncDateTimeOffset.Humanize() : "Never";
+
+            if (syncedUntilDateTimeOffset.DateTime < DateTime.Now)
+            {
+                SyncUntilDate = (syncedUntilDateTimeOffset != DateTimeOffset.MinValue) ? syncedUntilDateTimeOffset.Humanize() : "Never";
+            }
+            else
+            {
+                SyncUntilDate = syncedUntilDateTimeOffset.DateTime.ToShortDateString();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

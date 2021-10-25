@@ -177,8 +177,8 @@ namespace ScheduleSync.Views
             if (localSettings.Values["LastSyncedDate"] != null)
                 DateTimeOffset.TryParse(localSettings.Values["LastSyncedDate"].ToString(), out lastSyncDateTimeOffset);
 
-            SyncUntilDate = syncedUntilDateTimeOffset.Humanize();
-            LastSyncDate = lastSyncDateTimeOffset.Humanize();
+            SyncUntilDate = (syncedUntilDateTimeOffset != DateTimeOffset.MinValue) ?  syncedUntilDateTimeOffset.Humanize() : "Never";
+            LastSyncDate = (lastSyncDateTimeOffset != DateTimeOffset.MinValue) ? lastSyncDateTimeOffset.Humanize() : "Never";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.UI.Animations;
+﻿using Humanizer;
+using Microsoft.Toolkit.Uwp.UI.Animations;
 using ScheduleSync.Data;
 using System;
 using System.Collections.Generic;
@@ -127,7 +128,7 @@ namespace ScheduleSync.Views
                         break;
                 }
 
-                localSettings.Values["LastSyncedDate"] = DateTime.Now.ToShortDateString();
+                localSettings.Values["LastSyncedDate"] = DateTimeOffset.Now;
                 StopSyncingAnimation();
             }
         }
@@ -170,10 +171,14 @@ namespace ScheduleSync.Views
         private void UpdateDates()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            string syncedUntilDate = (localSettings.Values["LastScheduleDate"] == null) ? "Never" : (localSettings.Values["LastScheduleDate"].ToString() == DateTime.Today.ToShortDateString() ? "Today" : localSettings.Values["LastScheduleDate"].ToString());
-            string lastSyncDate = (localSettings.Values["LastSyncedDate"] == null) ? "Never" : (localSettings.Values["LastSyncedDate"].ToString() == DateTime.Today.ToShortDateString()) ? "Today" : localSettings.Values["LastSyncedDate"].ToString();
-            SyncUntilDate = syncedUntilDate;
-            LastSyncDate = lastSyncDate;
+            DateTimeOffset syncedUntilDateTimeOffset, lastSyncDateTimeOffset;
+            if (localSettings.Values["LastScheduleDate"] != null)
+                DateTimeOffset.TryParse(localSettings.Values["LastScheduleDate"].ToString(), out syncedUntilDateTimeOffset);
+            if (localSettings.Values["LastSyncedDate"] != null)
+                DateTimeOffset.TryParse(localSettings.Values["LastSyncedDate"].ToString(), out lastSyncDateTimeOffset);
+
+            SyncUntilDate = syncedUntilDateTimeOffset.Humanize();
+            LastSyncDate = lastSyncDateTimeOffset.Humanize();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

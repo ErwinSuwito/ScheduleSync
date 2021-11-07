@@ -19,5 +19,4 @@ namespace ScheduleSync.Controls
             return ((bool)value) == false ? true : false;
         }
     }
-
 }

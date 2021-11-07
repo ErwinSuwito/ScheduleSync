@@ -28,7 +28,6 @@ namespace ScheduleSync.Data
         public string CLASS_CODE { get; set; }
     }
 
-
     public class Root
     {
         public List<Schedule> schedules { get; set; }

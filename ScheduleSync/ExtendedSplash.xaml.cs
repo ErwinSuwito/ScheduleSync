@@ -149,7 +149,5 @@ namespace ScheduleSync
                 PositionRing();
             }
         }
-
-
     }
 }

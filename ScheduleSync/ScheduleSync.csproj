@@ -128,7 +128,8 @@
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\DataAccess.cs" />
-    <Compile Include="Data\ScheduleItem.cs" />
+    <Compile Include="Data\Schedule.cs" />
+    <Compile Include="Data\ScheduleRoot.cs" />
     <Compile Include="Data\SyncService.cs" />
     <Compile Include="ExtendedSplash.xaml.cs">
       <DependentUpon>ExtendedSplash.xaml</DependentUpon>

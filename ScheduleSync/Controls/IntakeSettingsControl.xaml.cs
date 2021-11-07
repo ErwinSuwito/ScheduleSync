@@ -51,8 +51,6 @@ namespace ScheduleSync.Controls
         public static readonly DependencyProperty IsFsStudentProperty =
             DependencyProperty.Register("IsFsStudent", typeof(bool), typeof(IntakeSettingsControl), new PropertyMetadata(false));
 
-
-
         public string Intake
         {
             get { return (string)GetValue(IntakeProperty); }
@@ -62,8 +60,6 @@ namespace ScheduleSync.Controls
         // Using a DependencyProperty as the backing store for Intake.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty IntakeProperty =
             DependencyProperty.Register("Intake", typeof(string), typeof(IntakeSettingsControl), new PropertyMetadata(""));
-
-
 
         public IntakeSettingsControl()
         {

@@ -19,10 +19,11 @@ namespace ScheduleSync.Controls
 {
     public sealed partial class NoticeContentDialog : ContentDialog
     {
-        public NoticeContentDialog(string titleContent)
+        public NoticeContentDialog(string titleContent, string content)
         {
             this.InitializeComponent();
             this.Title = titleContent;
+            this.MarkdownTextBlock.Text = content;
         }
 
         private async void MarkdownTextBlock_LinkClicked(object sender, Microsoft.Toolkit.Uwp.UI.Controls.LinkClickedEventArgs e)

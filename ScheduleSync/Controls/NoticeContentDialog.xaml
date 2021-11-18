@@ -8,12 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     CloseButtonText="Close">
+    <ContentDialog.Resources>
+        <Style TargetType="local:NoticeContentDialog" BasedOn="{StaticResource DefaultContentDialogStyle}"/>
+    </ContentDialog.Resources>
 
     <ScrollViewer VerticalScrollMode="Enabled"
                   VerticalScrollBarVisibility="Auto"
                   HorizontalScrollMode="Disabled"
                   HorizontalScrollBarVisibility="Hidden"
-                  HorizontalContentAlignment="Stretch">
+                  HorizontalContentAlignment="Stretch"
+                  MaxHeight="452">
         <controls:MarkdownTextBlock x:Name="MarkdownTextBlock"
                                     IsTextSelectionEnabled="True"
                                     HorizontalAlignment="Stretch"

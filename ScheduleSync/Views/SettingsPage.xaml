@@ -100,67 +100,34 @@
                 </muxc:Expander>
                 <muxc:Expander x:Name="ExtrasExpander"
                                Margin="0,8,0,0"
+                               IsExpanded="True"
                                HorizontalContentAlignment="Stretch"
                                HorizontalAlignment="Stretch">
                     <muxc:Expander.Header>
                         <RelativePanel>
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon Glyph="&#xE10C;" />
-                                <TextBlock Text="Extras"
+                                <FontIcon Glyph="&#xE167;" />
+                                <TextBlock Text="Useful Links"
                                            Margin="12,0,0,0"/>
                             </StackPanel>
                         </RelativePanel>
                     </muxc:Expander.Header>
-                    <GridView SelectionMode="None"
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              IsItemClickEnabled="True"
-                              ItemClick="GridView_ItemClick">
-                        <GridViewItem Padding="8,2"
-                                      HorizontalAlignment="Stretch"
-                                      HorizontalContentAlignment="Stretch">
-                            <StackPanel Tag="Feedback"
-                                        Orientation="Horizontal"
-                                        Padding="4"
-                                        Spacing="8">
-                                <FontIcon Glyph="&#xED15;" />
-                                <TextBlock Text="Send Feedback" />
-                            </StackPanel>
-                        </GridViewItem>
-                        <GridViewItem Padding="8,2"
-                                      HorizontalAlignment="Stretch"
-                                      HorizontalContentAlignment="Stretch">
-                            <StackPanel Tag="Review"
-                                        Orientation="Horizontal"
-                                        Padding="4"
-                                        Spacing="8">
-                                <FontIcon Glyph="&#xE1CE;" />
-                                <TextBlock Text="Rate &amp; Review" />
-                            </StackPanel>
-                        </GridViewItem>
-                        <GridViewItem Padding="8,2"
-                                      HorizontalAlignment="Stretch"
-                                      HorizontalContentAlignment="Stretch">
-                            <StackPanel Tag="PrivacyPolicy"
-                                        Orientation="Horizontal"
-                                        Padding="4"
-                                        Spacing="8">
-                                <FontIcon Glyph="&#xE72E;" />
-                                <TextBlock Text="Privacy Policy" />
-                            </StackPanel>
-                        </GridViewItem>
-                        <GridViewItem Padding="8,2"
-                                      HorizontalAlignment="Stretch"
-                                      HorizontalContentAlignment="Stretch">
-                            <StackPanel Tag="Github"
-                                        Orientation="Horizontal"
-                                        Padding="4"
-                                        Spacing="8">
-                                <FontIcon Glyph="&#xE943;" />
-                                <TextBlock Text="Source code" />
-                            </StackPanel>
-                        </GridViewItem>
-                    </GridView>
+                    <Grid Margin="20,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <HyperlinkButton Content="Source Code" NavigateUri="https://github.com/ErwinSuwito/ScheduleSync" />
+                            <HyperlinkButton Content="Privacy Policy" Tag="PrivacyPolicy" Click="HyperlinkButton_Click" />
+                            <HyperlinkButton Content="Rate and Review" Tag="Review" Click="HyperlinkButton_Click" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <HyperlinkButton Content="License" Tag="License" Click="HyperlinkButton_Click" />
+                            <HyperlinkButton Content="Third Party Notices" Tag="ThirdPartyNotice" Click="HyperlinkButton_Click" />
+                            <HyperlinkButton Content="Feedback" NavigateUri="https://github.com/ErwinSuwito/ScheduleSync/issues/" />
+                        </StackPanel>
+                    </Grid>
                 </muxc:Expander>
             </StackPanel>
         </RelativePanel>

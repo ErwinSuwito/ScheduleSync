@@ -127,8 +127,12 @@
     <Compile Include="Controls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NoticeContentDialog.xaml.cs">
+      <DependentUpon>NoticeContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess.cs" />
-    <Compile Include="Data\ScheduleItem.cs" />
+    <Compile Include="Data\Schedule.cs" />
+    <Compile Include="Data\ScheduleRoot.cs" />
     <Compile Include="Data\SyncService.cs" />
     <Compile Include="ExtendedSplash.xaml.cs">
       <DependentUpon>ExtendedSplash.xaml</DependentUpon>
@@ -235,6 +239,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\NoticeContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ExtendedSplash.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -286,6 +294,9 @@
     <PackageReference Include="CommunityToolkit.Graph.Uwp">
       <Version>7.1.0</Version>
     </PackageReference>
+    <PackageReference Include="Humanizer.Core">
+      <Version>2.11.10</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>4.4.0</Version>
     </PackageReference>
@@ -295,15 +306,26 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>7.1.0</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
       <Version>7.1.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Behaviors">
       <Version>7.1.0</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
+      <Version>7.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.7.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Notices\License.md" />
+    <Content Include="Assets\Notices\PrivacyPolicy.md" />
+    <Content Include="Assets\Notices\ThirdPartyLicenses.md" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

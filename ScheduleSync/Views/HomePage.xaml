@@ -5,10 +5,15 @@
     xmlns:local="using:ScheduleSync.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" 
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     Background="Transparent"
     Loaded="Page_Loaded">
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
 
     <Grid Padding="28,24">
         <StackPanel x:Name="HeaderStackPanel">
@@ -29,38 +34,53 @@
                         <TextBlock Text="Timetable Sync" 
                                    RelativePanel.AlignLeftWithPanel="True"
                                    RelativePanel.AlignVerticalCenterWithPanel="True"/>
-                        <muxc:ProgressRing x:Name="ProgressRing"
-                                           IsActive="False" 
-                                           Width="24"
-                                           Height="24"
-                                           Visibility="Collapsed"
-                                           RelativePanel.AlignHorizontalCenterWith="SyncButton"
-                                           RelativePanel.AlignVerticalCenterWithPanel="True">
-                            <animations:Implicit.ShowAnimations>
-                                <animations:OpacityAnimation Duration="0:0:0.2" From="0" To="1.0"/>
-                            </animations:Implicit.ShowAnimations>
-                            <animations:Implicit.HideAnimations>
-                                <animations:OpacityAnimation Duration="0:0:0.2" From="1.0" To="0"/>
-                            </animations:Implicit.HideAnimations>
-                        </muxc:ProgressRing>
                         <Button x:Name="SyncButton"
-                                Content="Sync Now" 
                                 Click="SyncButton_Click"
                                 Style="{ThemeResource AccentButtonStyle}"
-                                RelativePanel.AlignRightWithPanel="True" />
+                                RelativePanel.AlignRightWithPanel="True" >
+                            <Button.Content>
+                                <Grid>
+                                    <SymbolIcon Symbol="Accept"
+                                                Height="12"
+                                                Visibility="{x:Bind ShowCheckIcon, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <animations:Implicit.ShowAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
+                                        </animations:Implicit.ShowAnimations>
+                                        <animations:Implicit.HideAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
+                                        </animations:Implicit.HideAnimations>
+                                    </SymbolIcon>
+                                    <TextBlock x:Name="SyncNowText"
+                                               Text="Sync Now" />
+                                    <muxc:ProgressRing x:Name="ProgressRing"
+                                                       Foreground="{ThemeResource AppBarBackgroundThemeBrush}"
+                                                       Visibility="{x:Bind IsLoading, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                                       IsActive="{x:Bind IsLoading, Mode=OneWay}"
+                                                       Width="16"
+                                                       Height="16"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center">
+                                        <animations:Implicit.ShowAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
+                                        </animations:Implicit.ShowAnimations>
+                                        <animations:Implicit.HideAnimations>
+                                            <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
+                                        </animations:Implicit.HideAnimations>
+                                    </muxc:ProgressRing>
+                                </Grid>
+                            </Button.Content>
+                        </Button>
                     </RelativePanel>
                 </muxc:Expander.Header>
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <TextBlock Text="Last sync:" />
-                        <TextBlock x:Name="LastSyncDate"
-                                   Text="Today" 
+                        <TextBlock Text="{x:Bind LastSyncDate, Mode=OneWay}" 
                                    Margin="4,0,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                         <TextBlock Text="Synced until:" />
-                        <TextBlock x:Name="SyncUntilDate" 
-                                   Text="Today" 
+                        <TextBlock Text="{x:Bind SyncUntilDate, Mode=OneWay}" 
                                    Margin="4,0,0,0" />
                     </StackPanel>
                 </StackPanel>

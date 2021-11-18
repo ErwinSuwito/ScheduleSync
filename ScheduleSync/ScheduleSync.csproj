@@ -127,6 +127,9 @@
     <Compile Include="Controls\LoginControl.xaml.cs">
       <DependentUpon>LoginControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\NoticeContentDialog.xaml.cs">
+      <DependentUpon>NoticeContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess.cs" />
     <Compile Include="Data\Schedule.cs" />
     <Compile Include="Data\ScheduleRoot.cs" />
@@ -233,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoginControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\NoticeContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

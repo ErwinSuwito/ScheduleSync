@@ -130,6 +130,9 @@
     <Compile Include="Controls\NoticeContentDialog.xaml.cs">
       <DependentUpon>NoticeContentDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SyncOtherIntake.xaml.cs">
+      <DependentUpon>SyncOtherIntakeContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\DataAccess.cs" />
     <Compile Include="Data\Schedule.cs" />
     <Compile Include="Data\ScheduleRoot.cs" />
@@ -240,6 +243,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NoticeContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SyncOtherIntakeContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

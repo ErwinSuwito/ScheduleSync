@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using ScheduleSync.Controls;
+using System;
 using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -25,6 +16,8 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class SettingsPage : Page
     {
+        public string ApplicationVersion => $"Version {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+
         public SettingsPage()
         {
             this.InitializeComponent();
@@ -38,20 +31,48 @@ namespace ScheduleSync.Views
 
         private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var item = e.ClickedItem as StackPanel;
 
-            switch (item.Tag)
+        }
+
+        private async Task<string> GetNotices(string path)
+        {
+            StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri(path));
+
+            if (file != null)
             {
-                case "Feedback":
-                    await Launcher.LaunchUriAsync(new Uri(@"https://github.com/ErwinSuwito/ScheduleSync/issues"));
+                return System.IO.File.ReadAllText(file.Path);
+            }
+
+            return string.Empty;
+        }
+
+        private async void HyperlinkButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            HyperlinkButton btn = (HyperlinkButton)sender;
+
+            switch (btn.Tag)
+            {
+                case "Review":
+                    // This won't work properly until app is associated with the Store.
+                    await SystemInformation.LaunchStoreForReviewAsync();
                     break;
 
                 case "PrivacyPolicy":
-                    await Launcher.LaunchUriAsync(new Uri(@"http://suwito.codes/privacypolicy/"));
+                    string privacyPolicy = await GetNotices("ms-appx:///Assets/Notices/PrivacyPolicy.md");
+                    var privacyPolicyDialog = new NoticeContentDialog("Privacy Policy", privacyPolicy);
+                    await privacyPolicyDialog.ShowAsync();
                     break;
 
-                case "Github":
-                    await Launcher.LaunchUriAsync(new Uri(@"https://github.com/ErwinSuwito/ScheduleSync"));
+                case "License":
+                    string license = await GetNotices("ms-appx:///Assets/Notices/License.md");
+                    var licenseDialog = new NoticeContentDialog("License", license);
+                    await licenseDialog.ShowAsync();
+                    break;
+
+                case "ThirdPartyNotice":
+                    string thirdPartyLicense = await GetNotices("ms-appx:///Assets/Notices/ThirdPartyLicenses.md");
+                    var thirdPartyLicenseDialog = new NoticeContentDialog("Third Party Licenses", thirdPartyLicense);
+                    await thirdPartyLicenseDialog.ShowAsync();
                     break;
 
                 default:

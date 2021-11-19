@@ -68,7 +68,7 @@ namespace ScheduleSync
         void PositionRing()
         {
             splashProgressRing.SetValue(Canvas.LeftProperty, splashImageRect.X + (splashImageRect.Width * 0.5) - (splashProgressRing.Width * 0.5));
-            splashProgressRing.SetValue(Canvas.TopProperty, (splashImageRect.Y + splashImageRect.Height + splashImageRect.Height * 0.1));
+            splashProgressRing.SetValue(Canvas.TopProperty, splashImageRect.Y + splashImageRect.Height + (splashImageRect.Height * 0.1));
         }
 
         // Include code to be executed when the system has transitioned from the splash screen to the extended splash screen (application's first view).
@@ -149,7 +149,5 @@ namespace ScheduleSync
                 PositionRing();
             }
         }
-
-
     }
 }

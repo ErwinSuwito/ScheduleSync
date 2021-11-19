@@ -15,10 +15,12 @@
     </UserControl.Resources>
 
     <StackPanel>
-        <TextBox x:Name="IntakeCodeTextBox" 
-                 Header="Intake code"
-                 PlaceholderText="e.g. UC2F2008SE"
-                 Text="{x:Bind IntakeCode, Mode=TwoWay}"/>
+        <AutoSuggestBox x:Name="IntakeCodeAutoSuggestBox"
+                        Header="Intake code"
+                        PlaceholderText="e.g. UC2F2008SE"
+                        Text="{x:Bind IntakeCode, Mode=TwoWay}"
+                        TextChanged="IntakeCodeAutoSuggestBox_TextChanged"
+                        SuggestionChosen="IntakeCodeAutoSuggestBox_SuggestionChosen"/>
         <TextBox x:Name="TutorialGroupTextBox" 
                  Header="Tutorial group" 
                  PlaceholderText="e.g. G1"

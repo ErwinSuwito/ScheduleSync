@@ -17,6 +17,11 @@
 
     <ScrollViewer Padding="28,24">
         <StackPanel>
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <RepositionThemeTransition />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
             <TextBlock Text="Sync your intake schedule to your calendar" 
                        TextWrapping="Wrap" 
                        FontWeight="SemiBold"

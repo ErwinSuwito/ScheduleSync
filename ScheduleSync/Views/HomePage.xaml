@@ -15,8 +15,8 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Page.Resources>
 
-    <Grid Padding="28,24">
-        <StackPanel x:Name="HeaderStackPanel">
+    <ScrollViewer Padding="28,24">
+        <StackPanel>
             <TextBlock Text="Sync your intake schedule to your calendar" 
                        TextWrapping="Wrap" 
                        FontWeight="SemiBold"
@@ -85,7 +85,10 @@
                     </StackPanel>
                 </StackPanel>
             </muxc:Expander>
+            <HyperlinkButton Content="Sync other intake"
+                             Click="HyperlinkButton_Click"
+                             Margin="0,4,0,0"/>
         </StackPanel>
-    </Grid>
+    </ScrollViewer>
 
 </Page>

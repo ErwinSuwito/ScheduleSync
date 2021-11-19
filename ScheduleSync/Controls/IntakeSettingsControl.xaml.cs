@@ -102,7 +102,7 @@ namespace ScheduleSync.Controls
 
             for (int i = 0; i < localSettings.Containers["EnteredIntakeCodes"].Values.Count; i++)
             {
-                EnteredIntakeCodes.Add(localSettings.Containers["EnteredIntakeCodes"].Values.ElementAt(i).ToString());
+                EnteredIntakeCodes.Add(localSettings.Containers["EnteredIntakeCodes"].Values.ElementAt(i).Value.ToString());
             }
         }
 

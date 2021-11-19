@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Storage;
-using Windows.UI.Xaml;
+﻿using Windows.Storage;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -34,6 +21,12 @@ namespace ScheduleSync.Controls
             intake = IntakeSettingsControl.IntakeCode;
             tutorialGroup = IntakeSettingsControl.TutorialGroup;
             isForeignStudent = IntakeSettingsControl.IsFsStudent;
+
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            if (localSettings.Containers.ContainsKey("EnteredIntakeCodes"))
+            {
+                localSettings.Containers["EnteredIntakeCodes"].Values[(IntakeSettingsControl.EnteredIntakeCodes.Count - 1).ToString()] = intake;
+            }
 
             this.Hide();
         }

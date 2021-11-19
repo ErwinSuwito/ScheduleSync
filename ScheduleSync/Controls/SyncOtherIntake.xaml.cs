@@ -25,7 +25,8 @@ namespace ScheduleSync.Controls
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
             if (localSettings.Containers.ContainsKey("EnteredIntakeCodes"))
             {
-                localSettings.Containers["EnteredIntakeCodes"].Values[(IntakeSettingsControl.EnteredIntakeCodes.Count - 1).ToString()] = intake;
+                if (!IntakeSettingsControl.EnteredIntakeCodes.Contains(intake))
+                    localSettings.Containers["EnteredIntakeCodes"].Values[(IntakeSettingsControl.EnteredIntakeCodes.Count - 1).ToString()] = intake;
             }
 
             this.Hide();

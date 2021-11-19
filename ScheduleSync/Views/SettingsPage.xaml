@@ -23,7 +23,7 @@
                         Padding="24,4">
                 <StackPanel.ChildrenTransitions>
                     <TransitionCollection>
-                        <ReorderThemeTransition />
+                        <RepositionThemeTransition />
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
                 <muxc:Expander x:Name="SettingsExpander"

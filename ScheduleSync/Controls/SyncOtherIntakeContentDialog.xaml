@@ -11,7 +11,7 @@
 	CloseButtonText="Cancel"
 	PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
 	<ContentDialog.Resources>
-		<Style TargetType="local:NoticeContentDialog" BasedOn="{StaticResource DefaultContentDialogStyle}"/>
+		<Style TargetType="local:SyncOtherIntakeContentDialog" BasedOn="{StaticResource DefaultContentDialogStyle}"/>
 	</ContentDialog.Resources>
 
 	<StackPanel>

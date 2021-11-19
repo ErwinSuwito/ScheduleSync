@@ -1,0 +1,24 @@
+﻿<ContentDialog
+	x:Class="ScheduleSync.Controls.SyncOtherIntakeContentDialog"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:local="using:ScheduleSync.Controls"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	Title="Sync other intake"
+	PrimaryButtonText="Sync"
+	CloseButtonText="Cancel"
+	PrimaryButtonClick="ContentDialog_PrimaryButtonClick">
+	<ContentDialog.Resources>
+		<Style TargetType="local:SyncOtherIntakeContentDialog" BasedOn="{StaticResource DefaultContentDialogStyle}"/>
+	</ContentDialog.Resources>
+
+	<StackPanel>
+		<TextBlock Text="Enter the intake details to be synced to your calendar. This will not change your intake settings" 
+				   TextWrapping="Wrap"/>
+		<local:IntakeSettingsControl x:Name="IntakeSettingsControl"
+									 IsLoadSettingNeeded="False"
+									 Margin="0,4,0,0"/>
+	</StackPanel>
+</ContentDialog>

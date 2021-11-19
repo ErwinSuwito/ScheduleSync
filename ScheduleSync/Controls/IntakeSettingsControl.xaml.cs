@@ -61,6 +61,16 @@ namespace ScheduleSync.Controls
         public static readonly DependencyProperty IntakeProperty =
             DependencyProperty.Register("Intake", typeof(string), typeof(IntakeSettingsControl), new PropertyMetadata(""));
 
+        public bool IsLoadSettingNeeded
+        {
+            get { return (bool)GetValue(IsLoadSettingNeededProperty); }
+            set { SetValue(IsLoadSettingNeededProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsLoadSettingNeeded.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsLoadSettingNeededProperty =
+            DependencyProperty.Register("IsLoadSettingNeeded", typeof(bool), typeof(IntakeSettingsControl), new PropertyMetadata(true));
+
         public IntakeSettingsControl()
         {
             this.InitializeComponent();
@@ -68,14 +78,17 @@ namespace ScheduleSync.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            if (localSettings.Values["IntakeCode"] != null)
+            if (this.IsLoadSettingNeeded)
             {
-                IntakeCode = localSettings.Values["IntakeCode"].ToString();
-                TutorialGroup = localSettings.Values["TutorialGroup"].ToString();
-                bool.TryParse(localSettings.Values["IsFsStudent"].ToString(), out bool _isForeignStudent);
-                IsFsStudent = _isForeignStudent;
-            }
+                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+                if (localSettings.Values["IntakeCode"] != null)
+                {
+                    IntakeCode = localSettings.Values["IntakeCode"].ToString();
+                    TutorialGroup = localSettings.Values["TutorialGroup"].ToString();
+                    bool.TryParse(localSettings.Values["IsFsStudent"].ToString(), out bool _isForeignStudent);
+                    IsFsStudent = _isForeignStudent;
+                }
+            } 
         }
 
         public void SaveIntakeSettings()

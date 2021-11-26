@@ -4,6 +4,7 @@ using ScheduleSync.Controls;
 using ScheduleSync.Data;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -25,9 +26,8 @@ namespace ScheduleSync.Views
     {
         public string ApplicationVersion => $"Version {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-        public List<string> _ignoredModules = new List<string>();
-
-        public List<string> IgnoredModules
+        public ObservableCollection<string> _ignoredModules = new ObservableCollection<string>();
+        public ObservableCollection<string> IgnoredModules
         {
             get { return _ignoredModules; }
             set
@@ -36,6 +36,7 @@ namespace ScheduleSync.Views
                 this.OnPropertyChanged();
             }
         }
+
 
         public SettingsPage()
         {
@@ -50,6 +51,7 @@ namespace ScheduleSync.Views
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             IntakeSettings.SaveIntakeSettings();
+            SaveIgnoredModules();
             base.OnNavigatingFrom(e);
         }
 
@@ -101,14 +103,13 @@ namespace ScheduleSync.Views
 
         private void SubmitIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            AddIgnoredModules(ModuleNameTextBox.Text);
-
+            IgnoredModules.Add(ModuleNameTextBox.Text);
             AddIgnoredModuleFlyout.Hide();
         }
 
         private void GetIgnoredModules()
         {
-            List<string> ignoredModules = new List<string>();
+            ObservableCollection<string> ignoredModules = new ObservableCollection<string>();
 
             if (localSettings.Containers.ContainsKey("IgnoredModulesName") == false)
             {
@@ -123,17 +124,27 @@ namespace ScheduleSync.Views
             IgnoredModules = ignoredModules;
         }
 
-        private void AddIgnoredModules(string ignoredModuleName)
+        private void SaveIgnoredModules()
         {
-            if (string.IsNullOrEmpty(ignoredModuleName))
-                return;
-
             if (localSettings.Containers.ContainsKey("IgnoredModulesName"))
             {
-                localSettings.Containers["IgnoredModulesName"].Values[(_ignoredModules.Count - 1).ToString()] = ignoredModuleName;
+                localSettings.DeleteContainer("IgnoredModulesName");
             }
 
-            GetIgnoredModules();
+            localSettings.CreateContainer("IgnoredModulesName", ApplicationDataCreateDisposition.Always);
+           
+            for (int i = 0; i < _ignoredModules.Count; i++)
+            {
+                string ignoredModuleName = _ignoredModules[i];
+                localSettings.Containers["IgnoredModulesName"].Values[i.ToString()] = ignoredModuleName;
+            }
+        }
+
+        private void DeleteIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            IgnoredModules.Remove(btn.Tag.ToString());
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

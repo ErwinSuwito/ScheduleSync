@@ -103,6 +103,8 @@
                                                    RelativePanel.AlignLeftWithPanel="True"/>
                                         <Button Background="Transparent"
                                                 BorderBrush="Transparent"
+                                                Click="DeleteIgnoredModuleButton_Click"
+                                                Tag="{Binding}"
                                                 RelativePanel.AlignVerticalCenterWithPanel="True"
                                                 RelativePanel.AlignRightWithPanel="True">
                                             <Button.Content>

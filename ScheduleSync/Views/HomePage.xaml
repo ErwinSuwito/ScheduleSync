@@ -93,6 +93,8 @@
             <HyperlinkButton Content="Sync other intake"
                              Click="HyperlinkButton_Click"
                              Margin="0,4,0,0"/>
+            <HyperlinkButton Content="Course Schedule"
+                             NavigateUri="http://kb.sites.apiit.edu.my/knowledge-base/course-schedule/"/>
         </StackPanel>
     </ScrollViewer>
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -16,6 +17,20 @@ namespace ScheduleSync.Data
         public Exception Exception { get; private set; }
         StorageFolder tempFolder = ApplicationData.Current.LocalFolder;
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        List<string> ignoredModules = new List<string>();
+
+        public DataAccess()
+        {
+            if (localSettings.Containers.ContainsKey("IgnoredModulesName") == false)
+            {
+                localSettings.CreateContainer("IgnoredModulesName", ApplicationDataCreateDisposition.Always);
+            }
+
+            for (int i = 0; i < localSettings.Containers["IgnoredModulesName"].Values.Count; i++)
+            {
+                ignoredModules.Add(localSettings.Containers["IgnoredModulesName"].Values.ElementAt(i).Value.ToString());
+            }
+        }
 
         private async Task<bool> DownloadSchedule()
         {
@@ -121,7 +136,11 @@ namespace ScheduleSync.Data
                     DateTime.TryParse(item.DATESTAMP_ISO, out dt);
                     if (dt.DayOfYear >= DateTime.Today.DayOfYear)
                     {
-                        filteredItems.Add(item);
+                        var isIgnoredModuleFound = ignoredModules.Find(x => item.MODID.ToLower().Contains(x.ToLower()));
+                        if (isIgnoredModuleFound == null)
+                        {
+                            filteredItems.Add(item);
+                        }
                     }
                 }
             }

@@ -86,7 +86,7 @@ namespace ScheduleSync.Data
             string modifiedJson = scheduleJson.Replace("[", "{\"schedules\":[");
             scheduleJson = modifiedJson.Replace("]", "]}");
 
-            var result = JsonConvert.DeserializeObject<Root>(scheduleJson);
+            var result = JsonConvert.DeserializeObject<ScheduleRoot>(scheduleJson);
 
             Schedule lastItem = result.schedules.LastOrDefault();
             DateTimeOffset.TryParse(lastItem.DATESTAMP_ISO, out DateTimeOffset dt);

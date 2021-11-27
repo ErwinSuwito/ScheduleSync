@@ -140,11 +140,22 @@ namespace ScheduleSync.Views
             }
         }
 
-        private void DeleteIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private async void DeleteIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Button btn = (Button)sender;
 
-            IgnoredModules.Remove(btn.Tag.ToString());
+            ContentDialog contentDialog = new ContentDialog()
+            {
+                Title = "Unignore module?",
+                Content = "Are you sure you want to unignore " + btn.Tag.ToString() + "? This module will start appearing on your synced schedule.",
+                PrimaryButtonText = "Yes",
+                CloseButtonText = "Cancel"
+            };
+
+            var result = await contentDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+                IgnoredModules.Remove(btn.Tag.ToString());
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

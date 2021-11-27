@@ -19,6 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Schedule = ScheduleSync.Data.Schedule;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -56,6 +57,22 @@ namespace ScheduleSync.Views.Setup
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
+            var ignoredModules = ModulesListView.SelectedItems;
+
+            if (localSettings.Containers.ContainsKey("IgnoredModulesName"))
+            {
+                localSettings.DeleteContainer("IgnoredModulesName");
+            }
+
+            localSettings.CreateContainer("IgnoredModulesName", ApplicationDataCreateDisposition.Always);
+
+            for (int i = 0; i < ignoredModules.Count; i++)
+            {
+                Schedule schedule = (Schedule)ignoredModules[i];
+
+                localSettings.Containers["IgnoredModulesName"].Values[i.ToString()] = schedule.MODULE_NAME;
+            }
+
             OSVersion OperatingSystemVersion = SystemInformation.Instance.OperatingSystemVersion;
             if (OperatingSystemVersion.Build >= 22000)
             {

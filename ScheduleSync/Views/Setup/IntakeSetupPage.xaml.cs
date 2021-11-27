@@ -38,17 +38,7 @@ namespace ScheduleSync.Views.Setup
         {
             IntakeSettings.SaveIntakeSettings();
 
-            OSVersion OperatingSystemVersion = SystemInformation.Instance.OperatingSystemVersion;
-            if (OperatingSystemVersion.Build >= 22000)
-            {
-                var parentFrame = Window.Current.Content as Frame;
-                parentFrame.Navigate(typeof(Shell.MainShell), null);
-            }
-            else
-            {
-                var parentFrame = Window.Current.Content as Frame;
-                parentFrame.Navigate(typeof(Shell.AcrylicMainShell), null);
-            }
+            this.Frame.Navigate(typeof(IgnoredModulesSetupPage), null);
         }
     }
 }

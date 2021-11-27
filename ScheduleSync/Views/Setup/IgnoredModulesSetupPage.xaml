@@ -19,7 +19,11 @@
     </Page.Transitions>
 
     <Grid Margin="24">
-        <StackPanel x:Name="Content">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="83*"/>
+        </Grid.RowDefinitions>
+        <StackPanel x:Name="Content" Grid.RowSpan="2">
             <TextBlock Text="Ignored Modules"
                        TextWrapping="Wrap"
                        Style="{ThemeResource TitleTextBlockStyle}" />
@@ -29,7 +33,9 @@
                        Style="{ThemeResource BodyTextBlockStyle}"
                        FontSize="18"/>
 
-            <ListView SelectionMode="Multiple">
+            <ListView x:Name="ModulesListView"
+                      SelectionMode="Multiple"
+                      Margin="0,8,0,0">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="data:Schedule">
                         <TextBlock Text="{x:Bind MODULE_NAME}" />
@@ -40,8 +46,8 @@
 
         <StackPanel x:Name="LoadingStackPanel"
                     Orientation="Horizontal"
-                    VerticalAlignment="Center"
-                    HorizontalAlignment="Center">
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center" Margin="0,126,0,0" Grid.Row="1">
             <muxc:ProgressRing IsActive="True"
                                Width="24"
                                Height="24"/>
@@ -55,15 +61,14 @@
                 VerticalAlignment="Bottom"
                 HorizontalAlignment="Right"
                 FlowDirection="RightToLeft"
-                Click="NextButton_Click"/>
+                Click="NextButton_Click" Margin="0,0,4,2" Grid.Row="1"/>
 
         <Button x:Name="BackButton"
                 Visibility="Visible"
                 Style="{StaticResource NavigationBackButtonNormalStyle}"
                 VerticalAlignment="Bottom"
-                HorizontalAlignment="Left"
                 FlowDirection="LeftToRight"
-                Click="BackButton_Click"/>
+                Click="BackButton_Click" Margin="4,0,0,2" Grid.Row="1"/>
     </Grid>
 
 </Page>

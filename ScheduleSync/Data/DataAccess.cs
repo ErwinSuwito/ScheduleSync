@@ -75,7 +75,7 @@ namespace ScheduleSync.Data
             }
         }
 
-        public async Task<bool> GetSchedule()
+        private async Task<bool> GetSchedule()
         {
             bool result = await DownloadSchedule();
             if (result == true)

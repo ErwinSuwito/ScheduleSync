@@ -136,8 +136,9 @@ namespace ScheduleSync.Data
                     DateTime.TryParse(item.DATESTAMP_ISO, out dt);
                     if (dt.DayOfYear >= DateTime.Today.DayOfYear)
                     {
-                        var isIgnoredModuleFound = ignoredModules.Find(x => item.MODID.ToLower().Contains(x.ToLower()));
-                        if (isIgnoredModuleFound == null)
+                        var isIgnoredModuleIdFound = ignoredModules.Find(x => item.MODID.ToLower().Contains(x.ToLower()));
+                        var isIgnoredModuleNameFound = ignoredModules.Find(x => item.MODULE_NAME.ToLower().Contains(x.ToLower()));
+                        if (isIgnoredModuleIdFound == null && isIgnoredModuleNameFound == null)
                         {
                             filteredItems.Add(item);
                         }

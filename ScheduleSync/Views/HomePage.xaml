@@ -10,6 +10,7 @@
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     Background="Transparent"
+    d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
     <Page.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -17,6 +18,11 @@
 
     <ScrollViewer Padding="28,24">
         <StackPanel>
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <RepositionThemeTransition />
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
             <TextBlock Text="Sync your intake schedule to your calendar" 
                        TextWrapping="Wrap" 
                        FontWeight="SemiBold"
@@ -88,6 +94,8 @@
             <HyperlinkButton Content="Sync other intake"
                              Click="HyperlinkButton_Click"
                              Margin="0,4,0,0"/>
+            <HyperlinkButton Content="Course Schedule"
+                             NavigateUri="http://kb.sites.apiit.edu.my/knowledge-base/course-schedule/"/>
         </StackPanel>
     </ScrollViewer>
 

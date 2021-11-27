@@ -6,8 +6,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:controls="using:ScheduleSync.Controls"
+    xmlns:data="using:ScheduleSync.Data"
     mc:Ignorable="d"
-    Background="Transparent">
+    Background="Transparent"
+    d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    Loaded="Page_Loaded">
 
     <ScrollViewer>
         <RelativePanel HorizontalAlignment="Stretch"
@@ -23,15 +26,14 @@
                         Padding="24,4">
                 <StackPanel.ChildrenTransitions>
                     <TransitionCollection>
-                        <ReorderThemeTransition />
+                        <RepositionThemeTransition />
                     </TransitionCollection>
                 </StackPanel.ChildrenTransitions>
                 <muxc:Expander x:Name="SettingsExpander"
                                Margin="0,8,0,0"
                                IsExpanded="True"
                                HorizontalAlignment="Stretch"
-                               HorizontalContentAlignment="Stretch"
-                               RelativePanel.Below="PageHeader">
+                               HorizontalContentAlignment="Stretch">
                     <muxc:Expander.Header>
                         <RelativePanel>
                             <StackPanel Orientation="Horizontal">
@@ -49,9 +51,78 @@
                                                     HorizontalAlignment="Left" />
                 </muxc:Expander>
 
-                <muxc:Expander x:Name="AccountExpander"
+                <muxc:Expander x:Name="IgnoredModulesExpander"
                                Margin="0,8,0,0"
                                IsExpanded="True"
+                               HorizontalAlignment="Stretch"
+                               HorizontalContentAlignment="Stretch">
+                    <muxc:Expander.Header>
+                        <RelativePanel>
+                            <StackPanel Orientation="Horizontal"
+                                        RelativePanel.AlignLeftWithPanel="True"
+                                        RelativePanel.AlignVerticalCenterWithPanel="True">
+                                <FontIcon Glyph="&#xECE4;" />
+                                <TextBlock Text="Ignored Modules"
+                                           Margin="12,0,0,0"/>
+                            </StackPanel>
+
+                            <Button x:Name="AddIgnoredModuleButton"
+                                    Content="Add"
+                                    RelativePanel.AlignRightWithPanel="True"
+                                    RelativePanel.AlignVerticalCenterWithPanel="True">
+                                <Button.Flyout>
+                                    <Flyout x:Name="AddIgnoredModuleFlyout">
+                                        <StackPanel>
+                                            <TextBox x:Name="ModuleNameTextBox"
+                                                     Header="Module name contains"
+                                                     Width="280"/>
+                                            <Button x:Name="SubmitIgnoredModuleButton"
+                                                    Content="Add"
+                                                    Margin="0,12,0,0"
+                                                    Click="SubmitIgnoredModuleButton_Click" />
+                                        </StackPanel>
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>
+                        </RelativePanel>
+                    </muxc:Expander.Header>
+                    <StackPanel>
+                        <TextBlock Text="Module names containing the following words will be ignored and not added to your calendar"
+                                   TextWrapping="Wrap"
+                                   Style="{ThemeResource BodyTextBlockStyle}"
+                                   Margin="0,0,0,8" />
+                        <ListView x:Name="IgnoredModulesListView"
+                                  SelectionMode="None"
+                                  ItemsSource="{x:Bind IgnoredModules, Mode=OneWay}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <RelativePanel Background="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
+                                                   CornerRadius="3"
+                                                   HorizontalAlignment="Stretch">
+                                        <TextBlock Text="{Binding}"
+                                                   Foreground="{ThemeResource ListViewItemForeground}"
+                                                   Margin="12,8"
+                                                   RelativePanel.AlignLeftWithPanel="True"/>
+                                        <Button Background="Transparent"
+                                                BorderBrush="Transparent"
+                                                Click="DeleteIgnoredModuleButton_Click"
+                                                Tag="{Binding}"
+                                                RelativePanel.AlignVerticalCenterWithPanel="True"
+                                                RelativePanel.AlignRightWithPanel="True">
+                                            <Button.Content>
+                                                <FontIcon Glyph="&#xE107;" FontSize="16" />
+                                            </Button.Content>
+                                        </Button>
+                                    </RelativePanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </muxc:Expander>
+
+                <muxc:Expander x:Name="AccountExpander"
+                               Margin="0,8,0,0"
+                               IsExpanded="False"
                                HorizontalContentAlignment="Stretch"
                                HorizontalAlignment="Stretch">
                     <muxc:Expander.Header>
@@ -96,6 +167,10 @@
                                    Margin="44,0,0,0"/>
                         <TextBlock Text="by Erwin Suwitoandojo"
                                    Margin="44,0,0,0"/>
+                        <Button x:Name="ResetAppButton"
+                                Content="Reset App"
+                                Click="ResetAppButton_Click"
+                                Margin="44,8,0,0" />
                     </StackPanel>
                 </muxc:Expander>
                 <muxc:Expander x:Name="ExtrasExpander"

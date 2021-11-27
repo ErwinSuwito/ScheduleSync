@@ -21,6 +21,7 @@ namespace ScheduleSync.Controls
 {
     public sealed partial class IntakeSettingsControl : UserControl
     {
+        #region Dependency Properties
         public string IntakeCode
         {
             get { return (string)GetValue(IntakeCodeProperty); }
@@ -71,6 +72,11 @@ namespace ScheduleSync.Controls
         public static readonly DependencyProperty IsLoadSettingNeededProperty =
             DependencyProperty.Register("IsLoadSettingNeeded", typeof(bool), typeof(IntakeSettingsControl), new PropertyMetadata(true));
 
+        #endregion
+        
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        public List<string> EnteredIntakeCodes = new List<string>();
+
         public IntakeSettingsControl()
         {
             this.InitializeComponent();
@@ -80,7 +86,6 @@ namespace ScheduleSync.Controls
         {
             if (this.IsLoadSettingNeeded)
             {
-                ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
                 if (localSettings.Values["IntakeCode"] != null)
                 {
                     IntakeCode = localSettings.Values["IntakeCode"].ToString();
@@ -89,6 +94,16 @@ namespace ScheduleSync.Controls
                     IsFsStudent = _isForeignStudent;
                 }
             } 
+
+            if (localSettings.Containers.ContainsKey("EnteredIntakeCodes") == false)
+            {
+                localSettings.CreateContainer("EnteredIntakeCodes", ApplicationDataCreateDisposition.Always);
+            }
+
+            for (int i = 0; i < localSettings.Containers["EnteredIntakeCodes"].Values.Count; i++)
+            {
+                EnteredIntakeCodes.Add(localSettings.Containers["EnteredIntakeCodes"].Values.ElementAt(i).Value.ToString());
+            }
         }
 
         public void SaveIntakeSettings()
@@ -108,6 +123,32 @@ namespace ScheduleSync.Controls
         {
             string studentType = (IsFsStudent == true) ? "(FS)" : "(LS)";
             return IntakeCode + studentType + " " + TutorialGroup;
+        }
+
+        private void IntakeCodeAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            var suitableItems = new List<string>();
+            var splitText = sender.Text.ToLower().Split(' ');
+            
+            foreach (var intake in EnteredIntakeCodes)
+            {
+                var found = splitText.All((key) =>
+                {
+                    return intake.ToLower().Contains(key);
+                });
+
+                if (found)
+                {
+                    suitableItems.Add(intake);
+                }
+            }
+
+            sender.ItemsSource = suitableItems;
+        }
+
+        private void IntakeCodeAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            IntakeCodeAutoSuggestBox.Text = args.SelectedItem.ToString();
         }
     }
 }

@@ -19,6 +19,7 @@
 				   TextWrapping="Wrap"/>
 		<local:IntakeSettingsControl x:Name="IntakeSettingsControl"
 									 IsLoadSettingNeeded="False"
-									 Margin="0,4,0,0"/>
+									 Margin="0,4,0,0"
+									 HorizontalAlignment="Left" />
 	</StackPanel>
 </ContentDialog>

@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -38,17 +39,9 @@ namespace ScheduleSync.Views.Setup
         {
             IntakeSettings.SaveIntakeSettings();
 
-            OSVersion OperatingSystemVersion = SystemInformation.Instance.OperatingSystemVersion;
-            if (OperatingSystemVersion.Build >= 22000)
-            {
-                var parentFrame = Window.Current.Content as Frame;
-                parentFrame.Navigate(typeof(Shell.MainShell), null);
-            }
-            else
-            {
-                var parentFrame = Window.Current.Content as Frame;
-                parentFrame.Navigate(typeof(Shell.AcrylicMainShell), null);
-            }
+            var navigationTransitionInfo = new SlideNavigationTransitionInfo();
+            navigationTransitionInfo.Effect = SlideNavigationTransitionEffect.FromRight;
+            this.Frame.Navigate(typeof(IgnoredModulesSetupPage), null, navigationTransitionInfo);
         }
     }
 }

@@ -23,7 +23,7 @@
                                     HorizontalAlignment="Stretch"
                                     TextWrapping="Wrap"
                                     Background="Transparent"
-                                    MaxWidth="500"
+                                    MaxWidth="436"
                                     LinkClicked="MarkdownTextBlock_LinkClicked">
         </controls:MarkdownTextBlock>
     </ScrollViewer>

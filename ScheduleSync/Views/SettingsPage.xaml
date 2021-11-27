@@ -167,6 +167,10 @@
                                    Margin="44,0,0,0"/>
                         <TextBlock Text="by Erwin Suwitoandojo"
                                    Margin="44,0,0,0"/>
+                        <Button x:Name="ResetAppButton"
+                                Content="Reset App"
+                                Click="ResetAppButton_Click"
+                                Margin="44,8,0,0" />
                     </StackPanel>
                 </muxc:Expander>
                 <muxc:Expander x:Name="ExtrasExpander"

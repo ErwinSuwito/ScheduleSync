@@ -1,4 +1,5 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
+﻿using CommunityToolkit.Authentication;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Newtonsoft.Json;
 using ScheduleSync.Controls;
 using ScheduleSync.Data;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
@@ -157,6 +159,47 @@ namespace ScheduleSync.Views
 
             if (result == ContentDialogResult.Primary)
                 IgnoredModules.Remove(btn.Tag.ToString());
+        }
+
+        private async void ResetAppButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ContentDialog resetDataWarning = new ContentDialog()
+            {
+                Title = "Reset app data?",
+                Content = "Resetting app data will clear all your settings and log you out of the application. The application will restart after it is reset.",
+                PrimaryButtonText = "Reset",
+                CloseButtonText = "Cancel"
+            };
+
+            var result = await resetDataWarning.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                localSettings.Values.Remove("IntakeCode");
+                localSettings.Values.Remove("TutorialGroup");
+                localSettings.Values.Remove("IsFsStudent");
+                localSettings.Values.Remove("LastScheduleDate");
+                localSettings.Values.Remove("LastSyncedDate");
+
+                localSettings.DeleteContainer("EnteredIntakeCodes");
+                localSettings.DeleteContainer("IgnoredModulesName");
+
+                await ProviderManager.Instance.GlobalProvider.SignOutAsync();
+
+                AppRestartFailureReason restartFailureReason = await CoreApplication.RequestRestartAsync("");
+
+                if (restartFailureReason == AppRestartFailureReason.NotInForeground
+                    || restartFailureReason == AppRestartFailureReason.Other)
+                {
+                    ContentDialog restartWarning = new ContentDialog()
+                    {
+                        Title = "Please restart the app",
+                        Content = "App data has been reset. Please restart the app to use the app again."
+                    };
+
+                    await restartWarning.ShowAsync();
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

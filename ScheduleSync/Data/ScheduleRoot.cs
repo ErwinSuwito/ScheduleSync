@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ScheduleSync.Data
 {
-    public class Root
+    public class ScheduleRoot
     {
         public List<Schedule> schedules { get; set; }
     }

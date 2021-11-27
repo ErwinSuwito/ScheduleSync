@@ -28,6 +28,9 @@ namespace ScheduleSync.Shell
 
             // Sets TitleBar as the title bar to expand dragable area
             Window.Current.SetTitleBar(TitleBar);
+#if DEBUG
+            AppTitle.Text = "ScheduleSync Dev";
+#endif
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)

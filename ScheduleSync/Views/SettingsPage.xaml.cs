@@ -1,7 +1,17 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
+﻿using CommunityToolkit.Authentication;
+using Microsoft.Toolkit.Uwp.Helpers;
+using Newtonsoft.Json;
 using ScheduleSync.Controls;
+using ScheduleSync.Data;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI.Xaml.Controls;
@@ -14,24 +24,41 @@ namespace ScheduleSync.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SettingsPage : Page
+    public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
-        public string ApplicationVersion => $"Version {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+        public string ApplicationVersion;
+        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        public ObservableCollection<string> _ignoredModules = new ObservableCollection<string>();
+        public ObservableCollection<string> IgnoredModules
+        {
+            get { return _ignoredModules; }
+            set
+            {
+                _ignoredModules = value;
+                this.OnPropertyChanged();
+            }
+        }
 
         public SettingsPage()
         {
             this.InitializeComponent();
+
+            ApplicationVersion = $"Version {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+#if DEBUG
+            ApplicationVersion = $"Version Dev - {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+#endif
+        }
+
+        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            GetIgnoredModules();
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
         {
             IntakeSettings.SaveIntakeSettings();
+            SaveIgnoredModules();
             base.OnNavigatingFrom(e);
-        }
-
-        private async void GridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-
         }
 
         private async Task<string> GetNotices(string path)
@@ -78,6 +105,112 @@ namespace ScheduleSync.Views
                 default:
                     break;
             }
+        }
+
+        private void SubmitIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            IgnoredModules.Add(ModuleNameTextBox.Text);
+            ModuleNameTextBox.Text = string.Empty;
+            AddIgnoredModuleFlyout.Hide();
+        }
+
+        private void GetIgnoredModules()
+        {
+            ObservableCollection<string> ignoredModules = new ObservableCollection<string>();
+
+            if (localSettings.Containers.ContainsKey("IgnoredModulesName") == false)
+            {
+                localSettings.CreateContainer("IgnoredModulesName", ApplicationDataCreateDisposition.Always);
+            }
+
+            for (int i = 0; i < localSettings.Containers["IgnoredModulesName"].Values.Count; i++)
+            {
+                ignoredModules.Add(localSettings.Containers["IgnoredModulesName"].Values.ElementAt(i).Value.ToString());
+            }
+
+            IgnoredModules = ignoredModules;
+        }
+
+        private void SaveIgnoredModules()
+        {
+            if (localSettings.Containers.ContainsKey("IgnoredModulesName"))
+            {
+                localSettings.DeleteContainer("IgnoredModulesName");
+            }
+
+            localSettings.CreateContainer("IgnoredModulesName", ApplicationDataCreateDisposition.Always);
+           
+            for (int i = 0; i < _ignoredModules.Count; i++)
+            {
+                string ignoredModuleName = _ignoredModules[i];
+                localSettings.Containers["IgnoredModulesName"].Values[i.ToString()] = ignoredModuleName;
+            }
+        }
+
+        private async void DeleteIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Button btn = (Button)sender;
+
+            ContentDialog contentDialog = new ContentDialog()
+            {
+                Title = "Unignore module?",
+                Content = "Are you sure you want to unignore " + btn.Tag.ToString() + "? This module will start appearing on your synced schedule.",
+                PrimaryButtonText = "Yes",
+                CloseButtonText = "Cancel"
+            };
+
+            var result = await contentDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+                IgnoredModules.Remove(btn.Tag.ToString());
+        }
+
+        private async void ResetAppButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            ContentDialog resetDataWarning = new ContentDialog()
+            {
+                Title = "Reset app data?",
+                Content = "Resetting app data will clear all your settings and log you out of the application. The application will restart after it is reset.",
+                PrimaryButtonText = "Reset",
+                CloseButtonText = "Cancel"
+            };
+
+            var result = await resetDataWarning.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                localSettings.Values.Remove("IntakeCode");
+                localSettings.Values.Remove("TutorialGroup");
+                localSettings.Values.Remove("IsFsStudent");
+                localSettings.Values.Remove("LastScheduleDate");
+                localSettings.Values.Remove("LastSyncedDate");
+
+                localSettings.DeleteContainer("EnteredIntakeCodes");
+                localSettings.DeleteContainer("IgnoredModulesName");
+
+                await ProviderManager.Instance.GlobalProvider.SignOutAsync();
+
+                AppRestartFailureReason restartFailureReason = await CoreApplication.RequestRestartAsync("");
+
+                if (restartFailureReason == AppRestartFailureReason.NotInForeground
+                    || restartFailureReason == AppRestartFailureReason.Other)
+                {
+                    ContentDialog restartWarning = new ContentDialog()
+                    {
+                        Title = "Please restart the app",
+                        Content = "App data has been reset. Please restart the app to use the app again."
+                    };
+
+                    await restartWarning.ShowAsync();
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            // Raise the PropertyChanged event, passing the name of the property whose value has changed.
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

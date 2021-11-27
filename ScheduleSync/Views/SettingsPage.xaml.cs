@@ -26,7 +26,7 @@ namespace ScheduleSync.Views
     /// </summary>
     public sealed partial class SettingsPage : Page, INotifyPropertyChanged
     {
-        public string ApplicationVersion => $"Version {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+        public string ApplicationVersion;
         ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
         public ObservableCollection<string> _ignoredModules = new ObservableCollection<string>();
         public ObservableCollection<string> IgnoredModules
@@ -39,10 +39,14 @@ namespace ScheduleSync.Views
             }
         }
 
-
         public SettingsPage()
         {
             this.InitializeComponent();
+
+            ApplicationVersion = $"Version {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+#if DEBUG
+            ApplicationVersion = $"Version Dev - {SystemInformation.Instance.ApplicationVersion.Major}.{SystemInformation.Instance.ApplicationVersion.Minor}.{SystemInformation.Instance.ApplicationVersion.Build}";
+#endif
         }
 
         private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)

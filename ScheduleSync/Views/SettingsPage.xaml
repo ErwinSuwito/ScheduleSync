@@ -9,6 +9,7 @@
     xmlns:data="using:ScheduleSync.Data"
     mc:Ignorable="d"
     Background="Transparent"
+    d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Loaded="Page_Loaded">
 
     <ScrollViewer>

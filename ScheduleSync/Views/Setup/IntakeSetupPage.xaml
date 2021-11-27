@@ -9,11 +9,6 @@
     mc:Ignorable="d"
     Background="Transparent"
     d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Transitions>
-        <TransitionCollection>
-            <EdgeUIThemeTransition Edge="Right" />
-        </TransitionCollection>
-    </Page.Transitions>
 
     <Grid Margin="24">
         <StackPanel x:Name="Content">

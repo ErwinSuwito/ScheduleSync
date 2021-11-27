@@ -104,6 +104,7 @@ namespace ScheduleSync.Views
         private void SubmitIgnoredModuleButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             IgnoredModules.Add(ModuleNameTextBox.Text);
+            ModuleNameTextBox.Text = string.Empty;
             AddIgnoredModuleFlyout.Hide();
         }
 

@@ -95,10 +95,11 @@
                                   ItemsSource="{x:Bind IgnoredModules, Mode=OneWay}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <RelativePanel Background="{ThemeResource AppBarItemPointerOverBackgroundThemeBrush}"
+                                    <RelativePanel Background="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}"
                                                    CornerRadius="3"
                                                    HorizontalAlignment="Stretch">
                                         <TextBlock Text="{Binding}"
+                                                   Foreground="{ThemeResource ListViewItemForeground}"
                                                    Margin="12,8"
                                                    RelativePanel.AlignLeftWithPanel="True"/>
                                         <Button Background="Transparent"

@@ -120,28 +120,27 @@ namespace ScheduleSync.Data
 
             List<Schedule> filteredItems = new List<Schedule>();
 
-            foreach (Schedule item in allSchedule)
-            {
-                if (item.INTAKE == intakeCode && item.GROUPING == tutorialGroup)
-                {
-                    if (item.MODID.Contains("(LS)") || item.MODID.Contains("(FS)"))
-                    {
-                        if (!item.MODID.Contains(studentType))
-                        {
-                            continue;
-                        }
-                    }
+            var allIntakeSchedule = allSchedule.Where(x => (x.INTAKE == intakeCode && x.GROUPING == tutorialGroup)).ToList();
 
-                    DateTime dt = new DateTime();
-                    DateTime.TryParse(item.DATESTAMP_ISO, out dt);
-                    if (dt.DayOfYear >= DateTime.Today.DayOfYear)
+            foreach (Schedule item in allIntakeSchedule)
+            {
+                if (item.MODID.Contains("(LS)") || item.MODID.Contains("(FS)"))
+                {
+                    if (!item.MODID.Contains(studentType))
                     {
-                        var isIgnoredModuleIdFound = ignoredModules.Find(x => item.MODID.ToLower().Contains(x.ToLower()));
-                        var isIgnoredModuleNameFound = ignoredModules.Find(x => item.MODULE_NAME.ToLower().Contains(x.ToLower()));
-                        if (isIgnoredModuleIdFound == null && isIgnoredModuleNameFound == null)
-                        {
-                            filteredItems.Add(item);
-                        }
+                        continue;
+                    }
+                }
+
+                DateTime dt = new DateTime();
+                DateTime.TryParse(item.DATESTAMP_ISO, out dt);
+                if (dt >= DateTime.Today)
+                {
+                    var isIgnoredModuleIdFound = ignoredModules.Find(x => item.MODID.ToLower().Contains(x.ToLower()));
+                    var isIgnoredModuleNameFound = ignoredModules.Find(x => item.MODULE_NAME.ToLower().Contains(x.ToLower()));
+                    if (isIgnoredModuleIdFound == null && isIgnoredModuleNameFound == null)
+                    {
+                        filteredItems.Add(item);
                     }
                 }
             }
